@@ -85,6 +85,33 @@ function stop() {
 /* ---------- messen ---------- */
 const browser = await chromium.launch({ executablePath: CHROME });
 
+/* Eine Runde zum Aufwärmen, deren Ergebnis weggeworfen wird.
+ *
+ * Beim allerersten Lauf nach dem Bauen liegen 40 MB eingefrorene
+ * Startbereiche mit ihren Videos noch nicht im Zwischenspeicher des
+ * Betriebssystems. Die Seite lädt dann so zäh, dass eine gerade laufende
+ * Einblendung beim Messen noch auf opacity 0 steht und ein Video noch nicht
+ * angelaufen ist. Beides ist kein Fehler der Seite — aber es ließ diese
+ * Prüfung genau ein Mal von zwei Läufen scheitern, und eine Prüfung, die
+ * mal so und mal so ausgeht, erzieht dazu, sie zu wiederholen statt ihr zu
+ * glauben. */
+{
+  const warm = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await warm.goto(base, { waitUntil: "networkidle" });
+  await warm.evaluate(async () => {
+    const nap = (ms) => new Promise((r) => setTimeout(r, ms));
+    for (let y = 0; y < document.body.scrollHeight; y += 700) {
+      window.scrollTo(0, y);
+      await nap(60);
+    }
+    for (const f of document.querySelectorAll("#cases iframe")) {
+      f.scrollIntoView({ block: "center", behavior: "instant" });
+      await nap(250);
+    }
+  });
+  await warm.close();
+}
+
 try {
   for (const vp of VIEWPORTS) {
     const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
@@ -142,10 +169,17 @@ try {
         if (r.height === 0 || r.width === 0) continue;
         if (isDead(el)) candidates.push(el);
       }
-      await nap(1800);
-      const invisible = candidates
-        .filter((el) => isDead(el))
-        .map((el) => el.textContent.trim().slice(0, 60));
+      await nap(1200);
+      const invisible = [];
+      for (const el of candidates) {
+        if (!isDead(el)) continue;
+        // Zweite Chance: das Element selbst ins Bild holen. Eine Einblendung,
+        // die noch nicht ausgelöst hat, startet dadurch. Was danach immer
+        // noch durchsichtig ist, ist es dauerhaft.
+        el.scrollIntoView({ block: "center", behavior: "instant" });
+        await nap(500);
+        if (isDead(el)) invisible.push(el.textContent.trim().slice(0, 60));
+      }
 
       const longHeadings = [];
       if (isDesktop) {
@@ -214,7 +248,17 @@ try {
           const cssMoves = doc.getAnimations
             ? doc.getAnimations().filter((a) => a.playState === "running").length > 0
             : false;
-          if (!videoMoves && !cssMoves) still.push(`${name}: nichts bewegt sich`);
+          if (!videoMoves && !cssMoves) {
+            // Zweiter Anlauf: ein Video, das noch puffert, ist nicht dasselbe
+            // wie ein Video, das nie startet.
+            const again = videos.map((v) => v.currentTime);
+            await nap(2500);
+            const lateVideo = videos.some((v, i) => !v.paused && v.currentTime > again[i] + 0.3);
+            const lateCss = doc.getAnimations
+              ? doc.getAnimations().filter((a) => a.playState === "running").length > 0
+              : false;
+            if (!lateVideo && !lateCss) still.push(`${name}: nichts bewegt sich`);
+          }
         }
         return { frames: frames.length, still };
       });
