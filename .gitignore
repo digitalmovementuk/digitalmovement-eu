@@ -1,0 +1,18 @@
+node_modules
+
+# Lokale Build-Konfiguration. Enthaelt nichts Geheimes, gehoert aber nicht
+# ins Repo — .env.example dokumentiert die Werte.
+.env
+dist
+.DS_Store
+.vite
+*.log
+
+# Source video assets — already mirrored into public/video for the build
+Assets/
+
+# TS build cache
+tsconfig.tsbuildinfo
+
+# Workflow folder is local only — deploy is done from a gh-pages branch
+.github/

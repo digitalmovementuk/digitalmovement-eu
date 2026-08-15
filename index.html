@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#1B0E2E" />
+    <!-- Hintergrund vor dem ersten Anstrich, damit Adressleiste und erstes
+         Bild nicht weiß aufblitzen, bevor das Stylesheet da ist. -->
+    <style>
+      html, body { background: #1B0E2E; color-scheme: dark; margin: 0; }
+    </style>
+
+    <!-- Title, Description, Canonical, Open Graph, Twitter und JSON-LD stehen
+         NICHT hier. Sie gehören zur jeweiligen Route und kommen aus <Seo> in
+         src/seo.tsx, das vite-react-ssg beim Bauen in jede vorgerenderte
+         HTML-Datei schreibt. Sie hier zu wiederholen würde jedes Tag doppelt
+         ausgeben und die Werte der Startseite auf jede Seite setzen — genau
+         das Problem, gegen das das Vorrendern eingebaut wurde. Unten gehört
+         nur hin, was für die ganze Seite gilt. -->
+
+    <!-- Das SVG-Favicon wiegt ~6 KB statt 252 KB als Rastergrafik. Moderne
+         Browser nehmen SVG, ältere fallen auf die .png zurück. -->
+    <link rel="icon" type="image/svg+xml" href="/brand/logo-mono-negative.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/brand/motif-positive.png" />
+    <link rel="apple-touch-icon" href="/brand/motif-positive.png" />
+    <meta name="apple-mobile-web-app-title" content="Digital Movement" />
+    <meta name="application-name" content="Digital Movement" />
+
+    <!-- Die Bildmaße sind auf jeder Route dieselbe Datei, deshalb stehen sie
+         hier und nicht in jeder Seite noch einmal. -->
+    <meta property="og:image:secure_url" content="https://digitalmovement.eu/brand/og-cover.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="2460" />
+    <meta property="og:image:height" content="1383" />
+
+    <!-- Keine Hero-Preloads hier. Sie galten früher nur der Startseite,
+         wurden aber auf jeder Seite ausgeliefert: ein ungenutzter 27-KB-Abruf
+         mit hoher Priorität und zwei as="video"-Hinweise, die Chrome nie
+         befolgt hat. Routenbezogene Hinweise gehören ans Element, nicht in
+         diese gemeinsame Datei. -->
+
+    <!-- Keine Schriften von Google. Sie werden selbst ausgeliefert und in
+         src/main.tsx eingebunden — siehe die Begründung dort. -->
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
