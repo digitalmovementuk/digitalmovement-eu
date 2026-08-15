@@ -24,32 +24,53 @@ function useIsMobile() {
   return isMobile;
 }
 
+/**
+ * WICHTIG — warum hier nur EIN Element steht und `opacity` immer im Ziel:
+ *
+ * Diese Seite wird vorgerendert (vite-react-ssg). Dabei gibt es kein
+ * `window`, also ist `isMobile` beim Erzeugen des HTML immer false und
+ * `useReducedMotion()` immer false: im ausgelieferten HTML steht die
+ * Desktop-Fassung mit `style="opacity:0"`.
+ *
+ * Kippt einer der beiden Werte erst nach dem ersten Rendern — und genau das
+ * passiert auf jedem Telefon — und führt das zu einem anderen Zweig, dann
+ * schreibt niemand diese Eigenschaft je zurück: React kennt den Stil nicht
+ * (framer-motion hat ihn gesetzt), und framer-motion animiert ihn im neuen
+ * Zweig nicht mehr. Das Element bleibt für immer unsichtbar.
+ *
+ * Am 15.08.2026 waren dadurch auf digitalmovement.eu bei 390 px Breite
+ * **32 Textblöcke unsichtbar** — praktisch jede Überschrift und jeder
+ * Einleitungssatz unterhalb des ersten Bildschirms. Die Seite war live.
+ *
+ * Deshalb: ein einziges `motion.div` für alle Fälle, und `opacity: 1` steht
+ * in jedem Animationsziel. Auch wenn ein Zweig nach dem Rendern kippt, wird
+ * der Wert beim Einblenden überschrieben.
+ */
 export function Reveal({ children, delay = 0, y = 22, className }: Props) {
   const reduce = useReducedMotion();
   const isMobile = useIsMobile();
+
   if (reduce) {
-    return <div className={className}>{children}</div>;
-  }
-  if (isMobile) {
+    // Explizit gesetzt, damit React den Stil selbst schreibt und ein von
+    // framer-motion hinterlassenes opacity:0 überschreibt.
     return (
-      <motion.div
-        className={className}
-        initial={{ y: Math.min(y, 12) }}
-        whileInView={{ y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.4, delay: Math.min(delay, 0.05), ease: [0.22, 1, 0.36, 1] }}
-      >
+      <div className={className} style={{ opacity: 1, transform: "none" }}>
         {children}
-      </motion.div>
+      </div>
     );
   }
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
+      initial={{ opacity: isMobile ? 1 : 0, y: isMobile ? Math.min(y, 12) : y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: isMobile ? "-40px" : "-80px" }}
+      transition={{
+        duration: isMobile ? 0.4 : 0.55,
+        delay: isMobile ? Math.min(delay, 0.05) : delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
     >
       {children}
     </motion.div>

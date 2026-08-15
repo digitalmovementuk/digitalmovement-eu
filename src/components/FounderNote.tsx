@@ -58,7 +58,7 @@ export function FounderNote() {
             </Reveal>
             <Reveal delay={0.1}>
               <h2
-                className="mt-5 max-w-[22ch] mx-auto lg:mx-0 balance text-ink"
+                className="mt-5 max-w-[34ch] mx-auto lg:mx-0 balance text-ink"
                 style={{
                   fontSize: "clamp(28px, 4.4vw, 48px)",
                   lineHeight: "1.08",

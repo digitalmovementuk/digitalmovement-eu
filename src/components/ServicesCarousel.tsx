@@ -96,9 +96,9 @@ export function ServicesCarousel() {
           </Reveal>
           <Reveal delay={0.05}>
             <h2
-              className="mt-3 max-w-[22ch] mx-auto lg:mx-0 balance text-ink"
+              className="mt-3 max-w-[26ch] mx-auto lg:mx-0 balance text-ink"
               style={{
-                fontSize: "clamp(28px, 3.6vw, 52px)",
+                fontSize: "clamp(24px, 2.6vw, 38px)",
                 lineHeight: "1.02",
                 letterSpacing: "-0.034em",
                 fontWeight: 700,
@@ -225,9 +225,9 @@ const ServiceSlide = ({
             {service.title}
           </p>
           <h3
-            className="mt-2 max-w-[16ch] balance text-white"
+            className="mt-2 max-w-[50ch] balance text-white"
             style={{
-              fontSize: "clamp(28px, 3.4vw, 48px)",
+              fontSize: "clamp(21px, 2.2vw, 32px)",
               lineHeight: "1.04",
               letterSpacing: "-0.034em",
               fontWeight: 600,

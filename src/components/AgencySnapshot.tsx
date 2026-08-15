@@ -258,7 +258,7 @@ const SnapshotSlide = ({
             {slide.index}
           </span>
 
-          <div className="relative max-w-[36ch]">
+          <div className="relative max-w-[44ch]">
             <div className="flex items-center gap-3">
               <span className="rounded-full bg-ink/[0.06] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.18em] text-ink-soft">
                 {slide.index} / {String(total).padStart(2, "0")}
@@ -274,7 +274,7 @@ const SnapshotSlide = ({
               <h3
                 className="mt-4 balance text-ink sm:mt-5"
                 style={{
-                  fontSize: "clamp(28px, 3.6vw, 48px)",
+                  fontSize: "clamp(18px, 1.5vw, 21px)",
                   lineHeight: "1.04",
                   letterSpacing: "-0.028em",
                   fontWeight: 700,

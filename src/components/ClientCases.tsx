@@ -76,9 +76,9 @@ export function ClientCases() {
             </Reveal>
             <Reveal delay={0.05}>
               <h2
-                className="mt-5 max-w-[18ch] mx-auto lg:mx-0 balance text-ink"
+                className="mt-5 max-w-[34ch] mx-auto lg:mx-0 balance text-ink"
                 style={{
-                  fontSize: "clamp(34px, 6vw, 84px)",
+                  fontSize: "clamp(28px, 2.5vw, 36px)",
                   lineHeight: "1.04",
                   letterSpacing: "-0.034em",
                   fontWeight: 700,
@@ -510,9 +510,9 @@ function CaseRow({
             </p>
 
             <h3
-              className="mt-2.5 max-w-[18ch] balance text-ink"
+              className="mt-2.5 max-w-[24ch] balance text-ink"
               style={{
-                fontSize: "clamp(30px, 3.6vw, 52px)",
+                fontSize: "clamp(24px, 2.2vw, 32px)",
                 lineHeight: "1.04",
                 letterSpacing: "-0.034em",
                 fontWeight: 600,
