@@ -1,0 +1,13 @@
+import { chromium } from "playwright-core";
+const [file, out, w, h] = process.argv.slice(2);
+const b = await chromium.launch({ executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" });
+const p = await b.newPage({ viewport: { width: +w, height: +h } });
+const errs = [];
+p.on("console", m => { if (m.type() === "error") errs.push(m.text().slice(0,120)); });
+const reqs = [];
+p.on("request", r => { const u = r.url(); if (!u.startsWith("file:") && !u.startsWith("data:") && !u.startsWith("about:")) reqs.push(u); });
+await p.goto("file://" + file, { waitUntil: "networkidle" });
+await p.waitForTimeout(2000);
+await p.screenshot({ path: out });
+console.log(JSON.stringify({ externalRequests: [...new Set(reqs)].slice(0,8), consoleErrors: errs.slice(0,5) }, null, 1));
+await b.close();

@@ -20,6 +20,12 @@
  *      einmal durchgescrollt wurde.
  *   2. Kein seitliches Scrollen (scrollWidth == innerWidth).
  *   3. Auf dem Desktop: keine H2/H3 über zwei Zeilen.
+ *   4. Auf dem Desktop: in jedem Erfolgsgeschichten-Rahmen bewegt sich etwas.
+ *      Die Rahmen zeigen den ersten Bildschirm der Kundenseite; steht das
+ *      Video darin still, sieht die Kachel aus wie ein Screenshot. Am
+ *      15.08.2026 stand jedes einzelne still: ein iframe mit `sandbox`
+ *      startet ohne `allow="autoplay"` kein Video, und die Kopie enthält
+ *      absichtlich kein JavaScript, mit dem sie sich selbst starten könnte.
  *
  * Aufruf:  node scripts/check-render.mjs [URL]
  * Ohne URL wird dist/ selbst auf einem freien Port ausgeliefert.
@@ -110,25 +116,36 @@ try {
       }
       await nap(900);
 
-      const invisible = [];
+      const isDead = (el) => {
+        // Nur das Element selbst und seine Kette bis zum Abschnitt ansehen.
+        let node = el;
+        while (node && node !== document.body) {
+          if (getComputedStyle(node).opacity === "0") return true;
+          node = node.parentElement;
+        }
+        return false;
+      };
+
+      /* Zwei Durchgänge, und gemeldet wird nur, was in BEIDEN durchsichtig
+         ist. Grund: eine Einblendung, die gerade läuft, steht für einen
+         Augenblick echt auf opacity 0. Beim ersten Lauf nach dem Bauen —
+         kalte Zwischenspeicher, fünf Rahmen mit Video im Hintergrund —
+         meldete diese Prüfung dadurch vier Textblöcke, die eine Sekunde
+         später normal dastanden. Ein Block, der wirklich hängt, bleibt für
+         immer auf 0 und überlebt beide Durchgänge. */
+      const candidates = [];
       for (const el of document.querySelectorAll("h1,h2,h3,h4,p,li,span,a,button")) {
         const text = el.textContent.trim();
         if (text.length < 4) continue;
         if (el.closest('[aria-hidden="true"]')) continue;
         const r = el.getBoundingClientRect();
         if (r.height === 0 || r.width === 0) continue;
-        // Nur das Element selbst und seine Kette bis zum Abschnitt ansehen.
-        let node = el;
-        let dead = false;
-        while (node && node !== document.body) {
-          if (getComputedStyle(node).opacity === "0") {
-            dead = true;
-            break;
-          }
-          node = node.parentElement;
-        }
-        if (dead) invisible.push(text.slice(0, 60));
+        if (isDead(el)) candidates.push(el);
       }
+      await nap(1800);
+      const invisible = candidates
+        .filter((el) => isDead(el))
+        .map((el) => el.textContent.trim().slice(0, 60));
 
       const longHeadings = [];
       if (isDesktop) {
@@ -172,9 +189,53 @@ try {
       );
     }
 
+    /* ---------- Bewegung in den Erfolgsgeschichten ---------- */
+    let motion = null;
+    if (vp.desktop) {
+      motion = await page.evaluate(async () => {
+        const nap = (ms) => new Promise((r) => setTimeout(r, ms));
+        const frames = [...document.querySelectorAll("#cases iframe")];
+        const still = [];
+        for (const f of frames) {
+          f.scrollIntoView({ block: "center", behavior: "instant" });
+          await nap(1600);
+          const doc = f.contentDocument;
+          const name = (f.getAttribute("src") || "").split("/")[2] || "?";
+          if (!doc) {
+            still.push(`${name}: Rahmen nicht lesbar`);
+            continue;
+          }
+          const videos = [...doc.querySelectorAll("video")];
+          const before = videos.map((v) => v.currentTime);
+          await nap(1400);
+          const videoMoves = videos.some((v, i) => !v.paused && v.currentTime > before[i] + 0.3);
+          // Kein Video ist erlaubt — dann muss der Startbereich mit CSS
+          // animiert sein, sonst steht die Kachel still.
+          const cssMoves = doc.getAnimations
+            ? doc.getAnimations().filter((a) => a.playState === "running").length > 0
+            : false;
+          if (!videoMoves && !cssMoves) still.push(`${name}: nichts bewegt sich`);
+        }
+        return { frames: frames.length, still };
+      });
+
+      /* Eine Prüfung, die nichts findet, hat nichts geprüft. */
+      if (motion.frames < 5) {
+        problems.push(
+          `${vp.name}: nur ${motion.frames} Erfolgsgeschichten-Rahmen gefunden (erwartet: 5) — die Prüfung selbst ist kaputt.`,
+        );
+      }
+      if (motion.still.length) {
+        problems.push(
+          `${vp.name}: ${motion.still.length} Rahmen ohne Bewegung:\n    ` + motion.still.join("\n    "),
+        );
+      }
+    }
+
     console.log(
       `check-render: ${vp.name} (${vp.width}px) — ${result.headings} Überschriften, ` +
-        `${result.invisible.length} unsichtbar, ${result.longHeadings.length} zu lang`,
+        `${result.invisible.length} unsichtbar, ${result.longHeadings.length} zu lang` +
+        (motion ? `, ${motion.frames - motion.still.length}/${motion.frames} Rahmen in Bewegung` : ""),
     );
 
     await page.close();

@@ -303,16 +303,30 @@ const CaseStorySlide = ({
       aria-roledescription="slide"
       aria-label={`${index + 1} von ${caseStudies.length}: ${study.client}`}
     >
-      <StoryVideo file={study.video} videoRef={videoRef} />
+      {HERO_SNAPSHOTS.has(study.slug) ? (
+        /* Der Startbereich der Kundenseite in Telefonbreite, freigestellt:
+           obendrüber steht nichts, und er wird nicht angeschnitten. Das Feld
+           hat dasselbe Seitenverhältnis wie der Rahmen, deshalb bleibt kein
+           Rand. Darunter beginnt der Text der Fallstudie. */
+        <div className="absolute inset-x-0 top-[62px] bottom-[37%] z-0 flex items-center justify-center px-8">
+          <div className="relative h-full aspect-[390/844] overflow-hidden rounded-[20px] border border-white/15 shadow-[0_18px_60px_rgba(0,0,0,0.45)]">
+            <CaseHeroFrame slug={study.slug} variant="phone" />
+          </div>
+        </div>
+      ) : (
+        <StoryVideo file={study.video} videoRef={videoRef} />
+      )}
 
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(15,8,32,0.55) 0%, rgba(15,8,32,0) 18%, rgba(15,8,32,0) 50%, rgba(15,8,32,0.78) 100%)",
-        }}
-      />
+      {HERO_SNAPSHOTS.has(study.slug) ? null : (
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(15,8,32,0.55) 0%, rgba(15,8,32,0) 18%, rgba(15,8,32,0) 50%, rgba(15,8,32,0.78) 100%)",
+          }}
+        />
+      )}
 
       {/* Tap-anywhere button INSIDE each slide — part of the slide's own
           DOM/stacking context so iOS doesn't route the tap to the scroll
@@ -358,6 +372,190 @@ const CaseStorySlide = ({
     </article>
   );
 };
+
+/**
+ * Eingefrorene Startbereiche der Kundenseiten. Gebaut von
+ * scripts/build-case-heroes.mjs, ausgeliefert aus public/cases/<slug>/.
+ *
+ * Es ist bewusst NICHT die Kundenseite selbst im iframe: das wäre eine
+ * Datenweitergabe an Dritte vor jeder Einwilligung, es brächte die
+ * Cookie-Fenster der Kundenseiten mit, und jede fremde Seite darf das
+ * Einbetten sperren. Die Kopie liegt auf unserer eigenen Adresse und
+ * enthält kein JavaScript und keine fremden Aufrufe.
+ *
+ * Cheshire Conservatory Roofs fehlt hier: zu diesem Kunden gibt es kein
+ * Projekt auf dieser Maschine und keine erreichbare Seite. Diese Kachel
+ * behält ihr Video.
+ */
+const HERO_SNAPSHOTS = new Set([
+  "cex",
+  "azura-living-bali",
+  "addressbali",
+  "cunos",
+  "fantastic-finish",
+]);
+
+const FRAME_SIZE = {
+  desktop: { w: 1440, h: 900 },
+  phone: { w: 390, h: 844 },
+} as const;
+
+/**
+ * Zeigt den eingefrorenen Startbereich eines Kunden formatfüllend in der
+ * Kachel. Der Rahmen wird in seiner echten Größe geladen und dann
+ * heruntergerechnet — so sieht der Besucher genau das Layout, das der Kunde
+ * ausliefert, und nicht die Telefonfassung in Kachelbreite.
+ */
+function CaseHeroFrame({
+  slug,
+  variant,
+}: {
+  slug: string;
+  variant: "desktop" | "phone";
+}) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [scale, setScale] = useState(0.4);
+  const size = FRAME_SIZE[variant];
+
+  // Erst laden, wenn die Kachel in die Nähe des Sichtfelds kommt: jede Kopie
+  // bringt ihre eigenen Bilder und ihr eigenes Video mit.
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setMounted(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setMounted(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "700px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  /* Vollständig sichtbar: der KLEINERE der beiden Faktoren. Formatfüllend
+     (der größere) sähe satter aus, schneidet aber immer eine Seite des
+     Startbereichs ab — und gezeigt werden soll der ganze erste Bildschirm,
+     so wie der Besucher der Kundenseite ihn sieht. */
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const measure = () => {
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      setScale(Math.min(r.width / size.w, r.height / size.h));
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [size.w, size.h]);
+
+  /* Das Video im Rahmen muss LAUFEN.
+   *
+   * Die eingefrorene Kopie trägt `autoplay muted loop playsinline` am
+   * <video> — trotzdem stand jedes Video am 15.08.2026 bei 0,00 s still.
+   * Grund: ein iframe mit `sandbox` startet von sich aus kein Video; die
+   * Erlaubnis dafür kommt erst über `allow="autoplay"`. Und weil in der
+   * Kopie bewusst kein JavaScript läuft (kein allow-scripts), kann sie sich
+   * auch nicht selbst starten.
+   *
+   * Also startet die Elternseite sie: gleiches Origin, also ist
+   * `contentDocument` erreichbar. Zusätzlich wird angehalten, sobald die
+   * Kachel aus dem Bild ist — fünf gleichzeitig laufende Videos kosten sonst
+   * dauerhaft Rechenzeit.
+   */
+  useEffect(() => {
+    if (!mounted) return;
+    const frame = frameRef.current;
+    const el = wrapRef.current;
+    if (!frame || !el) return;
+
+    let visible = true;
+
+    const videos = () => {
+      try {
+        return [...(frame.contentDocument?.querySelectorAll("video") ?? [])];
+      } catch {
+        return [] as HTMLVideoElement[];
+      }
+    };
+
+    const run = () => {
+      for (const v of videos()) {
+        v.muted = true;
+        v.loop = true;
+        if (visible) void v.play().catch(() => {});
+        else v.pause();
+      }
+    };
+
+    frame.addEventListener("load", run);
+    run();
+    // Der load kann schon durch sein; ein zweiter Versuch fängt zusätzlich
+    // Videos, die ihre Daten erst kurz danach haben.
+    const retry = window.setTimeout(run, 900);
+
+    let io: IntersectionObserver | undefined;
+    if (typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          run();
+        },
+        { rootMargin: "120px" },
+      );
+      io.observe(el);
+    }
+
+    return () => {
+      frame.removeEventListener("load", run);
+      window.clearTimeout(retry);
+      io?.disconnect();
+    };
+  }, [mounted]);
+
+  return (
+    <div ref={wrapRef} className="absolute inset-0 overflow-hidden bg-[#1B0E2E]">
+      {mounted && (
+        <iframe
+          ref={frameRef}
+          src={`${import.meta.env.BASE_URL}cases/${slug}/${variant}/index.html`}
+          title=""
+          aria-hidden
+          tabIndex={-1}
+          scrolling="no"
+          loading="lazy"
+          // Ohne diese Zeile darf im Rahmen kein Video von selbst starten.
+          allow="autoplay"
+          // Ohne allow-scripts: die Kopie enthält kein JavaScript, und so
+          // kann auch keins nachwachsen.
+          sandbox="allow-same-origin"
+          /* Oben ausgerichtet: der freie Streifen, der beim vollständigen
+             Anzeigen entsteht, sammelt sich unten — dort, wo die Zahlen der
+             Fallstudie liegen. Zentriert läge er zur Hälfte über dem
+             Startbereich. */
+          className="pointer-events-none absolute left-1/2 top-0 border-0"
+          style={{
+            width: size.w,
+            height: size.h,
+            transform: `translateX(-50%) scale(${scale})`,
+            transformOrigin: "top center",
+          }}
+        />
+      )}
+    </div>
+  );
+}
 
 /**
  * StoryVideo — used by the mobile IG-story slides. The parent component
@@ -567,72 +765,134 @@ function CaseRow({
           ) : null}
         </div>
 
-        {/* Visual column — autoplaying client video with a faint accent tint */}
-        <div className="relative overflow-hidden min-h-[260px] md:min-h-[440px] flex flex-col justify-between p-7 sm:p-10 md:p-12 lg:p-14 text-white">
-          <CaseVideo file={study.video} poster={study.poster} />
-          {/* Accent tint */}
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none"
-            style={{ background: ACCENT_TINT[study.accent] }}
-          />
-          {/* Bottom + side darken so metrics + chip stay legible */}
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(15,8,32,0.10) 0%, rgba(15,8,32,0) 35%, rgba(15,8,32,0.55) 100%)",
-            }}
-          />
+        {/* Visual column.
+            Mit eingefrorenem Startbereich: der Rahmen bleibt frei — kein
+            Schleier, kein Verlauf, kein Wort darüber. Die Zahlen der
+            Fallstudie stehen darunter auf eigener Fläche. Alles, was über
+            dem Rahmen läge, würde genau die Arbeit verdecken, die hier
+            gezeigt werden soll.
+            Ohne Startbereich (Cheshire) bleibt es beim Video mit
+            Beschriftung darüber. */}
+        {HERO_SNAPSHOTS.has(study.slug) ? (
+          <div className="relative flex flex-col bg-[#1B0E2E] text-white">
+            <div className="relative w-full aspect-[16/10] overflow-hidden">
+              <CaseHeroFrame slug={study.slug} variant="desktop" />
+            </div>
 
-          <div className="relative flex items-start justify-between gap-4">
-            <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/85">
-              Ergebnis
-            </span>
-            <span className="rounded-full bg-white/15 backdrop-blur-md text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 border border-white/20">
-              {String(index + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}
-            </span>
-          </div>
+            <div className="flex flex-1 flex-col justify-between gap-6 p-7 sm:p-10 md:p-12 lg:p-14">
+              <div className="flex items-start justify-between gap-4">
+                <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/85">
+                  Ergebnis
+                </span>
+                <span className="rounded-full bg-white/15 text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 border border-white/20">
+                  {String(index + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}
+                </span>
+              </div>
 
-          <div className="relative my-8">
-            <p
-              className="text-white drop-shadow-[0_2px_22px_rgba(0,0,0,0.65)]"
-              style={{
-                fontSize: "clamp(56px, 8vw, 132px)",
-                lineHeight: "0.9",
-                letterSpacing: "-0.045em",
-                fontWeight: 700,
-              }}
-            >
-              {study.metrics[0]?.value}
-            </p>
-            <p className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-white/85 drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]">
-              {study.metrics[0]?.label}
-            </p>
-          </div>
-
-          <ul className="relative grid grid-cols-2 gap-4 pt-5 border-t border-white/30">
-            {study.metrics.slice(1, 3).map((m) => (
-              <li key={m.label}>
+              <div>
                 <p
-                  className="text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.55)]"
+                  className="text-white"
                   style={{
-                    fontSize: "clamp(20px, 1.8vw, 28px)",
+                    fontSize: "clamp(40px, 5vw, 76px)",
+                    lineHeight: "0.9",
+                    letterSpacing: "-0.045em",
                     fontWeight: 700,
-                    letterSpacing: "-0.025em",
-                    lineHeight: "1.0",
                   }}
                 >
-                  {m.value}
+                  {study.metrics[0]?.value}
                 </p>
-                <p className="mt-1.5 text-[10.5px] uppercase tracking-[0.16em] text-white/85 font-bold">
-                  {m.label}
+                <p className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-white/85">
+                  {study.metrics[0]?.label}
                 </p>
-              </li>
-            ))}
-          </ul>
-        </div>
+              </div>
+
+              <ul className="grid grid-cols-2 gap-4 pt-5 border-t border-white/30">
+                {study.metrics.slice(1, 3).map((m) => (
+                  <li key={m.label}>
+                    <p
+                      className="text-white"
+                      style={{
+                        fontSize: "clamp(20px, 1.8vw, 28px)",
+                        fontWeight: 700,
+                        letterSpacing: "-0.025em",
+                        lineHeight: "1.0",
+                      }}
+                    >
+                      {m.value}
+                    </p>
+                    <p className="mt-1.5 text-[10.5px] uppercase tracking-[0.16em] text-white/85 font-bold">
+                      {m.label}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ) : (
+          <div className="relative overflow-hidden min-h-[260px] md:min-h-[440px] flex flex-col justify-between p-7 sm:p-10 md:p-12 lg:p-14 text-white">
+            <CaseVideo file={study.video} poster={study.poster} />
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{ background: ACCENT_TINT[study.accent] }}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(15,8,32,0.10) 0%, rgba(15,8,32,0) 35%, rgba(15,8,32,0.55) 100%)",
+              }}
+            />
+
+            <div className="relative flex items-start justify-between gap-4">
+              <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/85">
+                Ergebnis
+              </span>
+              <span className="rounded-full bg-white/15 backdrop-blur-md text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 border border-white/20">
+                {String(index + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}
+              </span>
+            </div>
+
+            <div className="relative my-8">
+              <p
+                className="text-white drop-shadow-[0_2px_22px_rgba(0,0,0,0.65)]"
+                style={{
+                  fontSize: "clamp(56px, 8vw, 132px)",
+                  lineHeight: "0.9",
+                  letterSpacing: "-0.045em",
+                  fontWeight: 700,
+                }}
+              >
+                {study.metrics[0]?.value}
+              </p>
+              <p className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-white/85 drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]">
+                {study.metrics[0]?.label}
+              </p>
+            </div>
+
+            <ul className="relative grid grid-cols-2 gap-4 pt-5 border-t border-white/30">
+              {study.metrics.slice(1, 3).map((m) => (
+                <li key={m.label}>
+                  <p
+                    className="text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.55)]"
+                    style={{
+                      fontSize: "clamp(20px, 1.8vw, 28px)",
+                      fontWeight: 700,
+                      letterSpacing: "-0.025em",
+                      lineHeight: "1.0",
+                    }}
+                  >
+                    {m.value}
+                  </p>
+                  <p className="mt-1.5 text-[10.5px] uppercase tracking-[0.16em] text-white/85 font-bold">
+                    {m.label}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </motion.li>
   );
