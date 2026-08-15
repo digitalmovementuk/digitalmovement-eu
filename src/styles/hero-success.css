@@ -1,25 +1,24 @@
 /* ============================================================
-   HERO — portiert von success.digitalmovement.uk
+   HERO — Startbereich der Startseite
    ------------------------------------------------------------
-   Eins zu eins übernommen aus der Maison-Vorlage (Jost + Inter,
-   Video-Karussell, Award-Banner, Office-Slider). Nur die Regeln,
-   die der Hero wirklich braucht — alles andere der Seite kommt
-   weiterhin aus Tailwind / index.css.
+   Ursprünglich eins zu eins von success.digitalmovement.uk
+   übernommen. Am 15.08.2026 auf Anweisung („dramatisch aufräumen")
+   entschlackt: Award-Banner und Kontakt-Slider sind raus, die
+   Google-Zeile sitzt nicht mehr mitten im Text, und die
+   Einblendung kann nicht mehr auf halbem Weg hängen bleiben.
 
-   Zwei bewusste Abweichungen zur Vorlage:
-   1. In der Vorlage sind eyebrow / lead / hero-actions / locations
-      über dem Video ausgeblendet (`#top .eyebrow{display:none}`).
-      Hier sind sie sichtbar: die freigegebene Copy hat für jedes
-      dieser Elemente einen Text, und ein Formular im Hero ist
-      Hausstandard.
-   2. Deshalb sind Formular und Fließtext auf Dunkel umgestellt
-      (weiße Schrift, helle Linien) statt auf Ink.
+   Was hier steht, steht in Abschnitt 2 des freigegebenen
+   Dokuments — Überzeile, Überschrift, Fließtext, Formular,
+   Zeile am Button, Leistungs-Schlagworte, Google-Badge. Nichts
+   sonst. Jedes zusätzliche Element kostet den ersten Blick.
+
+   Reihenfolge im Stylesheet: Grundlagen → flache Bildschirme →
+   Bewegung reduziert → MOBIL ZULETZT (Hausstandard).
    ============================================================ */
 
 .dm-hero {
   --h-ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --h-gold: #9a2fc6;
-  --h-gold-2: #ec178d;
+  --h-accent: #ec178d;
 
   position: relative;
   overflow: hidden;
@@ -30,8 +29,8 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 140px;
-  padding-bottom: clamp(150px, 22vh, 210px); /* Platz für den Office-Slider */
+  padding-top: 132px;
+  padding-bottom: clamp(72px, 10vh, 116px);
   color: #fff;
   font-family: "Inter", -apple-system, system-ui, sans-serif;
 }
@@ -43,7 +42,7 @@
   z-index: 0;
   opacity: 0;
   transition: opacity 0.6s var(--h-ease);
-  background: #0a0c10 url("/video/hero/cunos-hero-poster.jpg") center / cover no-repeat;
+  background: #0a0c10 url("/video/hero/berlin-poster.jpg") center / cover no-repeat;
 }
 .dm-hero__bg.is-in {
   opacity: 1;
@@ -69,29 +68,26 @@
   object-fit: cover;
   object-position: center;
 }
+/* Ein Verlauf statt zwei. Der Hero trägt jetzt weniger Kleintext, also
+   darf das Bild wieder Bild sein — nur oben und unten so viel Dunkel,
+   dass Navigation und Formular sicher lesbar bleiben. */
 .dm-hero__scrim {
   position: absolute;
   inset: 0;
   z-index: 2;
-  /* Zwei Lagen statt einer. In der Vorlage steht über dem Video nur die
-     Überschrift, da reicht ein dünner Verlauf. Hier stehen Kicker, Zitat,
-     Formular, Einwilligung und Leistungsband darüber — alles kleiner Text.
-     Der radiale Kern dunkelt genau die Mitte ab, in der dieser Text sitzt,
-     der lineare Verlauf hält Kopf- und Fußbereich zusammen. Weniger dunkel
-     sieht besser aus und ist nicht mehr lesbar; Lesbarkeit gewinnt. */
   background:
     radial-gradient(
-      118% 86% at 50% 56%,
-      rgba(8, 10, 14, 0.56) 0%,
-      rgba(8, 10, 14, 0.34) 58%,
+      100% 70% at 50% 50%,
+      rgba(8, 10, 14, 0.44) 0%,
+      rgba(8, 10, 14, 0.18) 60%,
       rgba(8, 10, 14, 0) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(8, 10, 14, 0.58) 0%,
-      rgba(8, 10, 14, 0.34) 30%,
-      rgba(8, 10, 14, 0.42) 64%,
-      rgba(8, 10, 14, 0.76) 100%
+      rgba(8, 10, 14, 0.62) 0%,
+      rgba(8, 10, 14, 0.26) 26%,
+      rgba(8, 10, 14, 0.3) 62%,
+      rgba(8, 10, 14, 0.72) 100%
     );
 }
 
@@ -100,302 +96,92 @@
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 1320px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding-inline: clamp(22px, 6vw, 96px);
+  padding-inline: clamp(22px, 6vw, 72px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1;
+  gap: clamp(26px, 4vh, 44px);
 }
 
-/* ---------- Award-Banner (oben links) ---------- */
-.dm-hero__ribbon {
-  position: absolute;
-  top: 0;
-  left: clamp(16px, 3vw, 52px);
-  z-index: 6;
-  width: 98px;
-  padding: 15px 11px 24px;
+/* ---------- Textblock (wechselt mit dem Video) ---------- */
+.dm-hero__copy {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  text-align: center;
-  color: #fff;
-  background-color: #17141d;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-top: none;
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 13px), 50% 100%, 0 calc(100% - 13px));
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  transition: background-color 1.1s var(--h-ease), backdrop-filter 1.1s var(--h-ease),
-    box-shadow 1.1s var(--h-ease);
-  transform-origin: top center;
-  opacity: 0;
+  gap: clamp(14px, 1.8vh, 22px);
 }
-/* Gewebe-Textur — verschwindet, sobald das Banner zu Glas wird */
-.dm-hero__ribbon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 1;
-  background-image: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.07) 0%,
-      rgba(255, 255, 255, 0) 20%,
-      rgba(0, 0, 0, 0.24) 100%
-    ),
-    linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.2) 0%,
-      rgba(255, 255, 255, 0.06) 13%,
-      rgba(0, 0, 0, 0.14) 30%,
-      rgba(255, 255, 255, 0.045) 50%,
-      rgba(0, 0, 0, 0.14) 70%,
-      rgba(255, 255, 255, 0.06) 87%,
-      rgba(0, 0, 0, 0.2) 100%
-    ),
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 3px);
-  transition: opacity 1.1s var(--h-ease);
-}
-.dm-hero__ribbon.is-glassy {
-  background-color: rgba(22, 19, 28, 0.46);
-  -webkit-backdrop-filter: blur(16px) saturate(125%);
-  backdrop-filter: blur(16px) saturate(125%);
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
-.dm-hero__ribbon.is-glassy::after {
-  opacity: 0;
-}
-.dm-hero__ribbon.is-in {
-  opacity: 1;
-  animation: dmBannerDrop 1.5s forwards;
-}
-@keyframes dmBannerDrop {
-  0% {
-    transform: rotate(0deg);
-    clip-path: polygon(0 0, 100% 0, 100% 0, 50% 0, 0 0);
-    animation-timing-function: cubic-bezier(0.45, 0, 0.85, 0.5);
-  }
-  55% {
-    transform: rotate(0deg);
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 13px), 50% 100%, 0 calc(100% - 13px));
-    animation-timing-function: cubic-bezier(0.3, 0.7, 0.25, 1);
-  }
-  68% {
-    transform: rotate(1.6deg);
-  }
-  81% {
-    transform: rotate(-1deg);
-  }
-  91% {
-    transform: rotate(0.45deg);
-  }
-  100% {
-    transform: rotate(0deg);
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 13px), 50% 100%, 0 calc(100% - 13px));
-  }
-}
-.dm-hero__ribbon::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #f05f22, #ec178d, #9a2fc6);
-}
-.dm-hero__ribbon-medal {
-  width: 21px;
-  height: 21px;
-  opacity: 0.95;
-  margin-top: 5px;
-}
-.dm-hero__ribbon-brand {
-  font-family: "Jost", sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 9.5px;
-  line-height: 1.35;
-}
-.dm-hero__ribbon-rule {
-  width: 26px;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.32);
-}
-.dm-hero__ribbon-tag {
+
+.dm-hero__eyebrow {
+  margin: 0;
   font-family: "Jost", sans-serif;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  font-size: 8px;
-  color: rgba(255, 255, 255, 0.62);
-}
-.dm-hero__ribbon-title {
-  font-family: "Jost", sans-serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 8.5px;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.92);
-}
-.dm-hero__ribbon-stars {
-  color: #f5b544;
-  font-size: 10px;
-  letter-spacing: 1px;
-}
-.dm-hero__ribbon-year {
-  font-family: "Jost", sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.16em;
   font-size: 11px;
-  padding: 3px 9px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  margin-top: 1px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 52ch;
+  /* Versalien nicht trennen. Automatische Silbentrennung gilt auf dieser
+     Seite überall — nur hier nicht: gesperrt gesetzte Großbuchstaben werden
+     durch einen Trennstrich („UM-SATZWACHSTUM") unlesbar. Die Zeile ist kurz
+     genug, um an Wortgrenzen umzubrechen. */
+  hyphens: manual;
 }
 
-/* ---------- Eyebrow ---------- */
-.dm-hero__eyebrow {
-  margin-bottom: 26px;
-  font-family: "Jost", sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.24em;
-  font-size: 11px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.88);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
-  /* 46ch in der Vorlage — der deutsche Kicker ist länger und bräche sonst
-     mitten im Wort um. Breiter statt getrennt. */
-  max-width: 64ch;
-  opacity: 0;
-  animation: dmRise 1.2s var(--h-ease) 0.15s forwards;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0 4px;
-  hyphens: auto;
-}
-.dm-hero__rule {
-  display: inline-block;
-  width: 34px;
-  height: 1px;
-  background: linear-gradient(90deg, #f05f22, #ec178d, #9a2fc6);
-  vertical-align: middle;
-  margin-right: 14px;
-}
-
-/* ---------- H1 ---------- */
 .dm-hero__h1 {
   font-family: "Jost", sans-serif;
   font-weight: 300;
-  font-size: clamp(34px, 6.2vw, 92px);
-  line-height: 1.04;
-  letter-spacing: -0.015em;
-  max-width: 16ch;
+  font-size: clamp(32px, 4.8vw, 68px);
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  max-width: 19ch;
   margin: 0;
-  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
   hyphens: auto;
 }
 .dm-hero__line {
   display: block;
-  overflow: visible;
-  padding-bottom: 0.06em;
-}
-.dm-hero__line > span {
-  display: block;
-  transform: translateY(115%);
-}
-.dm-hero.is-in .dm-hero__line:nth-child(1) > span {
-  animation: dmLineRise 1.25s var(--h-ease) 0.25s forwards;
-}
-.dm-hero.is-in .dm-hero__line:nth-child(2) > span {
-  animation: dmLineRise 1.25s var(--h-ease) 0.37s forwards;
 }
 .dm-hero__em {
   font-style: italic;
   font-weight: 300;
 }
-/* zweite Zeile: untergeordneter Satz, ruhiger gesetzt */
+/* Zweite Zeile: untergeordneter Satz, ruhiger gesetzt. */
 .dm-hero__h1 .dm-hero__line--sub {
-  font-size: 0.44em;
-  line-height: 1.28;
+  font-size: 0.4em;
+  line-height: 1.3;
   letter-spacing: -0.005em;
-  margin-top: 0.42em;
-  color: rgba(255, 255, 255, 0.86);
-  max-width: 26ch;
+  margin-top: 0.5em;
+  color: rgba(255, 255, 255, 0.8);
+  /* Keine eigene Breitenbegrenzung: die 19ch der Überschrift gelten in deren
+     Schriftgröße und sind für diese kleinere Zeile reichlich. Ein zusätzliches
+     ch-Maß hier hätte „Suchmaschinenoptimierung + KI-Suchoptimierung" mitten im
+     Wort umgebrochen, obwohl die Zeile bequem in eine Zeile passt. */
+  max-width: 100%;
 }
 
-/* ---------- Google-Vertrauenszeile ---------- */
-.dm-hero__trust {
-  margin-top: 26px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 11px 20px;
-  max-width: min(760px, 86vw);
-  opacity: 0;
-  animation: dmRise 1.2s var(--h-ease) 0.8s forwards;
-}
-.dm-hero__google {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  font-family: "Jost", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 10.5px;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
-  transition: color 0.4s var(--h-ease);
-  text-decoration: none;
-}
-.dm-hero__google:hover {
-  color: #fff;
-}
-.dm-hero__stars {
-  color: #f5b544;
-  letter-spacing: 1.5px;
-  font-size: 11px;
-}
-
-/* ---------- Untertitel ---------- */
-.dm-hero__quote {
-  margin: 18px auto 2px;
-  max-width: 620px;
-  text-align: center;
-  opacity: 0;
-  animation: dmRise 1.2s var(--h-ease) 0.7s forwards;
-}
-.dm-hero__quote p {
-  font-family: "Jost", sans-serif;
-  font-weight: 300;
-  font-style: italic;
-  font-size: clamp(14px, 1.4vw, 17.5px);
-  line-height: 1.5;
-  color: #fff;
-  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.3);
+/* Fließtext. Bewusst aufrecht statt kursiv — kursiv über bewegtem Bild
+   liest sich auf einem Telefon schlecht, und der Satz ist eine Aussage,
+   kein Zitat. */
+.dm-hero__sub {
   margin: 0;
+  max-width: 58ch;
+  font-size: clamp(14.5px, 1.15vw, 16.5px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.84);
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.5);
   hyphens: auto;
 }
 
 /* ---------- Anfrage-Formular ---------- */
 .dm-hero__actions {
-  margin-top: 34px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
-  opacity: 0;
-  animation: dmRise 1.2s var(--h-ease) 0.9s forwards;
+  gap: 13px;
   width: 100%;
 }
 .dm-hero__form {
@@ -404,7 +190,7 @@
   gap: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.42);
   padding-bottom: 11px;
-  width: min(430px, 84vw);
+  width: min(440px, 86vw);
   transition: border-color 0.5s var(--h-ease);
 }
 .dm-hero__form:focus-within {
@@ -422,26 +208,26 @@
   letter-spacing: 0.01em;
 }
 .dm-hero__form input::placeholder {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.7);
 }
 .dm-hero__form button {
   border: 0;
   background: transparent;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.94);
+  color: #fff;
   font-family: "Jost", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.13em;
   font-size: 11px;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 9px;
   padding: 2px 0 2px 18px;
-  transition: color 0.4s var(--h-ease);
+  transition: opacity 0.4s var(--h-ease);
 }
 .dm-hero__form button:hover:not(:disabled) {
-  color: #fff;
+  opacity: 0.78;
 }
 .dm-hero__form button:disabled {
   opacity: 0.55;
@@ -464,12 +250,12 @@
   display: flex;
   align-items: flex-start;
   gap: 9px;
-  width: min(430px, 84vw);
+  width: min(440px, 86vw);
   text-align: left;
   font-family: "Inter", sans-serif;
-  font-size: 12px;
+  font-size: 11.5px;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.8);
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
@@ -478,7 +264,7 @@
   width: 15px;
   height: 15px;
   flex: none;
-  accent-color: var(--h-gold-2);
+  accent-color: var(--h-accent);
 }
 .dm-hero__consent a {
   color: #fff;
@@ -488,18 +274,19 @@
 .dm-hero__note {
   font-family: "Jost", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 10.5px;
-  color: rgba(255, 255, 255, 0.82);
+  letter-spacing: 0.18em;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.66);
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
 }
 .dm-hero__ok {
   color: #fff;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: 14.5px;
   letter-spacing: 0.02em;
   max-width: 44ch;
   line-height: 1.6;
+  margin: 0;
 }
 .dm-hero__err {
   color: #ffc4c0;
@@ -507,181 +294,172 @@
   font-size: 12.5px;
   line-height: 1.55;
   max-width: 44ch;
+  margin: 0;
 }
 
-/* ---------- Leistungsband ---------- */
+/* ---------- Fußzeile des Startbereichs ---------- */
+.dm-hero__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px 26px;
+}
 .dm-hero__services {
-  margin-top: 38px;
+  margin: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 8px 16px;
+  gap: 6px 12px;
   font-family: "Jost", sans-serif;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 10.5px;
-  color: rgba(255, 255, 255, 0.84);
+  letter-spacing: 0.16em;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.66);
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  animation: dmRise 1.2s var(--h-ease) 1.05s forwards;
+}
+.dm-hero__services span {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 .dm-hero__services i {
-  color: var(--h-gold-2);
+  color: var(--h-accent);
   font-style: normal;
 }
-
-/* ---------- Kontakt-Slider unten ---------- */
-.dm-hero__locslider {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: clamp(28px, 5vh, 56px);
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
+/* Der Badge ist ein abgeschlossenes Element, keine weitere Textzeile —
+   deshalb Rahmen und Glas. Vorher stand er als breite Versalzeile mitten
+   im Satzbild und las sich wie eine dritte Überschrift. */
+.dm-hero__google {
+  /* Standardmäßig aus. Auf dem Desktop zeigt das schwebende Google-Fähnchen
+     unten links dieselbe Bewertung; beides gleichzeitig war genau die Art
+     Doppelung, die den Startbereich überladen hat. Unter 768 px fehlt das
+     schwebende Element — dort wird dieser Badge eingeblendet, ganz unten
+     im Stylesheet. */
+  display: none;
   align-items: center;
-  gap: 13px;
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-  transition: opacity 1s var(--h-ease), transform 1s var(--h-ease);
-}
-.dm-hero__locslider.is-in {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-}
-.dm-hero__loctrack {
-  position: relative;
-  width: 100%;
-  min-width: 280px;
-  height: 82px;
-}
-.dm-hero__locitem {
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  opacity: 0;
-  transition: opacity 0.7s var(--h-ease);
-  text-align: center;
-  pointer-events: none;
-}
-.dm-hero__locitem.is-active {
-  opacity: 1;
-  pointer-events: auto;
-}
-.dm-hero__locname {
-  font-family: "Jost", sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.26em;
-  font-size: 12.5px;
-  color: #fff;
-  white-space: nowrap;
-  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.6);
-}
-.dm-hero__locvalue {
+  gap: 8px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   font-family: "Inter", sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.85);
-  white-space: nowrap;
-  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
+  font-size: 11.5px;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.3s var(--h-ease), border-color 0.3s var(--h-ease);
+  transition: background 0.4s var(--h-ease), border-color 0.4s var(--h-ease);
 }
-a.dm-hero__locvalue:hover {
+.dm-hero__google:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.5);
 }
-.dm-hero__locdots {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-.dm-hero__locdots button {
-  width: 26px;
-  height: 2px;
-  padding: 0;
-  border: 0;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.42);
-  transition: background 0.4s var(--h-ease);
-}
-.dm-hero__locdots button.is-active {
-  background: #fff;
+.dm-hero__stars {
+  color: #f5b544;
+  letter-spacing: 1px;
+  font-size: 10.5px;
 }
 
-/* ---------- Keyframes ---------- */
+/* ---------- Einblendung ----------------------------------------------
+   Nur Deckkraft und 10 px Weg. Die alte Fassung schob jede Zeile aus
+   115 % Höhe herein; blieb die Animation stehen — und über einem Video,
+   das der Browser gerade nachlädt, tut sie das —, lag der Text quer über
+   dem, was darunter stand. Aus 10 px kann nichts kaputtgehen. */
+.dm-hero__copy > *,
+.dm-hero__actions,
+.dm-hero__foot {
+  opacity: 0;
+}
+.dm-hero.is-in .dm-hero__copy > * {
+  animation: dmRise 0.9s var(--h-ease) forwards;
+}
+.dm-hero.is-in .dm-hero__copy > *:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.dm-hero.is-in .dm-hero__copy > *:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dm-hero.is-in .dm-hero__copy > *:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.dm-hero.is-in .dm-hero__actions {
+  animation: dmRise 0.9s var(--h-ease) 0.45s forwards;
+}
+.dm-hero.is-in .dm-hero__foot {
+  animation: dmRise 0.9s var(--h-ease) 0.6s forwards;
+}
+
 @keyframes dmRise {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
     transform: none;
   }
 }
-@keyframes dmLineRise {
-  to {
-    transform: translateY(0);
+
+/* ---------- Flache Bildschirme ----------------------------------------
+   Auf einem Notebook mit ~900 px Höhe ist sonst der untere Rand des
+   Startbereichs knapp. Enger stellen, nicht kleiner setzen. */
+@media (min-width: 761px) and (max-height: 900px) {
+  .dm-hero {
+    padding-top: 112px;
+    padding-bottom: clamp(56px, 8vh, 88px);
+  }
+  .dm-hero__wrap {
+    gap: clamp(20px, 3vh, 32px);
+  }
+  .dm-hero__h1 {
+    font-size: clamp(32px, 4.2vw, 58px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-hero__copy > *,
+  .dm-hero__actions,
+  .dm-hero__foot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .dm-hero__slide {
+    transition: none;
   }
 }
 
 /* ============================================================
    MOBIL — zuletzt, damit diese Regeln gewinnen (Hausstandard)
    ============================================================ */
-/* ---------- Flache Bildschirme ----------------------------------------
-   Auf einem Notebook mit ~900 px Höhe ist der Hero sonst rund 150 px höher
-   als das Fenster, und der Kontakt-Slider unten rutscht aus dem Bild. Die
-   Vorlage hat das Problem nicht, weil dort über dem Video nur die
-   Überschrift steht. Hier steht mehr darüber, also wird der Abstand enger —
-   nicht der Inhalt kleiner. Reine Höhenabfrage, damit Telefone (die weiter
-   unten ihren eigenen Block haben) davon unberührt bleiben. */
-@media (min-width: 761px) and (max-height: 1000px) {
-  .dm-hero {
-    padding-top: 108px;
-    padding-bottom: clamp(118px, 16vh, 150px);
-  }
-  .dm-hero__h1 {
-    font-size: clamp(34px, 5.4vw, 76px);
-  }
-  .dm-hero__eyebrow {
-    margin-bottom: 18px;
-  }
-  .dm-hero__quote {
-    margin-top: 14px;
-  }
-  .dm-hero__actions {
-    margin-top: 24px;
-  }
-  .dm-hero__services {
-    margin-top: 24px;
-  }
-}
-
 @media (max-width: 760px) {
   .dm-hero {
-    padding-top: 108px;
-    padding-bottom: clamp(140px, 24vh, 190px);
+    padding-top: 104px;
+    padding-bottom: 56px;
   }
-  /* Das Band hängt in der Vorlage auch auf dem Telefon oben links. Dort
-     steht über dem Video aber fast nichts. Hier steht die Überschrift genau
-     dahinter, und das Band legt sich über das erste Wort jeder Zeile — auf
-     einem 390 px breiten Bildschirm ist links kein Platz für beides. Also
-     zeigt das Telefon es nicht. Das Vertrauenssignal geht nicht verloren:
-     die Google-Zeile mit 5,0 steht direkt unter der Überschrift. */
-  .dm-hero__ribbon {
-    display: none;
+  .dm-hero__wrap {
+    gap: 26px;
+  }
+  .dm-hero__eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    max-width: 32ch;
+  }
+  .dm-hero__h1 {
+    max-width: 100%;
+    font-size: clamp(30px, 8.2vw, 42px);
+  }
+  .dm-hero__h1 .dm-hero__line--sub {
+    font-size: 0.5em;
+    max-width: 100%;
+  }
+  .dm-hero__sub {
+    max-width: 92%;
+    font-size: 14.5px;
   }
 
   /* Formular gestapelt: nebeneinander bleibt vom Eingabefeld nur "Ihre
@@ -692,7 +470,7 @@ a.dm-hero__locvalue:hover {
     gap: 12px;
     border-bottom: 0;
     padding-bottom: 0;
-    width: min(430px, 88vw);
+    width: min(440px, 88vw);
   }
   .dm-hero__form input {
     border-bottom: 1px solid rgba(255, 255, 255, 0.42);
@@ -711,55 +489,22 @@ a.dm-hero__locvalue:hover {
     border-radius: 999px;
   }
   .dm-hero__consent {
-    width: min(430px, 88vw);
+    width: min(440px, 88vw);
   }
-  .dm-hero__eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    margin-bottom: 20px;
-    max-width: 30ch;
-  }
-  .dm-hero__rule {
-    display: none;
-  }
-  .dm-hero__h1 {
-    max-width: 100%;
-    font-size: clamp(30px, 8.6vw, 44px);
-  }
-  .dm-hero__h1 .dm-hero__line--sub {
-    font-size: 0.52em;
-    max-width: 100%;
-  }
-  .dm-hero__quote {
-    max-width: 92%;
-  }
-  .dm-hero__quote p {
-    font-size: 14px;
+  .dm-hero__foot {
+    gap: 12px 18px;
   }
   .dm-hero__services {
-    margin-top: 28px;
     font-size: 9.5px;
-    letter-spacing: 0.16em;
-  }
-  .dm-hero__loctrack {
-    height: 74px;
+    letter-spacing: 0.14em;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .dm-hero__ribbon,
-  .dm-hero__eyebrow,
-  .dm-hero__trust,
-  .dm-hero__quote,
-  .dm-hero__actions,
-  .dm-hero__services {
-    animation: none !important;
-    opacity: 1 !important;
-  }
-  .dm-hero__line > span {
-    transform: none !important;
-  }
-  .dm-hero__slide {
-    transition: none;
+/* 768 px ist die Grenze, ab der das schwebende Google-Fähnchen erscheint
+   (Tailwind „md", `hidden md:block`). Genau darunter — und nur dort —
+   übernimmt der Badge im Startbereich. */
+@media (max-width: 767.98px) {
+  .dm-hero__google {
+    display: inline-flex;
   }
 }

@@ -6,27 +6,34 @@ import { CONSENT_TEXT } from "../lib/consentText";
 import "../styles/hero-success.css";
 
 /**
- * Hero — 1:1 portiert von success.digitalmovement.uk.
+ * Hero — Video-Karussell mit dem Text aus dem freigegebenen Dokument.
  *
- * Aufbau wie in der Vorlage: Video-Karussell im Hintergrund, Award-Banner
- * oben links, mittig Eyebrow → H1 → Google-Zeile → Untertitel → Anfrage-
- * formular → Leistungsband, unten der durchlaufende Slider.
+ * Aufbau nach Abschnitt 2 des Dokuments, in genau dieser Reihenfolge:
+ * Überzeile → Überschrift (zwei Zeilen) → Fließtext → Formular →
+ * „Kostenloses Erstgespräch · Antwort innerhalb 2 Stunden" →
+ * Leistungs-Schlagworte → Google-Bewertungs-Badge.
  *
- * Zwei Dinge sind bewusst anders als in der englischen Vorlage:
+ * Was hier NICHT mehr steht und warum (2026-08-15, Anweisung Raoul
+ * „dramatisch aufräumen"):
  *
- *  1. Die Vorlage blendet Eyebrow, Formular und Leistungsband über dem Video
- *     aus. Hier bleiben sie sichtbar — die freigegebene Copy hat für jedes
- *     dieser Elemente einen Text, und ein Formular im ersten Bildschirm ist
- *     Hausstandard.
- *  2. Das Formular fragt die Telefonnummer ab, nicht die E-Mail. Telefon ist
+ *  - Das Award-Banner der englischen Vorlage. Die Auszeichnung ist
+ *    australisch, steht in keinem Feld des deutschen Dokuments, und auf dem
+ *    Telefon lag sie über dem ersten Wort jeder Zeile.
+ *  - Der Kontakt-Slider am unteren Rand. Auch er kommt aus der Vorlage; das
+ *    Dokument nennt für den Startbereich keine Kontaktdaten. Er kostete
+ *    150–210 px Fußraum und zog den Blick von der einen Handlung weg, um die
+ *    es hier geht. Telefon, WhatsApp, E-Mail und Anschrift stehen weiterhin
+ *    im Kontaktabschnitt und in der Fußzeile.
+ *
+ * Übrig bleiben sieben Zeilen statt zehn, eine Bewegung statt vier, und ein
+ * Bildschirm, den man in einem Blick liest.
+ *
+ * Zwei Dinge, die absichtlich so sind:
+ *  1. Das Formular fragt die Telefonnummer ab, nicht die E-Mail. Telefon ist
  *     Pflicht, E-Mail optional — das gilt für jedes Formular auf jeder
- *     Digital-Movement-Seite. Ohne gesetztes Häkchen geht gar nichts raus:
- *     submitLead verweigert die Übertragung, bevor irgendein Netzwerkaufruf
- *     passiert.
- *
- * Der Slider unten trägt in der Vorlage vier Büros. Ein deutsches
- * Einzelunternehmen hat keine vier Büros, also stehen dort die echten
- * Kontaktwege — gleiche Mechanik, überprüfbarer Inhalt.
+ *     Digital-Movement-Seite.
+ *  2. Ohne gesetztes Häkchen geht gar nichts raus: submitLead verweigert die
+ *     Übertragung, bevor irgendein Netzwerkaufruf passiert.
  */
 
 type Slide = {
@@ -64,11 +71,9 @@ const SLIDES: Slide[] = [
 
 /* 8 Sekunden — so steht es im Dokument. */
 const SLIDE_MS = 8000;
-const LOC_MS = 4200;
 
 export function Hero() {
   const [slide, setSlide] = useState(0);
-  const [loc, setLoc] = useState(0);
   const [mounted, setMounted] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
@@ -92,14 +97,6 @@ export function Hero() {
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
     const id = window.setInterval(() => setSlide((i) => (i + 1) % SLIDES.length), SLIDE_MS);
-    return () => window.clearInterval(id);
-  }, []);
-
-  // Kontakt-Slider
-  useEffect(() => {
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    const id = window.setInterval(() => setLoc((i) => (i + 1) % hero.contacts.length), LOC_MS);
     return () => window.clearInterval(id);
   }, []);
 
@@ -152,11 +149,7 @@ export function Hero() {
   const copy = hero.slides[slide] ?? hero.slides[0];
 
   return (
-    <header
-      id="top"
-      className={`dm-hero${mounted ? " is-in" : ""}`}
-      data-surface="dark"
-    >
+    <header id="top" className={`dm-hero${mounted ? " is-in" : ""}`} data-surface="dark">
       {/* ---------- Video-Hintergrund ---------- */}
       <div className={`dm-hero__bg${mounted ? " is-in" : ""}`} aria-hidden>
         <div className="dm-hero__slides">
@@ -182,51 +175,29 @@ export function Hero() {
         <div className="dm-hero__scrim" />
       </div>
 
-      {/* ---------- Award-Banner ---------- */}
-      <AwardRibbon shown={mounted} />
-
       {/* ---------- Inhalt ---------- */}
       <div className="dm-hero__wrap">
-        {/* key = Slide-Index: React baut die Knoten neu auf, und damit läuft
-            die Einblend-Animation bei jedem Wechsel erneut. Ohne den key
-            stünde der neue Text ohne Bewegung da. */}
-        <p className="dm-hero__eyebrow" key={`eb-${copy.key}`}>
-          <span className="dm-hero__rule" aria-hidden />
-          {copy.eyebrow}
-        </p>
+        {/* key = Slide-Schlüssel: React baut den Textblock neu auf, damit die
+            Einblendung bei jedem Wechsel erneut läuft. Der Schlüssel sitzt am
+            gemeinsamen Elternteil, nicht an drei einzelnen Knoten — so
+            wechseln Überzeile, Überschrift und Fließtext garantiert im selben
+            Takt und können nicht in unterschiedlichen Zuständen hängen
+            bleiben. */}
+        <div className="dm-hero__copy" key={copy.key}>
+          <p className="dm-hero__eyebrow">{copy.eyebrow}</p>
 
-        <h1 className="dm-hero__h1" key={`h1-${copy.key}`}>
-          <span className="dm-hero__line">
-            <span>
+          <h1 className="dm-hero__h1">
+            <span className="dm-hero__line">
               {copy.headlinePre}
               <em className="dm-hero__em">{copy.headlineEm}</em>
               {copy.headlinePost}
             </span>
-          </span>
-          {copy.headlineBottom ? (
-            <span className="dm-hero__line dm-hero__line--sub">
-              <span>{copy.headlineBottom}</span>
-            </span>
-          ) : null}
-        </h1>
+            {copy.headlineBottom ? (
+              <span className="dm-hero__line dm-hero__line--sub">{copy.headlineBottom}</span>
+            ) : null}
+          </h1>
 
-        <div className="dm-hero__trust">
-          <a
-            className="dm-hero__google"
-            href={hero.reviewsHref}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <GoogleGlyph />
-            <span className="dm-hero__stars" aria-hidden>
-              ★★★★★
-            </span>
-            <span>{hero.reviewsLabel}</span>
-          </a>
-        </div>
-
-        <div className="dm-hero__quote" key={`sub-${copy.key}`}>
-          <p>{copy.sub}</p>
+          <p className="dm-hero__sub">{copy.sub}</p>
         </div>
 
         <div className="dm-hero__actions">
@@ -236,7 +207,7 @@ export function Hero() {
             </p>
           ) : (
             <>
-              <form className="dm-hero__form" onSubmit={onSubmit} noValidate={false}>
+              <form className="dm-hero__form" onSubmit={onSubmit}>
                 <label className="sr-only" htmlFor="hero-phone">
                   {hero.formLabel}
                 </label>
@@ -284,8 +255,7 @@ export function Hero() {
                   onChange={(e) => setConsent(e.target.checked)}
                 />
                 <span>
-                  {CONSENT_TEXT}{" "}
-                  <Link to="/datenschutz">Datenschutzerklärung</Link>
+                  {CONSENT_TEXT} <Link to="/datenschutz">Datenschutzerklärung</Link>
                 </span>
               </label>
 
@@ -300,99 +270,40 @@ export function Hero() {
           )}
         </div>
 
-        <p className="dm-hero__services">
-          {hero.services.map((s, i) => (
-            <span key={s}>
-              {i > 0 && <i aria-hidden>· </i>}
-              {s}
-            </span>
-          ))}
-        </p>
-      </div>
+        {/* Leistungs-Schlagworte und Google-Badge stehen zusammen in einer
+            ruhigen Fußzeile des Startbereichs, statt als zwei weitere
+            Textblöcke untereinander. */}
+        <div className="dm-hero__foot">
+          <p className="dm-hero__services">
+            {hero.services.map((s, i) => (
+              <span key={s}>
+                {i > 0 && <i aria-hidden>·</i>}
+                {s}
+              </span>
+            ))}
+          </p>
 
-      {/* ---------- Kontakt-Slider ---------- */}
-      <div className={`dm-hero__locslider${mounted ? " is-in" : ""}`}>
-        <div className="dm-hero__loctrack">
-          {hero.contacts.map((c, i) => (
-            <div
-              key={c.label}
-              className={`dm-hero__locitem${i === loc ? " is-active" : ""}`}
-              aria-hidden={i !== loc}
-            >
-              <span className="dm-hero__locname">{c.label}</span>
-              {c.href ? (
-                <a
-                  className="dm-hero__locvalue"
-                  href={c.href}
-                  target={c.external ? "_blank" : undefined}
-                  rel={c.external ? "noopener noreferrer" : undefined}
-                  tabIndex={i === loc ? 0 : -1}
-                >
-                  {c.value}
-                </a>
-              ) : (
-                <span className="dm-hero__locvalue">{c.value}</span>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="dm-hero__locdots">
-          {hero.contacts.map((c, i) => (
-            <button
-              key={c.label}
-              type="button"
-              className={i === loc ? "is-active" : undefined}
-              aria-label={c.label}
-              aria-current={i === loc}
-              onClick={() => setLoc(i)}
-            />
-          ))}
+          <a
+            className="dm-hero__google"
+            href={hero.reviewsHref}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <GoogleGlyph />
+            <span className="dm-hero__stars" aria-hidden>
+              ★★★★★
+            </span>
+            <span>{hero.reviewsLabel}</span>
+          </a>
         </div>
       </div>
     </header>
   );
 }
 
-/**
- * Der Award-Streifen. Die Auszeichnung ist echt und wurde in Australien
- * vergeben — deshalb steht sie hier im englischen Originalwortlaut. Eine
- * übersetzte Auszeichnung wäre eine erfundene Auszeichnung.
- */
-function AwardRibbon({ shown }: { shown: boolean }) {
-  const [glassy, setGlassy] = useState(false);
-
-  useEffect(() => {
-    if (!shown) return;
-    const id = window.setTimeout(() => setGlassy(true), 1700);
-    return () => window.clearTimeout(id);
-  }, [shown]);
-
-  return (
-    <div
-      className={`dm-hero__ribbon${shown ? " is-in" : ""}${glassy ? " is-glassy" : ""}`}
-      role="img"
-      aria-label="Digital Reference Award Winner — Best Digital Marketing Agency in Australia, 2026"
-    >
-      <svg className="dm-hero__ribbon-medal" viewBox="0 0 24 24" fill="none" aria-hidden>
-        <circle cx="12" cy="9" r="6" stroke="currentColor" strokeWidth="1.2" />
-        <path d="M12 6.2l1.1 2.2 2.4.35-1.75 1.7.42 2.4L12 11.72 9.83 12.87l.42-2.4L8.5 8.77l2.4-.35L12 6.2z" fill="currentColor" />
-        <path d="M8.6 14.4L6.6 21l5.4-2.6 5.4 2.6-2-6.6" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-      </svg>
-      <span className="dm-hero__ribbon-brand">Digital Reference</span>
-      <span className="dm-hero__ribbon-rule" aria-hidden />
-      <span className="dm-hero__ribbon-tag">Award Winner</span>
-      <span className="dm-hero__ribbon-title">Best Digital Marketing Agency in Australia</span>
-      <span className="dm-hero__ribbon-stars" aria-hidden>
-        ★★★★★
-      </span>
-      <span className="dm-hero__ribbon-year">2026</span>
-    </div>
-  );
-}
-
 function GoogleGlyph() {
   return (
-    <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden>
+    <svg width="14" height="14" viewBox="0 0 48 48" aria-hidden>
       <path
         fill="#4285F4"
         d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"

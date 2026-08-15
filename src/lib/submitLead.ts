@@ -53,7 +53,15 @@ const WEBHOOK = ((import.meta.env.VITE_LEAD_ENDPOINT as string | undefined) ?? "
  *  - `consent` is REQUIRED. Omit it and the handler rejects the submission.
  *  - `company_website` is the honeypot the handler expects — send it empty.
  *  - The Origin must be on the handler's allowlist or it answers 403.
- *    digitalmovement.eu und www. stehen seit 2026-08-15 auf der Liste.
+ *
+ *    STAND 2026-08-15: digitalmovement.eu steht NOCH NICHT auf der Liste des
+ *    laufenden Endpunkts — gegen den Live-Host geprüft, Antwort 403
+ *    {"ok":false,"error":"Origin not allowed."}. Die neue Fassung mit beiden
+ *    .eu-Adressen liegt fertig in
+ *    Sales/SEO Strategies/DM UK Own Site …/leads-endpoint-source/index.php,
+ *    ihr Einspielen hängt am Upload des Plugins dmnz-automation. Bis das
+ *    passiert ist, sammelt kein Formular dieser Seite eine Anfrage ein.
+ *    Danach diesen Absatz durch das Datum der bestandenen Probe ersetzen.
  *
  * Never use mode:"no-cors" here: the opaque response would report success
  * while the server silently rejected the lead.
