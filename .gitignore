@@ -8,8 +8,14 @@ dist
 .vite
 *.log
 
-# Source video assets — already mirrored into public/video for the build
-Assets/
+# Hier stand `Assets/` — ein Rest aus der neuseeländischen Vorlage, wo ein
+# Ordner dieses Namens die Rohvideos enthielt. In diesem Projekt gibt es ihn
+# nicht, und die Zeile war gefährlich: macOS-Repos laufen mit
+# core.ignorecase=true, also hat `Assets/` auch `assets/` ausgeschlossen —
+# genau den Ordner, in den Vite JavaScript, CSS und Schriften baut. Der
+# Veröffentlichungszweig kam dadurch ohne einen einzigen Bundle-Ordner an:
+# Die Startseite lud als nacktes HTML, alle 25 Dateien 404. Nicht
+# wieder aufnehmen.
 
 # TS build cache
 tsconfig.tsbuildinfo
