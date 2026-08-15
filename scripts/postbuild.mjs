@@ -204,6 +204,36 @@ async function main() {
     }
   }
 
+  /* Jede Fallstudie braucht ihre eingefrorene Kopie.
+   *
+   * Seit dem 15.08.2026 zeigt jede Kachel den ersten Bildschirm der
+   * Kundenseite aus dist/cases/<slug>/. Es gibt keinen zweiten Weg mehr —
+   * fehlt der Ordner, bleibt die Kachel leer und niemand merkt es, weil
+   * ein leerer iframe keinen Fehler wirft. Also hier, beim Bauen. */
+  {
+    const content = await readFile(join(ROOT, "src", "content.ts"), "utf8");
+    const block = content.slice(content.indexOf("export const caseStudies"));
+    const slugs = [...block.matchAll(/^\s*slug: "([^"]+)",/gm)].map((m) => m[1]);
+    if (slugs.length < 3) {
+      fail(`only ${slugs.length} case slugs found in src/content.ts — this check is broken.`);
+    }
+    const missing = [];
+    for (const slug of slugs) {
+      for (const variant of ["desktop", "phone"]) {
+        if (!existsSync(join(DIST, "cases", slug, variant, "index.html"))) {
+          missing.push(`${slug}/${variant}`);
+        }
+      }
+    }
+    if (missing.length) {
+      fail(
+        `missing frozen hero copies: ${missing.join(", ")} — run "node scripts/build-case-heroes.mjs" ` +
+          `after adding the client to CASES in that script, otherwise the tile renders empty.`,
+      );
+    }
+    console.log(`postbuild: ${slugs.length} case studies, each with a frozen hero copy (desktop + phone)`);
+  }
+
   console.log(`postbuild: ${routePaths.length} pages, each with a unique title and canonical`);
   for (const p of routePaths) console.log(`  ${p}`);
   console.log("postbuild: dist/404.html present, noindex, and distinct from the homepage");

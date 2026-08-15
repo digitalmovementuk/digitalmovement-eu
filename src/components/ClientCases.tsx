@@ -7,12 +7,6 @@ import { Reveal } from "../lib/Reveal";
 
 // A faint colour wash over each video so cards retain brand variety
 // without overwhelming the footage underneath.
-const ACCENT_TINT: Record<CaseStudy["accent"], string> = {
-  orange: "linear-gradient(135deg, rgba(240,95,34,0.30) 0%, rgba(236,23,141,0.25) 100%)",
-  pink: "linear-gradient(135deg, rgba(236,23,141,0.30) 0%, rgba(211,50,255,0.25) 100%)",
-  violet: "linear-gradient(135deg, rgba(154,47,198,0.32) 0%, rgba(74,30,140,0.30) 100%)",
-};
-
 /**
  * ClientCases — Apple "feature story" editorial stack with a parallax bg.
  *
@@ -120,7 +114,6 @@ function MobileCaseStories() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
-  const slideVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const isProgrammaticScrollRef = useRef(false);
   const [storiesVisible, setStoriesVisible] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
@@ -172,27 +165,6 @@ function MobileCaseStories() {
     return () => window.clearTimeout(t);
   }, [activeIdx]);
 
-  // Explicit play / pause + rewind on the active slide's video. We only
-  // call play() once the IG-story section has actually entered the
-  // viewport — otherwise the first slide's video starts downloading
-  // immediately on mount, which on mobile is a ~10 MB head-of-page tax for
-  // content the user may never scroll to.
-  useEffect(() => {
-    if (!storiesVisible) return;
-    slideVideoRefs.current.forEach((v, i) => {
-      if (!v) return;
-      v.muted = true;
-      if (i === activeIdx) {
-        try {
-          v.currentTime = 0;
-        } catch {}
-        v.play().catch(() => {});
-      } else {
-        v.pause();
-      }
-    });
-  }, [activeIdx, storiesVisible]);
-
   // Slide tracker — keeps activeIdx aligned with manual swipes. Skips
   // intermediate states during programmatic (smooth) scroll.
   useEffect(() => {
@@ -237,9 +209,6 @@ function MobileCaseStories() {
             ref={(el) => {
               slideRefs.current[i] = el;
             }}
-            videoRef={(el) => {
-              slideVideoRefs.current[i] = el;
-            }}
             study={cs}
             index={i}
             onTap={next}
@@ -276,13 +245,11 @@ function MobileCaseStories() {
 
 const CaseStorySlide = ({
   ref,
-  videoRef,
   study,
   index,
   onTap,
 }: {
   ref: (el: HTMLElement | null) => void;
-  videoRef: (el: HTMLVideoElement | null) => void;
   study: CaseStudy;
   index: number;
   onTap: () => void;
@@ -303,30 +270,11 @@ const CaseStorySlide = ({
       aria-roledescription="slide"
       aria-label={`${index + 1} von ${caseStudies.length}: ${study.client}`}
     >
-      {HERO_SNAPSHOTS.has(study.slug) ? (
-        /* Der Startbereich der Kundenseite in Telefonbreite, freigestellt:
-           obendrüber steht nichts, und er wird nicht angeschnitten. Das Feld
-           hat dasselbe Seitenverhältnis wie der Rahmen, deshalb bleibt kein
-           Rand. Darunter beginnt der Text der Fallstudie. */
-        <div className="absolute inset-x-0 top-[62px] bottom-[37%] z-0 flex items-center justify-center px-8">
-          <div className="relative h-full aspect-[390/844] overflow-hidden rounded-[20px] border border-white/15 shadow-[0_18px_60px_rgba(0,0,0,0.45)]">
-            <CaseHeroFrame slug={study.slug} variant="phone" />
-          </div>
+      <div className="absolute inset-x-0 top-[62px] bottom-[37%] z-0 flex items-center justify-center px-8">
+        <div className="relative h-full aspect-[390/844] overflow-hidden rounded-[20px] border border-white/15 shadow-[0_18px_60px_rgba(0,0,0,0.45)]">
+          <CaseHeroFrame slug={study.slug} variant="phone" />
         </div>
-      ) : (
-        <StoryVideo file={study.video} videoRef={videoRef} />
-      )}
-
-      {HERO_SNAPSHOTS.has(study.slug) ? null : (
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(15,8,32,0.55) 0%, rgba(15,8,32,0) 18%, rgba(15,8,32,0) 50%, rgba(15,8,32,0.78) 100%)",
-          }}
-        />
-      )}
+      </div>
 
       {/* Tap-anywhere button INSIDE each slide — part of the slide's own
           DOM/stacking context so iOS doesn't route the tap to the scroll
@@ -383,17 +331,13 @@ const CaseStorySlide = ({
  * Einbetten sperren. Die Kopie liegt auf unserer eigenen Adresse und
  * enthält kein JavaScript und keine fremden Aufrufe.
  *
- * Cheshire Conservatory Roofs fehlt hier: zu diesem Kunden gibt es kein
- * Projekt auf dieser Maschine und keine erreichbare Seite. Diese Kachel
- * behält ihr Video.
+ * JEDE Fallstudie braucht diese Kopie — es gibt keinen zweiten Weg mehr.
+ * Wer hier einen Kunden aufnimmt, muss ihn vorher in
+ * scripts/build-case-heroes.mjs eintragen und das Skript laufen lassen,
+ * sonst bleibt seine Kachel leer. check-render fängt das ab: dort muss
+ * jede Zeile der Erfolgsgeschichten einen Rahmen haben, in dem sich
+ * etwas bewegt.
  */
-const HERO_SNAPSHOTS = new Set([
-  "cex",
-  "azura-living-bali",
-  "addressbali",
-  "cunos",
-  "fantastic-finish",
-]);
 
 const FRAME_SIZE = {
   desktop: { w: 1440, h: 900 },
@@ -557,115 +501,6 @@ function CaseHeroFrame({
   );
 }
 
-/**
- * StoryVideo — used by the mobile IG-story slides. The parent component
- * controls play/pause/rewind via the supplied videoRef so it doesn't rely
- * on the video's own intersection observer (which was unreliable for slides
- * inside a horizontally scrolling track).
- */
-function StoryVideo({
-  file,
-  videoRef,
-}: {
-  file: string;
-  videoRef: (el: HTMLVideoElement | null) => void;
-}) {
-  return (
-    <video
-      ref={videoRef}
-      loop
-      muted
-      playsInline
-      // `preload="metadata"` — the parent IG-story controller calls play()
-      // only when the section is visible, which is the moment we want
-      // bytes to start flowing. Five 3–28 MB videos × preload="auto"
-      // would saturate the connection before the user reached them.
-      preload="metadata"
-      className="absolute inset-0 h-full w-full object-cover pointer-events-none"
-      src={`${import.meta.env.BASE_URL}${file}`}
-      aria-hidden
-      {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as Record<string, string>)}
-    />
-  );
-}
-
-function CaseVideo({ file, poster }: { file: string; poster?: string }) {
-  // Mount the <video> only when the row is within 800 px of the viewport.
-  // Case videos run 3–28 MB each — eager-loading all five blows ~60 MB on
-  // first paint, even though ClientCases sits well below the fold. The
-  // 800 px lead time pre-buffers them so the user never sees a delay.
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [shouldMount, setShouldMount] = useState(false);
-
-  useEffect(() => {
-    const el = wrapRef.current;
-    if (!el) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setShouldMount(true);
-      return;
-    }
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setShouldMount(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "800px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!shouldMount) return;
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    v.defaultMuted = true;
-    const tryPlay = () => v.play().catch(() => {});
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) tryPlay();
-        else v.pause();
-      },
-      { threshold: 0.15 },
-    );
-    io.observe(v);
-    tryPlay();
-    return () => io.disconnect();
-  }, [shouldMount, file]);
-
-  return (
-    <div ref={wrapRef} className="absolute inset-0">
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(154,47,198,0.32) 0%, rgba(27,14,46,1) 70%)",
-        }}
-      />
-      {shouldMount && (
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster={poster}
-          className="absolute inset-0 h-full w-full object-cover pointer-events-none"
-          src={`${import.meta.env.BASE_URL}${file}`}
-          aria-hidden
-          {...({ "webkit-playsinline": "true", "x5-playsinline": "true" } as Record<string, string>)}
-        />
-      )}
-    </div>
-  );
-}
-
 function CaseRow({
   study,
   index,
@@ -773,92 +608,26 @@ function CaseRow({
             gezeigt werden soll.
             Ohne Startbereich (Cheshire) bleibt es beim Video mit
             Beschriftung darüber. */}
-        {HERO_SNAPSHOTS.has(study.slug) ? (
-          <div className="relative flex flex-col bg-[#1B0E2E] text-white">
-            <div className="relative w-full aspect-[16/10] overflow-hidden">
-              <CaseHeroFrame slug={study.slug} variant="desktop" />
-            </div>
-
-            <div className="flex flex-1 flex-col justify-between gap-6 p-7 sm:p-10 md:p-12 lg:p-14">
-              <div className="flex items-start justify-between gap-4">
-                <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/85">
-                  Ergebnis
-                </span>
-                <span className="rounded-full bg-white/15 text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 border border-white/20">
-                  {String(index + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}
-                </span>
-              </div>
-
-              <div>
-                <p
-                  className="text-white"
-                  style={{
-                    fontSize: "clamp(40px, 5vw, 76px)",
-                    lineHeight: "0.9",
-                    letterSpacing: "-0.045em",
-                    fontWeight: 700,
-                  }}
-                >
-                  {study.metrics[0]?.value}
-                </p>
-                <p className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-white/85">
-                  {study.metrics[0]?.label}
-                </p>
-              </div>
-
-              <ul className="grid grid-cols-2 gap-4 pt-5 border-t border-white/30">
-                {study.metrics.slice(1, 3).map((m) => (
-                  <li key={m.label}>
-                    <p
-                      className="text-white"
-                      style={{
-                        fontSize: "clamp(20px, 1.8vw, 28px)",
-                        fontWeight: 700,
-                        letterSpacing: "-0.025em",
-                        lineHeight: "1.0",
-                      }}
-                    >
-                      {m.value}
-                    </p>
-                    <p className="mt-1.5 text-[10.5px] uppercase tracking-[0.16em] text-white/85 font-bold">
-                      {m.label}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <div className="relative flex flex-col bg-[#1B0E2E] text-white">
+          <div className="relative w-full aspect-[16/10] overflow-hidden">
+            <CaseHeroFrame slug={study.slug} variant="desktop" />
           </div>
-        ) : (
-          <div className="relative overflow-hidden min-h-[260px] md:min-h-[440px] flex flex-col justify-between p-7 sm:p-10 md:p-12 lg:p-14 text-white">
-            <CaseVideo file={study.video} poster={study.poster} />
-            <div
-              aria-hidden
-              className="absolute inset-0 pointer-events-none"
-              style={{ background: ACCENT_TINT[study.accent] }}
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(15,8,32,0.10) 0%, rgba(15,8,32,0) 35%, rgba(15,8,32,0.55) 100%)",
-              }}
-            />
 
-            <div className="relative flex items-start justify-between gap-4">
+          <div className="flex flex-1 flex-col justify-between gap-6 p-7 sm:p-10 md:p-12 lg:p-14">
+            <div className="flex items-start justify-between gap-4">
               <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/85">
                 Ergebnis
               </span>
-              <span className="rounded-full bg-white/15 backdrop-blur-md text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 border border-white/20">
+              <span className="rounded-full bg-white/15 text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 border border-white/20">
                 {String(index + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}
               </span>
             </div>
 
-            <div className="relative my-8">
+            <div>
               <p
-                className="text-white drop-shadow-[0_2px_22px_rgba(0,0,0,0.65)]"
+                className="text-white"
                 style={{
-                  fontSize: "clamp(56px, 8vw, 132px)",
+                  fontSize: "clamp(40px, 5vw, 76px)",
                   lineHeight: "0.9",
                   letterSpacing: "-0.045em",
                   fontWeight: 700,
@@ -866,16 +635,16 @@ function CaseRow({
               >
                 {study.metrics[0]?.value}
               </p>
-              <p className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-white/85 drop-shadow-[0_1px_8px_rgba(0,0,0,0.55)]">
+              <p className="mt-3 text-[12px] font-bold uppercase tracking-[0.18em] text-white/85">
                 {study.metrics[0]?.label}
               </p>
             </div>
 
-            <ul className="relative grid grid-cols-2 gap-4 pt-5 border-t border-white/30">
+            <ul className="grid grid-cols-2 gap-4 pt-5 border-t border-white/30">
               {study.metrics.slice(1, 3).map((m) => (
                 <li key={m.label}>
                   <p
-                    className="text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.55)]"
+                    className="text-white"
                     style={{
                       fontSize: "clamp(20px, 1.8vw, 28px)",
                       fontWeight: 700,
@@ -892,7 +661,7 @@ function CaseRow({
               ))}
             </ul>
           </div>
-        )}
+        </div>
       </div>
     </motion.li>
   );

@@ -339,11 +339,13 @@ export type CaseStudy = {
   metrics: { value: string; label: string }[];
   /** Live-Website des Kunden. Wird verlinkt, wo vorhanden. */
   url?: string;
-  /** Pfad unter public/, z. B. "video/cases/roofing.mp4" */
-  video: string;
-  poster?: string;
-  accent: "orange" | "pink" | "violet";
 };
+
+/* Kein `video` mehr: jede Kachel zeigt seit dem 15.08.2026 den
+   eingefrorenen ersten Bildschirm der Kundenseite selbst
+   (public/cases/<slug>/), nicht mehr einen Stimmungsfilm. Wer einen Kunden
+   aufnimmt, trägt ihn in scripts/build-case-heroes.mjs ein und lässt das
+   Skript laufen. */
 
 export const casesIntro = {
   eyebrow: "Erfolgsgeschichten",
@@ -371,8 +373,6 @@ export const caseStudies: CaseStudy[] = [
       { value: "2026", label: "Relaunch" },
     ],
     url: "https://cex.koeln",
-    video: "video/cases/digital.mp4",
-    accent: "violet",
   },
   {
     slug: "azura-living-bali",
@@ -390,8 +390,6 @@ export const caseStudies: CaseStudy[] = [
       { value: "0 %", label: "Plattform-Kommission" },
     ],
     url: "https://azuralivingbali.com",
-    video: "video/cases/logistics.mp4",
-    accent: "orange",
   },
   {
     slug: "addressbali",
@@ -409,8 +407,6 @@ export const caseStudies: CaseStudy[] = [
       { value: "2026", label: "Sprint" },
     ],
     url: "https://addressbali.com",
-    video: "video/cases/finance-skyline.mp4",
-    accent: "pink",
   },
   {
     slug: "cunos",
@@ -428,26 +424,6 @@ export const caseStudies: CaseStudy[] = [
       { value: "#1", label: "12 wichtige Suchanfragen" },
     ],
     url: "https://cunos.co.uk",
-    video: "video/cases/finance-skyline.mp4",
-    accent: "violet",
-  },
-  {
-    slug: "cheshire-conservatory-roofs",
-    client: "Cheshire Conservatory Roofs",
-    industry: "Dach & Hausbau",
-    location: "Cheshire",
-    services: ["Local SEO", "Google Ads"],
-    timeline: "3 Monate",
-    headline: "8x mehr gebuchte Aufträge pro Woche",
-    body:
-      "Eine vollständig neu gestaltete Webseite, optimiert für Google, KI-Suche und Konversion. Dazu ein eigenes Google Business Profile und eine flankierende Google-Ads-Kampagne. Schon nach einer Woche der erste neue Kunde. Seitdem stetiger Vertriebs-Zuwachs.",
-    metrics: [
-      { value: "8x", label: "Gebuchte Aufträge" },
-      { value: "1 Woche", label: "Bis zum ersten Kunden" },
-      { value: "3 Monate", label: "Projektdauer" },
-    ],
-    video: "video/cases/roofing.mp4",
-    accent: "orange",
   },
   {
     slug: "fantastic-finish",
@@ -464,8 +440,6 @@ export const caseStudies: CaseStudy[] = [
       { value: "60", label: "Tage bis Seite 1" },
       { value: "8x", label: "ROAS" },
     ],
-    video: "video/cases/cleaning.mp4",
-    accent: "pink",
   },
 ];
 
