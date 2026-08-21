@@ -15,8 +15,8 @@ export const business = {
   name: "Digital Movement",
   legalName: "Digital Movement Deutschland · Raoul Müller",
   tagline: "Jede Woche neue Verkaufschancen.",
-  email: "hallo@digitalmovement.eu",
-  emailHref: "mailto:hallo@digitalmovement.eu",
+  email: "office@digitalmovement.eu",
+  emailHref: "mailto:office@digitalmovement.eu",
   phone: "+49 176 23296439",
   phoneHref: "tel:+4917623296439",
   whatsapp: "+49 176 82360647",
@@ -123,7 +123,7 @@ export const hero = {
   formNote: "Kostenloses Erstgespräch · Antwort innerhalb 2 Stunden",
   formSuccess: "Danke. Sie hören innerhalb 2 Stunden von mir.",
   formError:
-    "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an hallo@digitalmovement.eu.",
+    "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an office@digitalmovement.eu.",
   /* Wird als Kontext mitgeschickt, damit im Posteingang sofort erkennbar
      ist, worum es geht — der Kurz-Slider fragt sonst nichts ab. */
   formService: "Potenzialanalyse",
@@ -139,7 +139,7 @@ export const hero = {
       href: "https://wa.me/4917682360647",
       external: true,
     },
-    { label: "E-Mail", value: "hallo@digitalmovement.eu", href: "mailto:hallo@digitalmovement.eu" },
+    { label: "E-Mail", value: "office@digitalmovement.eu", href: "mailto:office@digitalmovement.eu" },
     { label: "Adresse", value: "Kolonnenstraße 8, 10827 Berlin" },
   ] as { label: string; value: string; href?: string; external?: boolean }[],
 };
@@ -604,7 +604,7 @@ export const contact = {
     success: "Danke. Sie hören innerhalb 2 Stunden von mir.",
     sending: "Wird gesendet …",
     error:
-      "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an hallo@digitalmovement.eu.",
+      "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an office@digitalmovement.eu.",
   },
   /* Auswahl im Formular. Die vier Services aus dem Dokument plus eine
      Option für alle, die sich noch nicht festlegen wollen. */
@@ -617,7 +617,7 @@ export const contact = {
       href: "https://wa.me/4917682360647",
       external: true,
     },
-    { kicker: "E-Mail", value: "hallo@digitalmovement.eu", href: "mailto:hallo@digitalmovement.eu" },
+    { kicker: "E-Mail", value: "office@digitalmovement.eu", href: "mailto:office@digitalmovement.eu" },
     { kicker: "Adresse", value: "Kolonnenstraße 8, 10827 Berlin", href: "/impressum" },
   ] as { kicker: string; value: string; href: string; external?: boolean }[],
 };
@@ -644,7 +644,7 @@ export const popup = {
   successTitle: "Danke — bis gleich.",
   successBody: "Sie hören innerhalb 2 Stunden von mir. Persönlich.",
   error:
-    "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an hallo@digitalmovement.eu.",
+    "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an office@digitalmovement.eu.",
   closeLabel: "Schließen",
 };
 
@@ -678,7 +678,7 @@ export const footer = {
       links: [
         { label: "Telefon: +49 176 23296439", href: "tel:+4917623296439" },
         { label: "WhatsApp: +49 176 82360647", href: "https://wa.me/4917682360647" },
-        { label: "E-Mail: hallo@digitalmovement.eu", href: "mailto:hallo@digitalmovement.eu" },
+        { label: "E-Mail: office@digitalmovement.eu", href: "mailto:office@digitalmovement.eu" },
         { label: "Adresse: Kolonnenstraße 8, 10827 Berlin", href: "/impressum" },
       ],
     },
