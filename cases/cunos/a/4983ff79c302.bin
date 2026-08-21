@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#06122a" />
+    <!-- Icons -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+    <link rel="manifest" href="/site.webmanifest?v=2" />
+
+    <title>Cunos Consulting — Senior Finance Support for Founder-Led Businesses | London, UK</title>
+    <meta
+      name="description"
+      content="Senior finance support for founder-led businesses across the UK. Outsourced finance leadership, 13-week cashflow forecasting, month-end reporting, and retained advisory — without the cost of a full-time Finance Director. London-based."
+    />
+    <meta
+      name="keywords"
+      content="cunos consulting, senior finance support, outsourced finance director, fractional cfo london, fractional finance director uk, finance support founder-led business, finance advisory london, sme finance support uk, monthly finance pack, 13-week cashflow forecast, month-end reporting"
+    />
+    <meta name="author" content="Cunos Consulting" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+    <!-- Geo targeting -->
+    <meta name="geo.region" content="GB-LND" />
+    <meta name="geo.placename" content="London" />
+    <meta name="geo.position" content="51.5074;-0.1278" />
+    <meta name="ICBM" content="51.5074, -0.1278" />
+
+    <link rel="canonical" href="https://cunos.co.uk/" />
+    <link rel="alternate" hreflang="en-GB" href="https://cunos.co.uk/" />
+    <link rel="alternate" hreflang="x-default" href="https://cunos.co.uk/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cunos Consulting" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:url" content="https://cunos.co.uk/" />
+    <meta
+      property="og:title"
+      content="Cunos Consulting — Senior Finance Support for Founder-Led Businesses"
+    />
+    <meta
+      property="og:description"
+      content="London-based senior finance support for founder-led UK businesses. Outsourced finance leadership without the cost of a full-time Finance Director."
+    />
+    <meta property="og:image" content="https://cunos.co.uk/og/cunos-default.jpg" />
+    <meta property="og:image:secure_url" content="https://cunos.co.uk/og/cunos-default.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cunos Consulting — London-based senior finance support" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cunos Consulting — Senior Finance Support for Founder-Led Businesses" />
+    <meta name="twitter:description" content="London-based senior finance support for founder-led UK businesses." />
+    <meta name="twitter:image" content="https://cunos.co.uk/og/cunos-default.jpg" />
+
+    <!-- JSON-LD: Organization / LocalBusiness / WebSite -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": ["Organization", "ProfessionalService"],
+            "@id": "https://cunos.co.uk/#organization",
+            "name": "Cunos Consulting",
+            "alternateName": "Cunos",
+            "url": "https://cunos.co.uk",
+            "logo": "https://cunos.co.uk/brand/logo.svg",
+            "image": "https://cunos.co.uk/og/cunos-default.jpg",
+            "email": "office@cunos.co.uk",
+            "telephone": "+44 7520 654 301",
+            "description": "London-based senior finance support for founder-led businesses across the UK — outsourced finance leadership, 13-week cashflow forecasting, month-end reporting, and retained advisory.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "London",
+              "addressCountry": "GB"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 51.5074,
+              "longitude": -0.1278
+            },
+            "areaServed": { "@type": "Country", "name": "United Kingdom" },
+            "knowsAbout": [
+              "Senior finance support",
+              "Outsourced finance director",
+              "Fractional CFO",
+              "13-week cashflow forecasting",
+              "Month-end reporting",
+              "Finance controls"
+            ],
+            "sameAs": ["https://www.linkedin.com/in/entingcgma/"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://cunos.co.uk/#website",
+            "url": "https://cunos.co.uk/",
+            "name": "Cunos Consulting",
+            "description": "Senior finance support for founder-led businesses across the UK.",
+            "publisher": { "@id": "https://cunos.co.uk/#organization" },
+            "inLanguage": "en-GB"
+          }
+        ]
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/main-BMGBfsBQ.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/main-F1Oc57ZQ.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "fantastic-finish",
+    "viewport": "desktop",
+    "files": 78,
+    "bytes": 126450,
+    "remote": [],
+    "posterFallbacks": 0,
+    "orphans": 0
+  },
+  {
+    "slug": "fantastic-finish",
+    "viewport": "phone",
+    "files": 78,
+    "bytes": 126450,
+    "remote": [],
+    "posterFallbacks": 0,
+    "orphans": 0
+  }
+]
