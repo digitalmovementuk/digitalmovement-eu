@@ -54,14 +54,18 @@ const WEBHOOK = ((import.meta.env.VITE_LEAD_ENDPOINT as string | undefined) ?? "
  *  - `company_website` is the honeypot the handler expects — send it empty.
  *  - The Origin must be on the handler's allowlist or it answers 403.
  *
- *    STAND 2026-08-15: digitalmovement.eu steht NOCH NICHT auf der Liste des
- *    laufenden Endpunkts — gegen den Live-Host geprüft, Antwort 403
- *    {"ok":false,"error":"Origin not allowed."}. Die neue Fassung mit beiden
- *    .eu-Adressen liegt fertig in
- *    Sales/SEO Strategies/DM UK Own Site …/leads-endpoint-source/index.php,
- *    ihr Einspielen hängt am Upload des Plugins dmnz-automation. Bis das
- *    passiert ist, sammelt kein Formular dieser Seite eine Anfrage ein.
- *    Danach diesen Absatz durch das Datum der bestandenen Probe ersetzen.
+ *    STAND 2026-08-24, Ende-zu-Ende belegt: eine Anfrage von dieser Seite
+ *    kommt an. Der laufende Endpunkt führt jetzt beide .eu-Adressen, und
+ *    eine echte Probe mit Origin https://digitalmovement.eu antwortete
+ *    HTTP 200 {"ok":true} mit access-control-allow-origin:
+ *    https://digitalmovement.eu. Die Mail lag 16:19:10 UTC im Postfach
+ *    office@digitalmovement.eu ("New enquiry — digitalmovement.eu"), per
+ *    IMAP nachgelesen — nicht aus dem 200 geschlossen. Vorher war hier
+ *    monatelang 403 "Origin not allowed."; die Seite zeigte Danke und
+ *    lieferte nichts.
+ *    ⚠️ Das Postfach office@digitalmovement.eu läuft auf einem 30-Tage-Test,
+ *    der am 2026-09-20 endet. Läuft er ab, stirbt die Zustelladresse — dann
+ *    muss die Route im Endpunkt wieder auf eine .uk-Adresse zeigen.
  *
  * Never use mode:"no-cors" here: the opaque response would report success
  * while the server silently rejected the lead.
