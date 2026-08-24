@@ -8,7 +8,16 @@
  * Bauteil keinen Text vorgibt, steht hier ein ergänzter Text — als solcher
  * im Kommentar markiert.
  *
- * Version 1.1 · Stand 24.08.2026
+ * Version 1.2 · Stand 24.08.2026
+ *
+ * Änderungen 1.2 (24.08.2026): `hero` vollständig ersetzt. Auf Weisung RMU
+ * ist der Startbereich jetzt die Übernahme von digitalmovement.uk, auf
+ * Deutsch. Damit entfallen die drei Video-Textblöcke (`slides`), die
+ * Schlagwortzeile (`services`), das Kurzformular mit nur einem Feld und
+ * die Kontaktliste am unteren Rand; dazu kommen Überschrift mit
+ * hervorgehobenem Teil, die Zeile „Gefunden werden bei“, die Belegzeile
+ * und das fünffeldrige Anfrageformular. Die Gründe für die drei
+ * Abweichungen von der englischen Vorlage stehen am Block selbst.
  *
  * Änderungen 1.1 (24.08.2026): Firmierung „Digital Movement Deutschland ·
  * Raoul Müller“ zu „Digital Movement Germany“ — auf Weisung RMU. Die
@@ -75,78 +84,123 @@ export const googleRating = {
    ============================================================ */
 
 export const hero = {
-  /* Drei Textblöcke, die mit den Videos durchwechseln — so steht es im
-     freigegebenen Dokument ("Drei Bilder wechseln alle 8 Sekunden durch.
-     Jedes hat eigenen Text."). Der Aufbau der Überschrift ist dreiteilig,
-     weil in der Vorlage ein Teil der Zeile kursiv hervorgehoben ist:
-     pre + em + post ergeben zusammen genau den Satz aus dem Dokument.
+  /* ------------------------------------------------------------------
+     Der Startbereich ist die 1:1-Übernahme von digitalmovement.uk
+     (abgerufen 24.08.2026, Anweisung RMU: „Fully copy the hero … but all
+     translated in German. Must all be identical.“). Aufbau, Reihenfolge
+     und Gestaltung sind unverändert; übersetzt ist der Text.
 
-     Korrigiert wurden ausschließlich Schreibfehler: "Funden" → "finden",
-     "High-end" → "High-End". */
-  slides: [
-    {
-      key: "marke",
-      eyebrow: "Mehr Neukunden und Umsatzwachstum mit SEO & GEO (AI Search)",
-      headlinePre: "Jede Woche ",
-      headlineEm: "neue Verkaufschancen",
-      headlinePost: ".",
-      headlineBottom: "Über Google, KI-Suche und eine High-End Website",
-      sub: "Sichtbar in jeder relevanten Stadt. In jedem Stadtteil. Für jede Ihrer Dienstleistungen.",
-    },
-    {
-      key: "suche",
-      eyebrow: "Google Search & KI-Suche Optimierung",
-      headlinePre: "Google Seite 1. ",
-      headlineEm: "In 90 Tagen",
-      headlinePost: ".",
-      headlineBottom: "Suchmaschinenoptimierung + KI-Suchoptimierung.",
-      sub: "Wir identifizieren die Suchbegriffe, mit denen Ihre Kunden Sie finden. Und wir liefern Webseiten, die Anfragen liefern.",
-    },
-    {
-      key: "websites",
-      eyebrow: "High-End Website-Entwicklung",
-      headlinePre: "Webseiten optimiert für Google (SEO), ChatGPT (GEO) und ",
-      headlineEm: "Konversion",
-      headlinePost: ".",
-      /* Das Dokument lässt die zweite Zeile für dieses Bild leer. */
-      headlineBottom: "",
-      sub: "Schnell. Modern. High-End. Mobile-first. Macht aus Besuchern Anfragen.",
-    },
+     Drei Dinge weichen ab, jedes mit Grund:
+
+     1. Der Preissatz der englischen Fassung („It starts from £495 a
+        month“) fehlt. Für Deutschland ist kein Preis freigegeben. £495
+        stehen zu lassen wäre falsch, umzurechnen hieße, einen Preis zu
+        erfinden — beides schlechter als der Verzicht. Der zweite Teil
+        des Satzes („you can leave whenever you like“) bleibt, er ist
+        eine Aussage über die Vertragsbindung, keine über den Preis.
+     2. Die Bewertungszahl ist „über 100“, nicht „102“. Die englische
+        Seite nennt 102; freigegeben ist für die deutsche Seite die
+        Angabe aus googleRating (5,0 / über 100). Die kleinere, belegte
+        Zahl gewinnt.
+     3. Das Etikett heißt „SEO-Agentur Deutschland“, nicht „… Berlin“.
+        Die englische Fassung nennt das Land, nicht die Stadt; die Seite
+        wirbt außerdem ausdrücklich mit Sichtbarkeit „in jeder relevanten
+        Stadt“. Berlin steht im Impressum und in der Fußzeile.
+
+     Der Bewertungsblock nennt weiterhin „Digital Movement Australia“ —
+     genau wie die englische Seite. Die Bewertungen sind dort entstanden;
+     sie einem deutschen Unternehmen zuzuschreiben, das es seit dem
+     21.08.2026 gibt, wäre eine Falschangabe.
+     ------------------------------------------------------------------ */
+
+  /* Überzeile mit dem Strich davor („ilabel“ im englischen System). */
+  label: "SEO-Agentur Deutschland",
+
+  /* Die Überschrift ist zweiteilig, weil der letzte Teil den
+     Farbverlaufs-Strich untergelegt bekommt. Er darf nicht umbrechen —
+     deshalb steht das Satzzeichen mit im hervorgehobenen Teil. */
+  /* Die Vorlage lautet „A UK SEO agency measured in enquiries." und steht
+     dort in drei Zeilen. Der unbestimmte Artikel fehlt hier bewusst:
+     „Eine SEO-Agentur, gemessen in Anfragen." misst bei 66 px 693 px und
+     passt damit nicht in die 635 px breite Textspalte — die Überschrift
+     bräuchte vier Zeilen und begänne mit einem Wort allein. Ohne den
+     Artikel stehen dieselben drei Zeilen wie im Original, und die Aussage
+     ist unverändert. Wirkung schlägt Wörtlichkeit.
+
+     `headlineNoBreak` ist ein eigenes Feld, weil der Browser sonst am
+     Bindestrich von „SEO-Agentur" umbricht; es bekommt white-space:nowrap. */
+  headlineNoBreak: "SEO-Agentur,",
+  headlineRest: " gemessen in ",
+  headlineAccent: "Anfragen.",
+
+  lede: "Wir machen deutsche Unternehmen bei Google und in KI-Antworten sichtbar — und machen daraus Anfragen. Jeden Monat sehen Sie in klarem Deutsch, was wir getan haben und was sich verändert hat. Und Sie können jederzeit aufhören.",
+
+  /* Zeile „Gefunden werden bei“ mit den vier Marken. Die Dateinamen sind
+     die Originaldateien der englischen Seite; sie liegen unter
+     public/brand/hero-uk/logos/ und werden über import.meta.env.BASE_URL
+     angesprochen, damit sie auch unter abweichendem Basispfad laden. */
+  findLabel: "Gefunden werden bei",
+  apps: [
+    { key: "google", label: "Google", icon: "google.svg" },
+    { key: "gemini", label: "Gemini", icon: "googlegemini.svg" },
+    { key: "chatgpt", label: "ChatGPT", icon: "openai.svg" },
+    { key: "claude", label: "Claude", icon: "claude.svg" },
   ],
-  services: ["SEO", "GEO", "High-End Website Development"],
 
-  reviewsLabel: "5,0 auf Google · über 100 Bewertungen",
+  /* Belegzeile: Bewertungs-Pille + zwei Kennzahlen. */
   reviewsHref: googleRating.reviewsUrl,
+  reviewsRating: "5,0",
+  reviewsText: "· über 100 Bewertungen · Digital Movement Australia",
+  stats: [
+    { value: "300+", label: "Kunden" },
+    /* Schmales Leerzeichen vor dem Prozentzeichen (U+202F): deutsche
+       Rechtschreibung verlangt hier ein Leerzeichen, ein normales würde
+       am Zeilenende umbrechen. */
+    { value: "92 %", label: "Kundenbindung" },
+  ],
 
-  /* Das Formular im Hero: Telefon Pflicht, alles andere optional. Die
-     Beschriftungen kommen aus dem Dokument, Platzhalter und Hinweistext
-     sind ergänzt — für sie gibt das Dokument nichts vor. */
-  formLabel: "Telefonnummer",
-  formPlaceholder: "Ihre Telefonnummer",
-  formCta: "Potenzialanalyse anfragen",
+  /* ---------- Anfrageformular ---------- */
+  formTitle: "Kostenlose Analyse Ihrer Website",
+  formIntro:
+    "Sagen Sie uns Ihre Website und welche Anfragen Sie brauchen — wir melden uns mit dem, was wir zuerst beheben würden. Kostenlos und unverbindlich.",
+
+  /* Telefon ist Pflicht, E-Mail optional. Das gilt für jedes Formular auf
+     jeder Digital-Movement-Seite und ist auch in der englischen Vorlage
+     so. */
+  fields: {
+    name: { label: "Vor- und Nachname", placeholder: "Ihr Name" },
+    phone: { label: "Telefon", placeholder: "0176 … oder +49 …" },
+    email: { label: "E-Mail (optional)", placeholder: "sie@firma.de" },
+    website: { label: "Ihre Website", placeholder: "https://ihrefirma.de" },
+    service: { label: "Was soll am meisten wachsen?" },
+  },
+
+  /* Reihenfolge wie in der Vorlage. Der erste Eintrag ist die Vorauswahl —
+     kein leerer Platzhalter, weil ein Auswahlfeld ohne Vorauswahl auf dem
+     Telefon als ungefüllt gelesen wird und den Absenden-Versuch abbricht,
+     ohne dass sichtbar wird, warum. */
+  serviceOptions: [
+    "SEO-Analyse",
+    "Sichtbarkeit in der KI-Suche",
+    "Local SEO / Google Maps",
+    "Google Ads",
+    "CRM & Nachfassen",
+  ],
+
+  formCta: "Kostenlose Analyse anfordern",
   formSending: "Wird gesendet …",
-  formNote: "Kostenloses Erstgespräch · Antwort innerhalb 2 Stunden",
+  formNote: "Kein Newsletter. Keine Verkaufsanrufe. Nur unsere Antwort.",
   formSuccess: "Danke. Sie hören innerhalb 2 Stunden von mir.",
   formError:
     "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an office@digitalmovement.eu.",
-  /* Wird als Kontext mitgeschickt, damit im Posteingang sofort erkennbar
-     ist, worum es geht — der Kurz-Slider fragt sonst nichts ab. */
-  formService: "Potenzialanalyse",
-  formMessage: "Anfrage über das Kurzformular im Seitenkopf.",
 
-  /* Unten im Hero läuft in der Vorlage ein Büro-Slider. Hier laufen die
-     echten Kontaktwege durch — gleiche Mechanik, überprüfbarer Inhalt. */
-  contacts: [
-    { label: "Telefon", value: "+49 176 23296439", href: "tel:+4917623296439" },
-    {
-      label: "WhatsApp",
-      value: "+49 176 82360647",
-      href: "https://wa.me/4917682360647",
-      external: true,
-    },
-    { label: "E-Mail", value: "office@digitalmovement.eu", href: "mailto:office@digitalmovement.eu" },
-    { label: "Adresse", value: "Kolonnenstraße 8, 10827 Berlin" },
-  ] as { label: string; value: string; href?: string; external?: boolean }[],
+  /* Feldbezogene Fehlermeldungen. Sie sagen, was zu tun ist, nicht was
+     falsch war — „Bitte tragen Sie …“ statt „Ungültige Eingabe“. */
+  errRequiredName: "Bitte tragen Sie Ihren Namen ein.",
+  errRequiredPhone: "Bitte tragen Sie eine Telefonnummer ein, unter der wir Sie erreichen.",
+  errRequiredWebsite: "Bitte tragen Sie die Adresse Ihrer Website ein.",
+  errConsent: "Ohne Ihr Einverständnis dürfen wir Ihre Anfrage nicht bearbeiten.",
+
 };
 
 export const heroStats = [
