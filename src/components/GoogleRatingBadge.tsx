@@ -9,21 +9,38 @@ import { googleRating } from "../content";
  * handles trust signal. Fades out as the Contact form approaches so the
  * form's primary CTA isn't competing with a floating trust pill, and back
  * in when the user scrolls above the contact section again.
+ *
+ * Seit der Übernahme des britischen Heros (24.08.2026) trägt der Hero die
+ * Bewertung selbst — dieselbe Zahl, dieselbe Quelle, in derselben linken
+ * Spalte. Gemessen bei 1440 × 900 lagen beide Pillen 62 px übereinander:
+ * die Hero-Zeile bei y 701, die schwebende Pille bei y 807. Zwei gleiche
+ * Belege nebeneinander belegen nichts, sie verdoppeln nur. Deshalb bleibt
+ * die schwebende Pille weg, solange der Hero im Bild ist, und kommt erst,
+ * wenn er oben herausgescrollt ist.
  */
 export function StickyGoogleRatingBadge() {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const contact = document.getElementById("contact");
-    if (!contact) return;
+    const hero = document.getElementById("top");
     const onScroll = () => {
       const vh = window.innerHeight;
-      const contactApproaching = contact.getBoundingClientRect().top < vh * 0.65;
-      setShow(!contactApproaching);
+      // Der Hero zeigt die Bewertung selbst. Erst wenn er praktisch aus dem
+      // Bild ist, darf die schwebende Pille übernehmen.
+      const heroVisible = hero ? hero.getBoundingClientRect().bottom > 120 : false;
+      const contactApproaching = contact
+        ? contact.getBoundingClientRect().top < vh * 0.65
+        : false;
+      setShow(!heroVisible && !contactApproaching);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (
