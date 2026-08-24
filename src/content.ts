@@ -8,7 +8,30 @@
  * Bauteil keinen Text vorgibt, steht hier ein ergänzter Text — als solcher
  * im Kommentar markiert.
  *
- * Version 1.7 · Stand 24.08.2026
+ * Version 1.8 · Stand 24.08.2026
+ *
+ * Änderungen 1.8 (24.08.2026): das Pop-up „Potenzialanalyse“ holt seinen
+ * Formulartext jetzt ebenfalls aus `hero`. Auf Weisung RMU: „The pop up
+ * contact form has to be synced and aligned as well.“ Damit entfallen in
+ * `popup` die Schlüssel `headline`, `intro`, `fields`, `submit`,
+ * `sending`, `error`, `successTitle` und `successBody`; geblieben sind
+ * nur die drei Angaben, die es außerhalb eines Formulars gibt
+ * (`eyebrow`, `dismiss`, `closeLabel`).
+ *
+ * Der zurückgezogene Wortlaut, damit er nachlesbar bleibt: Überschrift
+ * „Kostenloses Audit Ihrer Website.“, Einleitung „30 Minuten Walkthrough
+ * plus Ein-Seiten-Audit per E-Mail. Egal, ob wir zusammenarbeiten oder
+ * nicht.“, Knopf „Audit anfordern“, Dank „Danke — bis gleich.“ /
+ * „Sie hören innerhalb 2 Stunden von mir. Persönlich.“
+ *
+ * Warum weg: die Seite bot damit zweierlei an — unten und oben eine
+ * „kostenlose Analyse“, in der Mitte ein „kostenloses Audit“. Das ist
+ * für den Leser nicht dasselbe Angebot, sondern ein zweites, und das
+ * Pop-up fragte dafür auch andere Felder ab (kein Website-Feld, keine
+ * Auswahl). Ein Angebot, ein Formular, ein Wortlaut.
+ *
+ * `hero.formSuccessTitle` ist neu — die Zeile „Angekommen.“ stand als
+ * fester Text im Kontaktabschnitt und wird jetzt von beiden gelesen.
  *
  * Änderungen 1.7 (24.08.2026): `comparison.columns` bekommt eine dritte
  * Beschriftung, `topic: "Thema"`. Der Vergleich steht seit dieser Fassung
@@ -254,6 +277,10 @@ export const hero = {
   formCta: "Kostenlose Analyse anfordern",
   formSending: "Wird gesendet …",
   formNote: "Kein Newsletter. Keine Verkaufsanrufe. Nur unsere Antwort.",
+  /* Der Dank steht zweizeilig: eine kurze Bestätigung und darunter, was
+     als Nächstes passiert. Beide Formulare, die einen Erfolgszustand
+     zeigen (Kontaktabschnitt und Pop-up), lesen dieselben zwei Zeilen. */
+  formSuccessTitle: "Angekommen.",
   formSuccess: "Danke. Sie hören innerhalb 2 Stunden von mir.",
   formError:
     "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an office@digitalmovement.eu.",
@@ -746,18 +773,17 @@ export const contact = {
  * das Dokument nichts vor, und ohne sie hätte das Formular keinen Ausgang.
  */
 export const popup = {
+  /* Hier steht nur noch, was es AUSSERHALB eines Formulars gibt: die
+     Überzeile, der Weg wieder hinaus und die Beschriftung des Kreuzes.
+
+     Überschrift, Einleitung, Felder, Knopf, Hinweiszeile, Erfolgs- und
+     Fehlermeldung kommen seit Fassung 1.8 aus `hero` — genau wie im
+     Kontaktabschnitt. Eigene Schlüssel dafür wieder einzuführen hieße,
+     die Drift von Neuem zu beginnen, die diese Fassung beendet: das
+     Pop-up hatte drei Felder, wo die anderen fünf hatten, und nannte
+     dasselbe Angebot anders. */
   eyebrow: "Bevor Sie weiterlesen",
-  headline: "Kostenloses Audit Ihrer Website.",
-  intro:
-    "30 Minuten Walkthrough plus Ein-Seiten-Audit per E-Mail. Egal, ob wir zusammenarbeiten oder nicht.",
-  fields: { name: "Name", phone: "Telefonnummer", email: "E-Mail" },
-  submit: "Audit anfordern",
-  sending: "Wird gesendet …",
   dismiss: "Später vielleicht",
-  successTitle: "Danke — bis gleich.",
-  successBody: "Sie hören innerhalb 2 Stunden von mir. Persönlich.",
-  error:
-    "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an office@digitalmovement.eu.",
   closeLabel: "Schließen",
 };
 

@@ -1,8 +1,12 @@
 import { hero } from "../content";
 
 /**
- * Die gemeinsame Logik der beiden Anfrageformulare.
- * Version 1.0 · Stand 24.08.2026
+ * Die gemeinsame Logik der Anfrageformulare.
+ * Version 1.1 · Stand 24.08.2026
+ *
+ * Änderungen 1.1 (24.08.2026): `LEAD_FIELDS` ergänzt und das Pop-up
+ * angeschlossen. Auf Weisung RMU: „The pop up contact form has to be
+ * synced and aligned as well." Aus zwei Formularen sind drei geworden.
  *
  * Auf Weisung RMU (24.08.2026): „Make sure the data fields and content of
  * contact form at bottom of page is synced with contact form in hero."
@@ -19,6 +23,36 @@ import { hero } from "../content";
  * Felder und die Art, wie die Website in den Nutzdatensatz kommt. Die
  * Beschriftungen selbst stehen einmal in `hero` in content.ts.
  */
+
+/**
+ * Die fünf Felder, die auf JEDEM Anfrageformular stehen — in dieser
+ * Reihenfolge, mit diesen Namen, mit diesen Pflichtangaben.
+ *
+ * Diese Liste ist die Festlegung, nicht die Darstellung. Das Pop-up
+ * zeichnet seine Felder direkt daraus. Startbereich und Kontaktabschnitt
+ * haben eigene Auszeichnung — der Startbereich hängt an hero-uk.css und
+ * ist die 1:1-Übernahme der englischen Seite, der Kontaktabschnitt steht
+ * auf Weiß statt auf Dunkel. Beide werden deshalb nicht daraus gezeichnet,
+ * sondern dagegen GEPRÜFT: `scratchpad/formsync.mjs` liest alle drei
+ * Formulare aus dem laufenden Browser und vergleicht Namen, Reihenfolge
+ * und Pflichtangaben mit dieser Liste. Ein Formular, das abweicht, fällt
+ * dort auf, statt monatelang unbemerkt zu driften.
+ *
+ * `key` zeigt in `hero.fields` (Beschriftung und Platzhalter stehen dort,
+ * damit derselbe Wortlaut überall greift). `name` ist das, was beim
+ * Endpunkt ankommt — und heißt bei der Website absichtlich `site`: ein
+ * Feld namens `website` liest der gemeinsame Endpunkt als Honigtopf und
+ * verwirft die Anfrage still.
+ */
+export const LEAD_FIELDS = [
+  { key: "name", name: "name", type: "text", autoComplete: "name", required: true, half: true },
+  { key: "phone", name: "phone", type: "tel", inputMode: "tel", autoComplete: "tel", required: true, half: true },
+  { key: "email", name: "email", type: "email", autoComplete: "email", required: false, half: true },
+  { key: "website", name: "site", type: "url", inputMode: "url", autoComplete: "url", required: true, half: true },
+  { key: "service", name: "service", type: "select", required: true, half: false },
+] as const;
+
+export type LeadFieldKey = (typeof LEAD_FIELDS)[number]["key"];
 
 /** Die vier Felder, die eine Anfrage blockieren können. */
 export type LeadFieldErrors = {

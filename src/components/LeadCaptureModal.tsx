@@ -1,12 +1,39 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ArrowRight, Check } from "lucide-react";
-import { popup } from "../content";
+import { hero, popup } from "../content";
 import { submitLead, trackLead } from "../lib/submitLead";
+import { LEAD_FIELDS, LEAD_FIELD_ORDER, websiteMessage, validateLead } from "../lib/leadForm";
+import type { LeadFieldErrors } from "../lib/leadForm";
 import { ConsentCheckbox, ConsentNotice } from "./Consent";
 
 /**
  * Das Pop-up „Potenzialanalyse" — Abschnitt 14 des freigegebenen Dokuments.
+ * Version 1.1 · Stand 24.08.2026
+ *
+ * Änderungen 1.1 (24.08.2026): Das Formular ist Feld für Feld und Wort für
+ * Wort dasselbe wie im Startbereich und im Kontaktabschnitt. Auf Weisung
+ * RMU: „The pop up contact form has to be synced and aligned as well."
+ *
+ * Was das konkret geändert hat:
+ *   - Felder: vorher Name · Telefon · E-Mail. Jetzt Name · Telefon ·
+ *     E-Mail · Website · „Was soll am meisten wachsen?" — dieselben fünf,
+ *     in derselben Reihenfolge, gezeichnet aus `LEAD_FIELDS`.
+ *   - Beschriftungen sind sichtbar, nicht mehr nur Platzhalter. Ein
+ *     Platzhalter verschwindet beim Tippen; wer im Formular zurückspringt,
+ *     sieht dann drei gefüllte Kästen ohne Angabe, was darin steht.
+ *   - Überschrift, Einleitung, Knopf, Hinweiszeile, Dank und Fehlertext
+ *     kommen aus `hero`. Vorher bot das Pop-up ein „kostenloses Audit" an,
+ *     während der Rest der Seite eine „kostenlose Analyse" anbietet — für
+ *     den Leser zwei Angebote, nicht eines.
+ *   - Prüfung: Name, Telefon, Website und Häkchen sind Pflicht, E-Mail
+ *     bleibt freiwillig, und der Schreibzeiger springt in das erste
+ *     fehlende Feld. Vorher prüfte hier nur der Browser, in der Sprache
+ *     des Browsers.
+ *
+ * Angeglichen sind Inhalt, Felder und Regeln — nicht die Oberfläche. Das
+ * Fenster bleibt Flüssigglas über Milchglas, weil es über der Seite
+ * schwebt und nicht in ihr steht.
  *
  * Es erscheint EINMAL pro Seitenaufruf und erst kurz bevor die Bewertungen
  * in Sicht kommen, also weit nach dem ersten Satz. Ein Formular, das vor
@@ -22,9 +49,27 @@ export function LeadCaptureModal() {
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [hp, setHp] = useState("");
+  const [failed, setFailed] = useState(false);
   const hasShownRef = useRef(false);
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
+  const [service, setService] = useState(hero.serviceOptions[0]);
+  const [consent, setConsent] = useState(false);
+  const [hp, setHp] = useState(""); // Honigtopf
+
+  const [errors, setErrors] = useState<LeadFieldErrors>({});
+
+  const values: Record<string, string> = { name, phone, email, website, service };
+  const setters: Record<string, (v: string) => void> = {
+    name: setName,
+    phone: setPhone,
+    email: setEmail,
+    website: setWebsite,
+    service: setService,
+  };
 
   // Auslöser: der Bewertungsabschnitt, mit positivem unteren rootMargin,
   // damit das Fenster kommt, BEVOR der Abschnitt tatsächlich im Bild ist.
@@ -59,37 +104,51 @@ export function LeadCaptureModal() {
     };
   }, [open]);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Honigtopf gefüllt → Bot. Still aussteigen, ohne Fehlermeldung.
-    if (hp) return;
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (hp) return; // Honigtopf getroffen — kommentarlos verwerfen
+      if (sending || submitted) return;
 
-    const data = new FormData(e.currentTarget);
-    setSending(true);
-    setError(null);
+      /* Prüfung, Fehlertexte und Feldreihenfolge liegen in lib/leadForm.ts —
+         dasselbe Modul, aus dem Startbereich und Kontaktabschnitt lesen. */
+      const next = validateLead({ name, phone, website, consent });
+      setErrors(next);
+      if (Object.keys(next).length > 0) {
+        const first = LEAD_FIELD_ORDER.find((k) => next[k]);
+        if (first) {
+          document.getElementById(first === "consent" ? "p-consent" : `p-${first}`)?.focus();
+        }
+        return;
+      }
 
-    const result = await submitLead({
-      name: String(data.get("name") ?? ""),
-      phone: String(data.get("phone") ?? ""),
-      email: String(data.get("email") ?? ""),
-      consent: data.get("consent") != null,
-      service: "Kostenloses Audit",
-      message: "Anfrage über das Pop-up (Kostenloses Audit Ihrer Website).",
-      source: "lead-capture-modal",
-    });
+      setSending(true);
+      setFailed(false);
 
-    setSending(false);
+      const result = await submitLead({
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email.trim() || undefined,
+        service,
+        message: websiteMessage(website),
+        consent,
+        source: "lead-capture-modal",
+      });
 
-    // Der Dank hängt an der tatsächlichen Zustellung, nicht am Absenden.
-    // Andersherum wäre jede verlorene Anfrage als Erfolg gezählt worden.
-    if (result.ok) {
-      trackLead("lead-capture-modal");
-      setSubmitted(true);
-      window.setTimeout(() => setOpen(false), 2200);
-    } else {
-      setError(popup.error);
-    }
-  };
+      setSending(false);
+
+      // Der Dank hängt an der tatsächlichen Zustellung, nicht am Absenden.
+      // Andersherum wäre jede verlorene Anfrage als Erfolg gezählt worden.
+      if (result.ok) {
+        trackLead("lead-capture-modal");
+        setSubmitted(true);
+        window.setTimeout(() => setOpen(false), 2600);
+      } else {
+        setFailed(true);
+      }
+    },
+    [consent, email, hp, name, phone, sending, service, submitted, website],
+  );
 
   return (
     <AnimatePresence>
@@ -118,7 +177,10 @@ export function LeadCaptureModal() {
             aria-labelledby="lcm-title"
             className="fixed inset-0 z-[90] flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="relative pointer-events-auto w-full max-w-[440px] max-h-[92vh] overflow-y-auto rounded-[28px] border border-white/55 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-30px_rgba(15,8,32,0.55)] p-6 sm:p-8">
+            {/* overscroll-contain: sonst scrollt am Ende der Liste die Seite
+                hinter dem Fenster weiter, und das Fenster wirkt, als sei es
+                weggesprungen. */}
+            <div className="relative pointer-events-auto w-full max-w-[440px] max-h-[92svh] overflow-y-auto overscroll-contain rounded-[28px] border border-white/55 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-30px_rgba(15,8,32,0.55)] p-5 sm:p-8">
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -133,52 +195,79 @@ export function LeadCaptureModal() {
                   <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-ink-muted">
                     {popup.eyebrow}
                   </p>
+                  {/* Wortgleich mit dem Startbereich, aber als h3: das
+                      Fenster liegt über der Seite und darf ihre Gliederung
+                      nicht mit einer zweiten H2 zerlegen. */}
                   <h3
                     id="lcm-title"
-                    className="mt-2 text-ink"
+                    className="mt-2 pr-10 text-ink"
                     style={{
-                      fontSize: "clamp(22px, 4.4vw, 28px)",
-                      lineHeight: "1.1",
+                      fontSize: "clamp(21px, 4.2vw, 26px)",
+                      lineHeight: "1.12",
                       letterSpacing: "-0.028em",
                       fontWeight: 700,
                       hyphens: "auto",
                     }}
                   >
-                    {popup.headline}
+                    {hero.formTitle}
                   </h3>
-                  <p className="mt-2 text-[14.5px] text-ink-soft leading-relaxed">
-                    {popup.intro}
+                  <p className="mt-2 text-[13.5px] text-ink-soft leading-relaxed">
+                    {hero.formIntro}
                   </p>
 
-                  <form onSubmit={onSubmit} className="mt-5 space-y-3">
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      autoComplete="name"
-                      placeholder={popup.fields.name}
-                      aria-label={popup.fields.name}
-                      className={inputCls}
-                    />
-                    {/* Telefon ist auf jedem Formular das Pflichtfeld, die
-                        E-Mail ist freiwillig. Wir rufen zurück. */}
-                    <input
-                      type="tel"
-                      name="phone"
-                      required
-                      autoComplete="tel"
-                      placeholder={popup.fields.phone}
-                      aria-label={popup.fields.phone}
-                      className={inputCls}
-                    />
-                    <input
-                      type="email"
-                      name="email"
-                      autoComplete="email"
-                      placeholder={`${popup.fields.email} (optional)`}
-                      aria-label={popup.fields.email}
-                      className={inputCls}
-                    />
+                  {/* noValidate: die Meldungen des Browsers kommen in der
+                      Sprache des Browsers und verdecken unsere eigenen. Die
+                      required-Attribute bleiben stehen — sie sind das, was
+                      ein Screenreader vorliest. */}
+                  <form onSubmit={onSubmit} noValidate className="mt-5 space-y-3 sm:space-y-3.5">
+                    <div className="grid sm:grid-cols-2 gap-3 sm:gap-3.5">
+                      {LEAD_FIELDS.filter((f) => f.half).map((f) => (
+                        <Field
+                          key={f.key}
+                          id={`p-${f.key}`}
+                          label={hero.fields[f.key].label}
+                          error={errors[f.key as keyof LeadFieldErrors]}
+                        >
+                          <input
+                            id={`p-${f.key}`}
+                            name={f.name}
+                            type={f.type}
+                            inputMode={"inputMode" in f ? f.inputMode : undefined}
+                            autoComplete={f.autoComplete}
+                            placeholder={hero.fields[f.key].placeholder}
+                            required={f.required || undefined}
+                            aria-invalid={
+                              errors[f.key as keyof LeadFieldErrors] ? true : undefined
+                            }
+                            aria-describedby={
+                              errors[f.key as keyof LeadFieldErrors]
+                                ? `p-${f.key}-err`
+                                : undefined
+                            }
+                            value={values[f.key]}
+                            onChange={(e) => setters[f.key](e.target.value)}
+                            className={inputCls}
+                          />
+                        </Field>
+                      ))}
+                    </div>
+
+                    <Field id="p-service" label={hero.fields.service.label}>
+                      <select
+                        id="p-service"
+                        name="service"
+                        required
+                        value={service}
+                        onChange={(e) => setService(e.target.value)}
+                        className={selectCls}
+                      >
+                        {hero.serviceOptions.map((o) => (
+                          <option key={o} value={o}>
+                            {o}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
 
                     {/* Honigtopf — siehe Contact.tsx. Niemals „website"
                         nennen, das liest der gemeinsame Endpunkt als echte
@@ -195,7 +284,18 @@ export function LeadCaptureModal() {
                       />
                     </label>
 
-                    <ConsentCheckbox />
+                    <ConsentCheckbox
+                      id="p-consent"
+                      checked={consent}
+                      onChange={setConsent}
+                      invalid={Boolean(errors.consent)}
+                      describedBy={errors.consent ? "p-consent-err" : undefined}
+                    />
+                    {errors.consent ? (
+                      <p id="p-consent-err" role="alert" className="text-[12.5px] text-[#B3261E]">
+                        {errors.consent}
+                      </p>
+                    ) : null}
 
                     <button
                       type="submit"
@@ -203,17 +303,17 @@ export function LeadCaptureModal() {
                       className="w-full mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#EC178D] hover:bg-[#d4147f] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold text-[15px] py-3 transition-colors"
                     >
                       {sending ? (
-                        popup.sending
+                        hero.formSending
                       ) : (
                         <>
-                          {popup.submit} <ArrowRight size={15} />
+                          {hero.formCta} <ArrowRight size={15} />
                         </>
                       )}
                     </button>
 
-                    {error ? (
+                    {failed ? (
                       <p role="alert" className="text-[12.5px] leading-relaxed text-[#B3261E]">
-                        {error}
+                        {hero.formError}
                       </p>
                     ) : null}
 
@@ -225,6 +325,8 @@ export function LeadCaptureModal() {
                       {popup.dismiss}
                     </button>
 
+                    <p className="text-[12px] text-ink-muted">{hero.formNote}</p>
+
                     <ConsentNotice />
                   </form>
                 </>
@@ -234,10 +336,10 @@ export function LeadCaptureModal() {
                     <Check size={22} strokeWidth={3} />
                   </div>
                   <h3 className="mt-4 text-[20px] font-bold text-ink tracking-tight">
-                    {popup.successTitle}
+                    {hero.formSuccessTitle}
                   </h3>
                   <p className="mt-2 text-[14px] text-ink-soft leading-relaxed">
-                    {popup.successBody}
+                    {hero.formSuccess}
                   </p>
                 </div>
               )}
@@ -250,4 +352,42 @@ export function LeadCaptureModal() {
 }
 
 const inputCls =
-  "w-full rounded-2xl border border-ink/15 bg-white px-4 py-3 text-[16px] text-ink placeholder:text-ink-faint outline-none transition focus:border-ink/55 focus:ring-2 focus:ring-ink/10";
+  "w-full rounded-2xl border border-ink/15 bg-white px-4 py-2.5 text-[16px] text-ink placeholder:text-ink-faint outline-none transition focus:border-ink/55 focus:ring-2 focus:ring-ink/10";
+
+const selectCls = `${inputCls} appearance-none pr-10`;
+
+/**
+ * Ein beschriftetes Feld — dieselbe Bauart wie im Kontaktabschnitt, nur
+ * enger gesetzt, weil das Fenster auf dem Telefon sonst zweimal gescrollt
+ * werden muss. Das Feld steht NEBEN der Beschriftung, nicht darin:
+ * umschlossen zählt der Vorlesetext des Auswahlfeldes alle fünf Optionen
+ * zur Beschriftung hinzu.
+ */
+function Field({
+  id,
+  label,
+  error,
+  children,
+}: {
+  id: string;
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className="block text-[10.5px] font-semibold uppercase tracking-[0.14em] text-ink-muted mb-1"
+      >
+        {label}
+      </label>
+      {children}
+      {error ? (
+        <p id={`${id}-err`} role="alert" className="mt-1 text-[12px] text-[#B3261E]">
+          {error}
+        </p>
+      ) : null}
+    </div>
+  );
+}
