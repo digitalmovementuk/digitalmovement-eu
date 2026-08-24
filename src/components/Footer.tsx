@@ -1,6 +1,7 @@
 import { Mail, Phone, MessageCircle, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { business, footer } from "../content";
+import { FooterMap } from "./FooterMap";
 import { ADDRESS_LINE, VAT_ID } from "../seo";
 
 /**
@@ -109,6 +110,9 @@ export function Footer() {
             </ul>
           </Column>
         </div>
+
+        {/* Karte */}
+        <FooterMap />
 
         {/* Rechtliches */}
         <div className="mt-14 sm:mt-16 pt-6 border-t border-ink/10 flex flex-col items-center sm:flex-row sm:items-start sm:justify-between gap-4 text-[12px] text-ink-muted text-center sm:text-left">

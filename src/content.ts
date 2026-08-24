@@ -8,12 +8,17 @@
  * Bauteil keinen Text vorgibt, steht hier ein ergänzter Text — als solcher
  * im Kommentar markiert.
  *
- * Version 1.0 · Stand 15.08.2026
+ * Version 1.1 · Stand 24.08.2026
+ *
+ * Änderungen 1.1 (24.08.2026): Firmierung „Digital Movement Deutschland ·
+ * Raoul Müller“ zu „Digital Movement Germany“ — auf Weisung RMU. Die
+ * Zeile `rights` in der Fußzeile trägt dieselbe Firmierung, sonst nennt
+ * die Seite zwei verschiedene Unternehmen.
  */
 
 export const business = {
   name: "Digital Movement",
-  legalName: "Digital Movement Deutschland · Raoul Müller",
+  legalName: "Digital Movement Germany",
   tagline: "Jede Woche neue Verkaufschancen.",
   email: "office@digitalmovement.eu",
   emailHref: "mailto:office@digitalmovement.eu",
@@ -683,7 +688,7 @@ export const footer = {
       ],
     },
   ],
-  rights: "© Digital Movement Deutschland. Alle Rechte vorbehalten.",
+  rights: "© Digital Movement Germany. Alle Rechte vorbehalten.",
   legal: [
     { label: "Impressum", href: "/impressum" },
     { label: "Datenschutz", href: "/datenschutz" },

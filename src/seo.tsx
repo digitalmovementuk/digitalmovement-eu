@@ -35,7 +35,7 @@ export function absoluteUrl(path: string): string {
 export const TELEPHONE = "+4917623296439";
 
 /**
- * Kein Handelsregister-Eintrag: Digital Movement Deutschland ist ein
+ * Kein Handelsregister-Eintrag: Digital Movement Germany ist ein
  * Einzelunternehmen. Die Umsatzsteuer-ID liegt noch nicht vor — sobald sie
  * da ist, gehoert sie hierhin und ins Impressum, und zwar in beide.
  */
@@ -78,7 +78,7 @@ export const ADDRESS_LINE = "Kolonnenstraße 8, 10827 Berlin, Deutschland";
  * company. The legal pages state both, so a reader can tell that the brand
  * they contacted and the entity on the register are the same business.
  */
-export const LEGAL_ENTITY = "Digital Movement Deutschland · Raoul Müller";
+export const LEGAL_ENTITY = "Digital Movement Germany";
 
 /**
  * Die Bewertungen gehören der Gruppe, nicht der deutschen Einheit. Sie
@@ -132,7 +132,7 @@ export const LOCAL_BUSINESS = {
   "@id": `${SITE_URL}/#localbusiness`,
   name: "Digital Movement",
   description:
-    "Digital Movement Deutschland: SEO, GEO (KI-Suche), Google Ads, Social Media und High-End Website-Entwicklung.",
+    "Digital Movement Germany: SEO, GEO (KI-Suche), Google Ads, Social Media und High-End Website-Entwicklung.",
   url: `${SITE_URL}/`,
   image: OG_IMAGE,
   email: "office@digitalmovement.eu",

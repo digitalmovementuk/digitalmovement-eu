@@ -4,9 +4,10 @@ import { Seo, breadcrumbs } from "../seo";
 /**
  * Datenschutzerklärung. Beschreibt genau das, was diese Seite tatsächlich
  * tut: Auslieferung über GitHub Pages, ein Kontaktformular an unseren
- * eigenen Endpunkt, eingebettete Kundenwebsites als iFrame — und sonst
- * nichts. Kein Tracking, keine Cookies, keine Analyse-Tools. Sobald sich
- * daran etwas ändert, muss dieser Text mitgeändert werden.
+ * eigenen Endpunkt, eingebettete Kundenwebsites als iFrame, eine Karte,
+ * die erst auf Klick zu Google verbindet — und sonst nichts. Kein
+ * Tracking, keine Cookies, keine Analyse-Tools. Sobald sich daran etwas
+ * ändert, muss dieser Text mitgeändert werden.
  */
 export function Datenschutz() {
   return (
@@ -180,7 +181,47 @@ export function Datenschutz() {
             </p>
           </Block>
 
-          <Block title="7. Schriften">
+          <Block title="7. Google Maps in der Fußzeile">
+            <p>
+              In der Fußzeile zeigen wir, wo unser Büro liegt. Zu sehen ist
+              zunächst ein Kartenausschnitt als Bild, das von unserem eigenen
+              Server kommt — dabei entsteht keine Verbindung zu Google.
+            </p>
+            <p>
+              Erst wenn Sie auf „Google Maps laden“ klicken, wird die
+              bedienbare Karte von Google Maps nachgeladen. Anbieter ist
+              Google Ireland Limited, Gordon House, Barrow Street, Dublin 4,
+              Irland. Dabei übermittelt Ihr Browser Ihre IP-Adresse an Google,
+              Google kann Informationen auf Ihrem Gerät speichern und
+              auslesen, und eine Übermittlung in die USA ist nicht
+              ausgeschlossen. Ist Ihr Google-Konto im selben Browser
+              angemeldet, kann Google den Aufruf diesem Konto zuordnen.
+            </p>
+            <p>
+              Rechtsgrundlage ist Ihre Einwilligung nach § 25 Abs. 1 TDDDG und
+              Art. 6 Abs. 1 lit. a DSGVO — der Klick ist die Einwilligung. Sie
+              gilt für den laufenden Besuch und lässt sich jederzeit
+              widerrufen, indem Sie den Tab schließen oder neu laden. Ihre
+              Entscheidung merkt sich der Browser dafür im Sitzungsspeicher
+              („dm-maps“); dieser Eintrag ist zur Umsetzung Ihrer Wahl
+              erforderlich und wird beim Schließen des Tabs gelöscht. Klicken
+              Sie nicht, wird nichts an Google übertragen.
+            </p>
+            <p>
+              Mehr dazu in der{" "}
+              <a
+                href="https://policies.google.com/privacy?hl=de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkCls}
+              >
+                Datenschutzerklärung von Google
+              </a>
+              .
+            </p>
+          </Block>
+
+          <Block title="8. Schriften">
             <p>
               Die auf dieser Website verwendeten Schriften werden von unserem
               eigenen Server ausgeliefert. Es besteht dabei keine Verbindung zu
@@ -188,7 +229,7 @@ export function Datenschutz() {
             </p>
           </Block>
 
-          <Block title="8. Cookies, Tracking und Analyse">
+          <Block title="9. Cookies, Tracking und Analyse">
             <p>
               Diese Website setzt keine Cookies zu Analyse-, Marketing- oder
               Tracking-Zwecken. Es sind keine Analyse-Dienste, keine
@@ -197,7 +238,7 @@ export function Datenschutz() {
             </p>
           </Block>
 
-          <Block title="9. SSL-/TLS-Verschlüsselung">
+          <Block title="10. SSL-/TLS-Verschlüsselung">
             <p>
               Diese Seite nutzt aus Sicherheitsgründen eine
               SSL-/TLS-Verschlüsselung. Sie erkennen das an der Adresszeile
@@ -206,8 +247,8 @@ export function Datenschutz() {
             </p>
           </Block>
 
-          <Block title="10. Stand dieser Erklärung">
-            <p>Stand: August 2026.</p>
+          <Block title="11. Stand dieser Erklärung">
+            <p>Stand: 24. August 2026.</p>
           </Block>
         </div>
       </div>

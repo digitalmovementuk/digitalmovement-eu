@@ -34,7 +34,7 @@ export function Impressum() {
         <div className="mt-10 space-y-9 text-[15.5px] leading-relaxed text-ink-soft">
           <Block title="Angaben gemäß § 5 DDG">
             <p className="font-semibold text-ink">{business.legalName}</p>
-            <p>Inhaber: Raoul Müller</p>
+            <p>Raoul Müller</p>
             <p>{business.address.line1}</p>
             <p>{business.address.line2}</p>
             <p>{business.address.country}</p>
