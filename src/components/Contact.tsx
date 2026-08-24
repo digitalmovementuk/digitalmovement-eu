@@ -1,13 +1,40 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Check, Phone, MessageCircle, Mail, MapPin, Clock } from "lucide-react";
-import { business, contact } from "../content";
+import { business, contact, hero } from "../content";
 import { Reveal } from "../lib/Reveal";
 import { submitLead, trackLead } from "../lib/submitLead";
+import { LEAD_FIELD_ORDER, websiteMessage, validateLead } from "../lib/leadForm";
+import type { LeadFieldErrors } from "../lib/leadForm";
 import { ConsentCheckbox, ConsentNotice } from "./Consent";
 
 /**
  * Kontaktabschnitt.
+ * Version 1.1 · Stand 24.08.2026
+ *
+ * Änderungen 1.1 (24.08.2026): Das Formular ist Feld für Feld und Wort für
+ * Wort dasselbe wie im Startbereich. Auf Weisung RMU: „Make sure the data
+ * fields and content of contact form at bottom of page is synced with
+ * contact form in hero."
+ *
+ * Was das konkret geändert hat:
+ *   - Felder: vorher Name · Telefon · E-Mail · Unternehmen · Leistung ·
+ *     Freitext. Jetzt Name · Telefon · E-Mail · Website · „Was soll am
+ *     meisten wachsen?" — dieselben fünf, in derselben Reihenfolge.
+ *   - Beschriftungen, Platzhalter, Auswahlliste, Überschrift, Einleitung,
+ *     Knopfbeschriftung, Hinweiszeile und Fehlertexte kommen jetzt aus
+ *     `hero` in content.ts. Sie stehen nur noch einmal auf der Platte.
+ *   - Prüfung: Name, Telefon, Website und Häkchen sind Pflicht, E-Mail
+ *     bleibt optional. Vorher prüfte dieses Formular nichts selbst und
+ *     überließ alles dem Browser.
+ *   - Der Knopf heißt „Kostenlose Analyse anfordern" statt „Nachricht
+ *     senden". Zwei verschiedene Beschriftungen für denselben Schritt
+ *     waren zwei Angebote auf einer Seite.
+ *
+ * Bewusst NICHT übernommen ist die Optik: der Startbereich steht auf
+ * Dunkel und trägt deshalb Flüssigglas, dieser Abschnitt steht auf Weiß.
+ * Ein transparentes Formular auf hellem Grund hätte hier keine Kanten.
+ * Angeglichen sind Inhalt und Felder, nicht die Oberfläche.
  *
  * Der Erfolgszustand wird ausschließlich gezeigt, wenn die Übertragung
  * wirklich geklappt hat. In der Vorlage stand hier einmal ein blankes
@@ -15,43 +42,59 @@ import { ConsentCheckbox, ConsentNotice } from "./Consent";
  * weg. Nicht wieder einbauen.
  */
 export function Contact() {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState("");
+  const [service, setService] = useState(hero.serviceOptions[0]);
+  const [consent, setConsent] = useState(false);
+  const [hp, setHp] = useState(""); // Honigtopf
+
+  const [errors, setErrors] = useState<LeadFieldErrors>({});
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [hp, setHp] = useState(""); // Honeypot
+  const [failed, setFailed] = useState(false);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (hp) return; // Honeypot getroffen — kommentarlos verwerfen, so erwarten es Bots
+  const onSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (hp) return; // Honigtopf getroffen — kommentarlos verwerfen, so erwarten es Bots
+      if (sending || submitted) return;
 
-    const data = new FormData(e.currentTarget);
-    setSending(true);
-    setError(null);
+      const next = validateLead({ name, phone, website, consent });
+      setErrors(next);
+      if (Object.keys(next).length > 0) {
+        const first = LEAD_FIELD_ORDER.find((k) => next[k]);
+        if (first) {
+          document.getElementById(first === "consent" ? "c-consent" : `c-${first}`)?.focus();
+        }
+        return;
+      }
 
-    const company = String(data.get("company") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
+      setSending(true);
+      setFailed(false);
 
-    const result = await submitLead({
-      name: String(data.get("name") ?? ""),
-      email: String(data.get("email") ?? ""),
-      phone: String(data.get("phone") ?? ""),
-      service: String(data.get("service") ?? ""),
-      // Das Unternehmensfeld hat im Endpunkt kein eigenes Feld. Es an den
-      // Fließtext anzuhängen ist besser, als es zu verlieren.
-      message: company ? `${message}\n\nUnternehmen: ${company}` : message,
-      consent: data.get("consent") != null,
-      source: "contact-section",
-    });
+      const result = await submitLead({
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email.trim() || undefined,
+        service,
+        message: websiteMessage(website),
+        consent,
+        source: "contact-section",
+      });
 
-    setSending(false);
+      setSending(false);
 
-    if (result.ok) {
-      trackLead("contact-section");
-      setSubmitted(true);
-    } else {
-      setError(contact.form.error);
-    }
-  };
+      if (result.ok) {
+        trackLead("contact-section");
+        setSubmitted(true);
+      } else {
+        setFailed(true);
+      }
+    },
+    [name, phone, email, website, service, consent, hp, sending, submitted],
+  );
 
   return (
     <section
@@ -101,75 +144,147 @@ export function Contact() {
           </ul>
         </div>
 
-        {/* Rechts — Formular */}
+        {/* Rechts — Formular. Felder und Text identisch mit dem Startbereich. */}
         <div className="rounded-[28px] sm:rounded-[36px] border border-ink/10 bg-white p-6 sm:p-8 md:p-10 shadow-card">
           <AnimatePresence mode="wait">
             {!submitted ? (
               <motion.form
                 key="form"
+                id="contact-form"
                 onSubmit={onSubmit}
+                noValidate
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.35 }}
                 className="space-y-5"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <p className="eyebrow text-ink-muted">Kostenloses Erstgespräch</p>
-                  <p className="text-[12px] text-ink-muted">Antwort innerhalb 2 Stunden</p>
+                {/* Wortgleich mit dem Startbereich, aber eine Ebene tiefer:
+                    die Überschrift dieses Abschnitts ist die H2 links, und
+                    zwei H2 nebeneinander würden die Gliederung der Seite
+                    zerlegen. */}
+                <div>
+                  <h3
+                    className="text-ink"
+                    style={{
+                      fontSize: "clamp(19px, 1.5vw, 22px)",
+                      lineHeight: "1.15",
+                      letterSpacing: "-0.02em",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {hero.formTitle}
+                  </h3>
+                  <p className="mt-2 text-[13.5px] leading-relaxed text-ink-soft">
+                    {hero.formIntro}
+                  </p>
                 </div>
 
-                <Field label={contact.form.name} name="name" required>
-                  <input type="text" name="name" required autoComplete="name" className={inputCls} />
-                </Field>
-
-                {/* Telefon ist Pflicht, E-Mail optional. Das sind Anfragen,
-                    die wir zurückrufen — eine gültige, aber falsche
-                    E-Mail-Adresse ist ein toter Kontakt, den man von einem
-                    lebenden nicht unterscheiden kann. */}
+                {/* Reihenfolge wie oben: Name · Telefon, dann E-Mail ·
+                    Website, dann die Auswahl über die volle Breite.
+                    Telefon ist Pflicht, E-Mail optional — das sind
+                    Anfragen, die wir zurückrufen, und eine gültige, aber
+                    falsche E-Mail-Adresse ist ein toter Kontakt, den man
+                    von einem lebenden nicht unterscheiden kann. */}
                 <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-                  <Field label={contact.form.phone} name="phone" required>
-                    <input type="tel" name="phone" required autoComplete="tel" className={inputCls} />
-                  </Field>
-                  <Field label={contact.form.email} name="email">
-                    <input type="email" name="email" autoComplete="email" className={inputCls} />
-                  </Field>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
-                  <Field label={contact.form.company} name="company">
+                  <Field
+                    id="c-name"
+                    label={hero.fields.name.label}
+                    error={errors.name}
+                  >
                     <input
+                      id="c-name"
+                      name="name"
                       type="text"
-                      name="company"
-                      autoComplete="organization"
+                      autoComplete="name"
+                      placeholder={hero.fields.name.placeholder}
+                      required
+                      aria-invalid={errors.name ? true : undefined}
+                      aria-describedby={errors.name ? "c-name-err" : undefined}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       className={inputCls}
                     />
                   </Field>
-                  <Field label="Leistung" name="service">
-                    <select
-                      name="service"
-                      defaultValue={contact.serviceOptions[contact.serviceOptions.length - 1]}
-                      className={selectCls}
-                    >
-                      {contact.serviceOptions.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
-                        </option>
-                      ))}
-                    </select>
+                  <Field
+                    id="c-phone"
+                    label={hero.fields.phone.label}
+                    error={errors.phone}
+                  >
+                    <input
+                      id="c-phone"
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      placeholder={hero.fields.phone.placeholder}
+                      required
+                      aria-invalid={errors.phone ? true : undefined}
+                      aria-describedby={errors.phone ? "c-phone-err" : undefined}
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className={inputCls}
+                    />
                   </Field>
                 </div>
 
-                <Field label={contact.form.message} name="message">
-                  <textarea
-                    name="message"
-                    rows={4}
-                    placeholder="Wo Sie heute stehen, wo Sie hinwollen — und was gerade im Weg steht."
-                    className={`${inputCls} resize-none min-h-[120px]`}
-                  />
+                <div className="grid sm:grid-cols-2 gap-4 sm:gap-5">
+                  <Field id="c-email" label={hero.fields.email.label}>
+                    <input
+                      id="c-email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      placeholder={hero.fields.email.placeholder}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={inputCls}
+                    />
+                  </Field>
+                  {/* Das Feld heißt `site`, nicht `website` — wie oben.
+                      Der gemeinsame Endpunkt liest ein Feld namens
+                      „website" als Honigtopf und verwirft die Anfrage
+                      still. */}
+                  <Field
+                    id="c-website"
+                    label={hero.fields.website.label}
+                    error={errors.website}
+                  >
+                    <input
+                      id="c-website"
+                      name="site"
+                      type="url"
+                      inputMode="url"
+                      autoComplete="url"
+                      placeholder={hero.fields.website.placeholder}
+                      required
+                      aria-invalid={errors.website ? true : undefined}
+                      aria-describedby={errors.website ? "c-website-err" : undefined}
+                      value={website}
+                      onChange={(e) => setWebsite(e.target.value)}
+                      className={inputCls}
+                    />
+                  </Field>
+                </div>
+
+                <Field id="c-service" label={hero.fields.service.label}>
+                  <select
+                    id="c-service"
+                    name="service"
+                    required
+                    value={service}
+                    onChange={(e) => setService(e.target.value)}
+                    className={selectCls}
+                  >
+                    {hero.serviceOptions.map((o) => (
+                      <option key={o} value={o}>
+                        {o}
+                      </option>
+                    ))}
+                  </select>
                 </Field>
 
-                {/* Honeypot — das Feld, das Bots gern ausfüllen. Heißt
+                {/* Honigtopf — das Feld, das Bots gern ausfüllen. Heißt
                     `_honey`, damit es auch ohne React greift. Niemals
                     „website" nennen: der gemeinsame Endpunkt liest dieses
                     Feld als echte URL der anfragenden Person, eine echte
@@ -186,7 +301,18 @@ export function Contact() {
                   />
                 </label>
 
-                <ConsentCheckbox />
+                <ConsentCheckbox
+                  id="c-consent"
+                  checked={consent}
+                  onChange={setConsent}
+                  invalid={Boolean(errors.consent)}
+                  describedBy={errors.consent ? "c-consent-err" : undefined}
+                />
+                {errors.consent ? (
+                  <p id="c-consent-err" role="alert" className="text-[12.5px] text-[#B3261E]">
+                    {errors.consent}
+                  </p>
+                ) : null}
 
                 <button
                   type="submit"
@@ -194,19 +320,21 @@ export function Contact() {
                   className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#EC178D] hover:bg-[#d4147f] disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium text-[15px] py-3 transition-colors"
                 >
                   {sending ? (
-                    contact.form.sending
+                    hero.formSending
                   ) : (
                     <>
-                      {contact.form.submit} <ArrowRight size={15} />
+                      {hero.formCta} <ArrowRight size={15} />
                     </>
                   )}
                 </button>
 
-                {error ? (
+                {failed ? (
                   <p role="alert" className="text-[13px] leading-relaxed text-[#B3261E]">
-                    {error}
+                    {hero.formError}
                   </p>
                 ) : null}
+
+                <p className="text-[12px] text-ink-muted">{hero.formNote}</p>
 
                 <ConsentNotice />
               </motion.form>
@@ -223,7 +351,7 @@ export function Contact() {
                   <Check size={26} strokeWidth={3} />
                 </div>
                 <h3 className="mt-5 text-[24px] font-extrabold text-ink">Angekommen.</h3>
-                <p className="mt-2 text-ink-soft leading-relaxed">{contact.form.success}</p>
+                <p className="mt-2 text-ink-soft leading-relaxed">{hero.formSuccess}</p>
 
                 <div className="mt-7 rounded-2xl border border-ink/10 bg-surface-2 p-5 text-left space-y-3">
                   <div className="flex items-start gap-3">
@@ -286,25 +414,45 @@ const inputCls =
 
 const selectCls = `${inputCls} appearance-none pr-10`;
 
+/**
+ * Ein beschriftetes Feld. `id` ist Pflicht, nicht optional: vorher zeigte
+ * das `htmlFor` auf den Feldnamen, den kein Element trug — die Beschriftung
+ * gehörte zu nichts, und ein Klick darauf setzte den Schreibzeiger nicht.
+ */
 function Field({
+  id,
   label,
-  name,
-  required,
+  error,
   children,
 }: {
+  id: string;
   label: string;
-  name: string;
-  required?: boolean;
+  error?: string;
   children: React.ReactNode;
 }) {
   return (
-    <label htmlFor={name} className="block">
-      <span className="block text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink-muted mb-1.5">
+    <div>
+      {/* Das Feld steht NEBEN der Beschriftung, nicht darin. Umschlossen
+          zählt der Vorlesetext des Auswahlfeldes alle fünf Optionen zur
+          Beschriftung hinzu — gemessen am gerenderten Bild:
+          „Was soll am meisten wachsen?SEO-AnalyseSichtbarkeit in der
+          KI-Suche…". Kein Sternchen: der Startbereich markiert Pflicht
+          nicht, sondern nennt umgekehrt das eine freiwillige Feld
+          „E-Mail (optional)". Zwei Konventionen auf einer Seite sind eine
+          zu viel. */}
+      <label
+        htmlFor={id}
+        className="block text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink-muted mb-1.5"
+      >
         {label}
-        {required && <span className="text-ink-faint ml-1">*</span>}
-      </span>
+      </label>
       {children}
-    </label>
+      {error ? (
+        <p id={`${id}-err`} role="alert" className="mt-1.5 text-[12.5px] text-[#B3261E]">
+          {error}
+        </p>
+      ) : null}
+    </div>
   );
 }
 

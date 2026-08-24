@@ -8,7 +8,27 @@
  * Bauteil keinen Text vorgibt, steht hier ein ergänzter Text — als solcher
  * im Kommentar markiert.
  *
- * Version 1.5 · Stand 24.08.2026
+ * Version 1.7 · Stand 24.08.2026
+ *
+ * Änderungen 1.7 (24.08.2026): `comparison.columns` bekommt eine dritte
+ * Beschriftung, `topic: "Thema"`. Der Vergleich steht seit dieser Fassung
+ * in einer echten Tabelle statt in zwei Karten (Blueprint Teil 12: „eine
+ * echte <table> … niemals ein Bild einer Tabelle"), und eine Tabelle
+ * braucht auch für die erste Spalte eine Überschrift. Kein Werbetext,
+ * sondern die Beschriftung einer Spalte — der freigegebene Text des
+ * RMU-Dokuments bleibt unberührt.
+ *
+ * Änderungen 1.6 (24.08.2026): `contact.form` und `contact.serviceOptions`
+ * entfallen. Das Anfrageformular im Kontaktabschnitt ist auf Weisung RMU
+ * („Make sure the data fields and content of contact form at bottom of
+ * page is synced with contact form in hero.") Feld für Feld und Wort für
+ * Wort dasselbe wie im Startbereich und holt seinen Text jetzt aus
+ * `hero`. Der Formulartext steht damit nur noch einmal auf der Platte.
+ * Die beiden Kopien hatten sich bereits auseinandergelebt — unten
+ * „Nachricht senden“ und „Leistung“, oben „Kostenlose Analyse anfordern“
+ * und „Was soll am meisten wachsen?“ — und unten wurden zwei Felder
+ * abgefragt, die es oben nicht gibt (Unternehmen, Freitext), während das
+ * Feld für die Website fehlte.
  *
  * Änderungen 1.5 (24.08.2026): Startbereich zurück auf den Text, den RMU
  * am selben Tag vorgegeben hat — Überzeile „SEO-Agentur“, Überschrift
@@ -604,7 +624,7 @@ export const comparison = {
   headlineMain: "Was wir anders machen.",
   headlineSub: "Sechs Punkte.",
   intro: "Damit Sie wissen, worauf Sie sich einlassen. Bevor Sie sich einlassen.",
-  columns: { other: "Andere Agenturen", neo: "Digital Movement" },
+  columns: { topic: "Thema", other: "Andere Agenturen", neo: "Digital Movement" },
   rows: [
     {
       topic: "Vertragslaufzeit",
@@ -697,21 +717,11 @@ export const contact = {
   headlinePre: "Lassen Sie uns",
   headlineSoft: "starten.",
   intro: "Kostenloses Erstgespräch. Werktags antworte ich innerhalb 2 Stunden. Persönlich.",
-  form: {
-    name: "Name",
-    phone: "Telefonnummer",
-    email: "E-Mail (optional)",
-    company: "Unternehmen (optional)",
-    message: "Was möchten Sie erreichen?",
-    submit: "Nachricht senden",
-    success: "Danke. Sie hören innerhalb 2 Stunden von mir.",
-    sending: "Wird gesendet …",
-    error:
-      "Das hat nicht geklappt. Bitte rufen Sie uns an oder schreiben Sie an office@digitalmovement.eu.",
-  },
-  /* Auswahl im Formular. Die vier Services aus dem Dokument plus eine
-     Option für alle, die sich noch nicht festlegen wollen. */
-  serviceOptions: ["SEO", "Google Ads", "Social Media", "Website", "Noch unklar"],
+  /* Kein eigener Formulartext mehr. Das Formular in diesem Abschnitt ist
+     Feld für Feld dasselbe wie im Startbereich und holt Beschriftungen,
+     Platzhalter, Auswahlliste, Knopfbeschriftung, Hinweiszeile und
+     Fehlertexte aus `hero` weiter oben. Der Text steht damit an einer
+     Stelle und kann nicht mehr auseinanderlaufen. */
   tiles: [
     { kicker: "Telefon", value: "+49 176 23296439", href: "tel:+4917623296439" },
     {

@@ -2,6 +2,8 @@ import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { hero } from "../content";
 import { submitLead, trackLead } from "../lib/submitLead";
+import { LEAD_FIELD_ORDER, websiteMessage, validateLead } from "../lib/leadForm";
+import type { LeadFieldErrors } from "../lib/leadForm";
 import { CONSENT_TEXT } from "../lib/consentText";
 import "../styles/hero-uk.css";
 
@@ -50,22 +52,6 @@ import "../styles/hero-uk.css";
 const BASE = import.meta.env.BASE_URL;
 const LOGO_DIR = `${BASE}brand/hero-uk/logos/`;
 
-type FieldErrors = {
-  name?: string;
-  phone?: string;
-  website?: string;
-  consent?: string;
-};
-
-/* Der Endpunkt bekommt die Adresse als Text. Ohne Schema ist "ihrefirma.de"
-   für jedes spätere Werkzeug ein relativer Pfad, nicht eine Website —
-   deshalb hier einmal sauber ergänzen statt später raten. */
-function normaliseUrl(raw: string): string {
-  const v = raw.trim();
-  if (!v) return v;
-  return /^https?:\/\//i.test(v) ? v : `https://${v}`;
-}
-
 export function Hero() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -75,7 +61,7 @@ export function Hero() {
   const [consent, setConsent] = useState(false);
   const [honey, setHoney] = useState("");
 
-  const [errors, setErrors] = useState<FieldErrors>({});
+  const [errors, setErrors] = useState<LeadFieldErrors>({});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -86,19 +72,16 @@ export function Hero() {
       if (honey) return; // Honigtopf getroffen — kommentarlos verwerfen
       if (sending || sent) return;
 
-      const next: FieldErrors = {};
-      if (!name.trim()) next.name = hero.errRequiredName;
-      if (!phone.trim()) next.phone = hero.errRequiredPhone;
-      if (!website.trim()) next.website = hero.errRequiredWebsite;
-      if (!consent) next.consent = hero.errConsent;
+      /* Prüfung, Fehlertexte und Feldreihenfolge liegen in lib/leadForm.ts —
+         dasselbe Modul, das der Kontaktabschnitt unten benutzt. */
+      const next = validateLead({ name, phone, website, consent });
 
       setErrors(next);
       if (Object.keys(next).length > 0) {
         /* Zum ersten fehlenden Feld springen. Auf dem Telefon steht der
            Fehler sonst außerhalb des Bildschirms und das Formular wirkt,
            als sei der Knopf kaputt. */
-        const order = ["name", "phone", "website", "consent"] as const;
-        const first = order.find((k) => next[k]);
+        const first = LEAD_FIELD_ORDER.find((k) => next[k]);
         if (first) {
           const el = document.querySelector<HTMLElement>(
             first === "consent" ? '.uk-hero .consent input' : `#h-${first}`,
@@ -116,7 +99,7 @@ export function Hero() {
         phone: phone.trim(),
         email: email.trim() || undefined,
         service,
-        message: `Website: ${normaliseUrl(website)}`,
+        message: websiteMessage(website),
         consent,
         source: "home-hero",
       });

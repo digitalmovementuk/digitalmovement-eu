@@ -41,7 +41,12 @@ export function AnswerBlock() {
               className="h-[52px] w-[52px] shrink-0 rounded-full object-cover ring-1 ring-ink/10"
             />
             <p className="text-[14.5px] leading-snug text-ink-soft">
-              <span className="font-bold text-ink">{byline.name}</span>
+              {/* `byline-author` ist keine Gestaltungsklasse, sondern die
+                  maschinenlesbare Markierung der Verfasserzeile. Ohne sie ist
+                  der Name für eine Prüfung nur Fließtext — und ein loses Muster
+                  auf „von …" darf sie bewusst nicht als Verfasser zählen.
+                  Zweiter, tragender Beleg: der Person-Knoten im Schema. */}
+              <span className="byline-author font-bold text-ink">{byline.name}</span>
               <span className="text-ink-muted"> · {byline.role}</span>
               <span className="block text-[13px] text-ink-muted">{byline.meta}</span>
             </p>

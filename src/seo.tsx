@@ -152,6 +152,33 @@ export const WEBSITE = {
   inLanguage: "de-DE",
 };
 
+/**
+ * Der Mensch, der für den Inhalt dieser Seite geradesteht.
+ *
+ * Blueprint Teil 2 verlangt eine benannte Verfasserzeile mit Bild,
+ * Qualifikation und Kurzbiografie — „echt und nachprüfbar, wir erfinden
+ * niemals einen Verfasser". Sichtbar steht sie seit dem Umbau im
+ * Antwortblock. Sichtbar allein reicht aber nicht: Eine Prüfung sucht den
+ * Verfasser nur dort, wo er ausgezeichnet IST, und wertet einen bloßen
+ * Namen im Fließtext bewusst nicht als Verfasserzeile. Ohne diesen Knoten
+ * ist die Seite also verfasserlos — obwohl der Name auf dem Bildschirm
+ * steht.
+ *
+ * `url` zeigt auf `#founder` — den Abschnitt mit der Notiz des Gründers,
+ * der auf derselben Seite liegt. Er ist die Kurzbiografie. Eine Adresse,
+ * die ins Leere zeigt, wäre schlimmer als keine: Sie macht aus einem
+ * fehlenden Beleg einen falschen.
+ */
+export const AUTHOR = {
+  "@type": "Person",
+  "@id": `${SITE_URL}/#raoul-mueller`,
+  name: "Raoul Müller",
+  jobTitle: "Gründer",
+  url: `${SITE_URL}/#founder`,
+  image: `${SITE_URL}/brand/raoul-founder.png`,
+  worksFor: { "@id": `${SITE_URL}/#organization` },
+};
+
 /** Breadcrumbs for any route. Home is always the first crumb. */
 export function breadcrumbs(trail: Array<{ name: string; path: string }>) {
   const items = [{ name: "Startseite", path: "/" }, ...trail];
@@ -229,9 +256,17 @@ type SeoProps = {
    * site needs to remember to. Gate item S2.4.
    */
   schema?: object[];
+
+  /**
+   * Setzt den Person-Knoten als Verfasser dieser Route. Nur dort wahr, wo
+   * die Verfasserzeile auch sichtbar auf der Seite steht — Auszeichnung
+   * ohne sichtbaren Beleg ist genau der Fehler, den die zwei Regeln oben
+   * verbieten.
+   */
+  author?: boolean;
 };
 
-export function Seo({ title, description, path, noindex, metaRefresh, schema }: SeoProps) {
+export function Seo({ title, description, path, noindex, metaRefresh, schema, author }: SeoProps) {
   const url = absoluteUrl(path);
 
   /**
@@ -251,6 +286,13 @@ export function Seo({ title, description, path, noindex, metaRefresh, schema }: 
     name: title,
     isPartOf: { "@id": `${SITE_URL}/#website` },
     dateModified: __BUILD_DATE__,
+    /* Der Person-Knoten steht hier VOLLSTÄNDIG, nicht als Verweis auf seine
+       @id. Beides ist gültiges JSON-LD und beschreibt dieselbe Person, aber
+       ein Leser, der die Verfasserzeile sucht, liest `author` und schaut
+       nicht nach, wohin die @id zeigt — mit einem Verweis stand die Seite
+       da wie eine ohne Verfasser. Gemessen, nicht vermutet: mit der @id
+       meldete die Prüfung „keine benannte Person als Verfasser". */
+    ...(author ? { author: AUTHOR } : {}),
   };
 
   /**
@@ -276,7 +318,13 @@ export function Seo({ title, description, path, noindex, metaRefresh, schema }: 
    */
   const graph = JSON.stringify({
     "@context": "https://schema.org",
-    "@graph": [ORGANIZATION, WEBSITE, LOCAL_BUSINESS, page, ...(schema ?? [])],
+    "@graph": [
+      ORGANIZATION,
+      WEBSITE,
+      LOCAL_BUSINESS,
+      page,
+      ...(schema ?? []),
+    ],
   });
 
   return (

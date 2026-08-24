@@ -15,14 +15,46 @@ import { CONSENT_TEXT, RETENTION } from "../lib/consentText";
 
 export { CONSENT_TEXT, RETENTION };
 
-export function ConsentCheckbox({ tone = "light" }: { tone?: "light" | "dark" }) {
+export function ConsentCheckbox({
+  tone = "light",
+  id,
+  checked,
+  onChange,
+  invalid,
+  describedBy,
+}: {
+  tone?: "light" | "dark";
+  id?: string;
+  /** Weglassen = ungesteuert. Gesetzt = das Formular prüft selbst. */
+  checked?: boolean;
+  onChange?: (value: boolean) => void;
+  invalid?: boolean;
+  describedBy?: string;
+}) {
+  /* Zwei Betriebsarten in einem Bauteil, damit der Wortlaut der
+     Einwilligung nur an einer Stelle steht. Ein zweites, handgeschriebenes
+     Kästchen im Kontaktformular wäre ein zweiter Rechtstext, sobald einer
+     der beiden geändert wird — und `consent_text` im Nutzdatensatz wäre
+     dann nicht mehr der Satz, den die Besucherin gelesen hat. */
+  const controlled = typeof checked === "boolean";
   return (
     <label className="flex items-start gap-3 pt-1 cursor-pointer">
       <input
+        id={id}
         type="checkbox"
         name="consent"
         required
-        className="mt-0.5 h-4 w-4 shrink-0 rounded border-ink/30 accent-[#EC178D]"
+        aria-invalid={invalid ? true : undefined}
+        aria-describedby={describedBy}
+        {...(controlled
+          ? { checked, onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChange?.(e.target.checked) }
+          : {})}
+        /* `color-scheme: light` steht hier, weil das Kästchen sonst in einem
+           dunkel gestellten Browser als schwarzes Quadrat gemalt wird — das
+           native Steuerelement folgt der Systemeinstellung, nicht der Seite.
+           Die Felder im Startbereich setzen das bereits, der Rest der Seite
+           nicht; gemessen am Bild, nicht am Quelltext. */
+        className="mt-0.5 h-4 w-4 shrink-0 rounded border-ink/30 accent-[#EC178D] [color-scheme:light]"
       />
       <span
         className={`text-[12px] leading-relaxed ${tone === "dark" ? "text-white/70" : "text-ink-muted"}`}

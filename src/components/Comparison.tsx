@@ -5,23 +5,41 @@ import { Reveal } from "../lib/Reveal";
 import { useT } from "../lib/i18n";
 
 /**
- * Comparison — "Andere Agenturen vs. NEO". Two-column side-by-side table
- * that directly addresses agency PTSD: contract length, reporting, point
- * of contact, pricing transparency, goal, lock-in. Copy via i18n (DE/EN).
+ * Comparison — „Andere Agenturen vs. Digital Movement“, Blueprint Teil 12.
  *
- * Motion: ambient orange/magenta orbs drift in opposite directions on
- * scroll for depth; rows stagger in line-by-line as the cards enter view.
+ * Version 1.1 · Stand 24.08.2026
+ *
+ * Änderung 1.1: aus zwei Karten wird eine echte Tabelle. Der Blueprint
+ * verlangt an dieser Stelle wörtlich „eine echte <table> mit Merkmalen und
+ * Preisen gegen die Alternativen … niemals ein Bild einer Tabelle“. Zwei
+ * Listen nebeneinander sehen aus wie ein Vergleich, sind aber keiner: Wer
+ * sie liest — ein Mensch mit Vorleseprogramm ebenso wie eine
+ * Suchmaschine — bekommt zwei getrennte Aufzählungen und muss die Zeilen
+ * selbst zusammenlegen. In einer Tabelle gehören „Vertragslaufzeit“,
+ * „12 oder 24 Monate“ und „90-Tage-Sprint“ nachweislich zusammen.
+ *
+ * Auf dem Telefon bleibt es dieselbe Tabelle, sie wird nur anders
+ * dargestellt: Jede Zeile klappt zu einem Block auf, weil drei Spalten
+ * deutscher Text in 375 Pixeln nicht lesbar sind. Deshalb trägt jede
+ * Zelle ihre eigene Beschriftung („Andere Agenturen“ / „Digital
+ * Movement“) — sichtbar nur dort, wo die Kopfzeile ausgeblendet ist. Am
+ * Auszeichnungs-Baum ändert das nichts, `display` ist reine Darstellung.
+ *
+ * Der Rest ist unverändert: Text aus i18n (speist sich aus `comparison`
+ * in content.ts), die beiden treibenden Farbkreise im Hintergrund.
+ * Entfallen ist allein das Abzeichen „NEO“ — die Marke heißt seit dem
+ * Rebrand Digital Movement, und die Spaltenüberschrift sagt es ohnehin.
  */
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
+/** Tönung der Digital-Movement-Spalte. Dieselbe Akzentfarbe wie zuvor. */
+const HIGHLIGHT = "rgba(255,122,69,0.06)";
+
 export function Comparison() {
   const t = useT();
-  const ROWS = t.comparison.rows.map((r) => ({
-    label: r.topic,
-    them: r.other,
-    us: r.neo,
-  }));
+  const cols = t.comparison.columns;
+  const rows = t.comparison.rows;
 
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -95,93 +113,104 @@ export function Comparison() {
           </Reveal>
         </div>
 
-        <div className="mt-12 sm:mt-16 grid md:grid-cols-2 gap-4 sm:gap-5">
-          {/* Andere Agenturen */}
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: EASE_OUT }}
-            className="rounded-[28px] sm:rounded-[36px] border border-ink/10 bg-white p-7 sm:p-9 shadow-card"
-          >
-            <p className="eyebrow text-ink-muted">{t.comparison.columns.other}</p>
-            <ul className="mt-6 space-y-4">
-              {ROWS.map((r, i) => (
-                <motion.li
-                  key={r.label}
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{
-                    duration: 0.45,
-                    delay: 0.18 + 0.06 * i,
-                    ease: EASE_OUT,
-                  }}
-                  className="flex items-start gap-3"
-                >
-                  <span className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-ink/8 text-ink-faint">
-                    <X size={11} strokeWidth={3} />
-                  </span>
-                  <div className="leading-snug">
-                    <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink-muted">
-                      {r.label}
-                    </p>
-                    <p className="mt-1 text-[14px] sm:text-[15px] text-ink-soft">{r.them}</p>
-                  </div>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
+        <Reveal delay={0.06}>
+          <div className="mt-12 sm:mt-16 overflow-hidden rounded-[28px] sm:rounded-[36px] border border-ink/10 bg-white shadow-card">
+            <table className="block w-full border-collapse text-left md:table">
+              <caption className="sr-only">
+                {`${cols.other} und ${cols.neo} im Vergleich — ${rows.length} Punkte.`}
+              </caption>
 
-          {/* NEO */}
-          <motion.div
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: 0.08, ease: EASE_OUT }}
-            className="relative rounded-[28px] sm:rounded-[36px] border-2 bg-white p-7 sm:p-9 shadow-[0_30px_80px_-30px_rgba(255,122,69,0.35)]"
-            style={{ borderColor: "#FF7A45" }}
-          >
-            <span
-              className="absolute -top-3 left-7 sm:left-9 inline-flex items-center gap-1.5 rounded-full text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5"
-              style={{ background: "#FF7A45" }}
-            >
-              NEO
-            </span>
-            <p className="eyebrow text-ink mt-2">{t.comparison.columns.neo}</p>
-            <ul className="mt-6 space-y-4">
-              {ROWS.map((r, i) => (
-                <motion.li
-                  key={r.label}
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
-                  transition={{
-                    duration: 0.45,
-                    delay: 0.24 + 0.06 * i,
-                    ease: EASE_OUT,
-                  }}
-                  className="flex items-start gap-3"
-                >
-                  <span
-                    className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full text-white"
-                    style={{ background: "#FF7A45" }}
+              {/* Auf dem Telefon ausgeblendet: dort trägt jede Zelle ihre
+                  eigene Beschriftung, siehe unten. */}
+              <thead className="hidden md:table-header-group">
+                <tr>
+                  <th
+                    scope="col"
+                    className="eyebrow w-[24%] px-6 py-5 text-ink-muted align-bottom"
                   >
-                    <Check size={11} strokeWidth={3} />
-                  </span>
-                  <div className="leading-snug">
-                    <p className="text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink-muted">
-                      {r.label}
-                    </p>
-                    <p className="mt-1 text-[14px] sm:text-[15px] font-semibold text-ink">
-                      {r.us}
-                    </p>
-                  </div>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
+                    {cols.topic}
+                  </th>
+                  <th
+                    scope="col"
+                    className="eyebrow w-[38%] px-6 py-5 text-ink-muted align-bottom"
+                  >
+                    {cols.other}
+                  </th>
+                  <th
+                    scope="col"
+                    className="eyebrow w-[38%] px-6 py-5 text-ink align-bottom"
+                    style={{ background: HIGHLIGHT }}
+                  >
+                    {cols.neo}
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody className="block md:table-row-group">
+                {rows.map((r, i) => (
+                  <motion.tr
+                    key={r.topic}
+                    /* Nur die Deckkraft wird bewegt. Ein `transform` auf einer
+                       Tabellenzeile ist von Browser zu Browser verschieden
+                       umgesetzt — der Effekt wäre denselben Aufwand nicht
+                       wert, das Risiko einer verrutschten Zeile schon gar
+                       nicht. */
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.45, delay: 0.06 * i, ease: EASE_OUT }}
+                    className="block border-t border-ink/10 first:border-t-0 md:table-row md:border-ink/8 md:first:border-t"
+                  >
+                    <th
+                      scope="row"
+                      className="block px-6 pt-5 pb-2 text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink-muted md:table-cell md:py-5 md:align-top md:text-[13.5px] md:font-semibold md:normal-case md:tracking-normal md:text-ink"
+                    >
+                      {r.topic}
+                    </th>
+
+                    <td className="block px-6 pb-3 md:table-cell md:py-5 md:align-top">
+                      <span className="mb-1.5 block text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink-faint md:hidden">
+                        {cols.other}
+                      </span>
+                      <span className="flex items-start gap-3">
+                        <span
+                          aria-hidden
+                          className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-ink/8 text-ink-faint"
+                        >
+                          <X size={11} strokeWidth={3} />
+                        </span>
+                        <span className="text-[14px] sm:text-[15px] leading-snug text-ink-soft">
+                          {r.other}
+                        </span>
+                      </span>
+                    </td>
+
+                    <td
+                      className="block px-6 pt-3 pb-5 md:table-cell md:py-5 md:align-top"
+                      style={{ background: HIGHLIGHT }}
+                    >
+                      <span className="mb-1.5 block text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink-muted md:hidden">
+                        {cols.neo}
+                      </span>
+                      <span className="flex items-start gap-3">
+                        <span
+                          aria-hidden
+                          className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-white"
+                          style={{ background: "#FF7A45" }}
+                        >
+                          <Check size={11} strokeWidth={3} />
+                        </span>
+                        <span className="text-[14px] sm:text-[15px] font-semibold leading-snug text-ink">
+                          {r.neo}
+                        </span>
+                      </span>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

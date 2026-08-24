@@ -100,6 +100,12 @@ export function HomePage() {
            sich aus derselben Konstante, damit Auszeichnung und sichtbarer
            Text nicht auseinanderlaufen können. */
         schema={[faqSchema(faqs)]}
+        /* Die Startseite trägt eine sichtbare Verfasserzeile im
+           Antwortblock — Name, Bild, Rolle, Link auf die Notiz des
+           Gründers. `author` zeichnet genau diese Person aus. Impressum
+           und Datenschutz tragen sie nicht und bekommen sie deshalb
+           auch nicht. */
+        author
       />
       <Hero />
       <AnswerBlock />
