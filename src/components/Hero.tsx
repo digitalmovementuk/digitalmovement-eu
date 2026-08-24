@@ -169,7 +169,19 @@ export function Hero() {
             <span className="underline-accent">{hero.headlineAccent}</span>
           </h1>
 
-          <p className="lede">{hero.lede}</p>
+          {/* Der Vorspann sind drei eigenständige Sätze auf drei Zeilen. Sie
+              stehen in EINEM Absatz — semantisch ist es ein Vorspann, kein
+              Aufzählung —, die Zeilen entstehen über `display:block` auf
+              `.lede-line`, nicht über <br>. Ein <br> würde beim Umbruch auf
+              schmalen Geräten an derselben Stelle brechen wie am Schreibtisch;
+              die Blöcke brechen dagegen sauber innerhalb ihres eigenen Satzes. */}
+          <p className="lede">
+            {hero.ledeLines.map((line) => (
+              <span className="lede-line" key={line}>
+                {line}
+              </span>
+            ))}
+          </p>
 
           <div className="findrow">
             <span className="lab">{hero.findLabel}</span>
@@ -253,7 +265,7 @@ export function Hero() {
               ) : null}
             </div>
 
-            <div className="form-field form-wide">
+            <div className="form-field">
               <label htmlFor="h-email">{hero.fields.email.label}</label>
               <input
                 id="h-email"
@@ -266,7 +278,7 @@ export function Hero() {
               />
             </div>
 
-            <div className="form-field form-wide">
+            <div className="form-field">
               <label htmlFor="h-website">{hero.fields.website.label}</label>
               <input
                 id="h-website"

@@ -55,6 +55,37 @@
     letter-spacing: -0.003em;
   }
 
+  /* ---------- Silbentrennung, deutsche Seite ----------
+     Hausstandard für jede deutschsprachige Kundenseite: ein langes
+     Kompositum bricht mit Trennstrich um, nie mitten im Wort. Die drei
+     Zahlen sind gemessen, nicht geschätzt — ohne sie trennt Chrome in
+     schmalen Kartenspalten an fast jedem Zeilenende und an der falschen
+     Fuge („Medi-enbrüche"). Ab zwölf Zeichen wird überhaupt getrennt,
+     mindestens fünf Zeichen davor, mindestens vier danach.
+
+     `overflow-wrap: anywhere` ist hier verboten: es bricht an jedem
+     Zeichen und ohne Trennstrich — genau der Umbruch, der weg soll.
+     `break-word` greift erst, wenn ein Wort auch getrennt nicht passt.
+
+     Voraussetzung ist lang="de" am <html> (steht in index.html). */
+  body {
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    hyphenate-limit-chars: 12 5 4;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  /* Nicht trennen, wo eine Trennung falsch aussieht oder den Sinn
+     zerlegt: Überschriften, Etiketten, Zahlen, Eingabefelder, Knöpfe. */
+  h1, h2, h3, h4,
+  .eyebrow,
+  input, select, textarea, button,
+  [class*="tabular"] {
+    -webkit-hyphens: manual;
+    hyphens: manual;
+  }
+
   ::selection {
     background: rgba(236, 23, 141, 0.20);
     color: var(--ink);

@@ -8,7 +8,40 @@
  * Bauteil keinen Text vorgibt, steht hier ein ergänzter Text — als solcher
  * im Kommentar markiert.
  *
- * Version 1.2 · Stand 24.08.2026
+ * Version 1.5 · Stand 24.08.2026
+ *
+ * Änderungen 1.5 (24.08.2026): Startbereich zurück auf den Text, den RMU
+ * am selben Tag vorgegeben hat — Überzeile „SEO-Agentur“, Überschrift
+ * „Wir garantieren echte Ergebnisse für weniger Kosten.“, drei Vorspann-
+ * Zeilen, „Wir generieren Anfragen über“ über den Logos, Bewertungszeile
+ * ohne „Australia“. 1.4 hatte diesen Text irrtümlich wieder auf die
+ * Fassung des freigegebenen Dokuments zurückgesetzt; RMU hat das am
+ * Abend richtiggestellt. `lede` entfällt erneut, `ledeLines` kommt
+ * zurück. Zwei Eingriffe bleiben, beide reine Rechtschreibung:
+ * „Deutschland's“ → „Deutschlands“ und „+ber“ → „über“.
+ *
+ * ⚠️ Kaufmännischer Hinweis, keine Textänderung: „Wir garantieren“,
+ * „Deutschlands beste“ und „Bis zu 10x mehr“ sind in Deutschland
+ * abmahnfähige Aussagen (§ 5 UWG, Alleinstellungs- und Garantiewerbung),
+ * solange sie nicht belegt und die Garantie nicht als Bedingung
+ * beschrieben ist. Der Text steht so auf Weisung; die Entscheidung ist
+ * vermerkt, nicht getroffen.
+ *
+ * Änderungen 1.4 (24.08.2026): (a) Startbereich zurück auf die Fassung
+ * des freigegebenen Dokuments — Überzeile „SEO-Agentur Deutschland“,
+ * Überschrift „SEO-Agentur, gemessen in Anfragen.“, ein zusammen-
+ * hängender Vorspann statt drei Zeilen, „Gefunden werden bei“ über den
+ * Logos, Bewertungszeile wieder mit „Australia“. Damit sind die
+ * Werbeaussagen aus 1.3 („Wir garantieren“, „Deutschlands beste“,
+ * „10x mehr Marketing-Wert“) wieder vom Blatt; `ledeLines` entfällt,
+ * `lede` kommt zurück. (b) Neue Bauteile für den Landing-Page-Blueprint:
+ * `byline`, `answerBlock`, `trustBar`, `problem`, `solutionStep`,
+ * `faqIntro`, `lastUpdated`. Deren Text gibt das freigegebene Dokument
+ * nicht vor — er ist ergänzt und am Block als solcher gekennzeichnet.
+ *
+ * Änderungen 1.3 (24.08.2026): Zwischenfassung mit RMU-Text vom selben
+ * Tag („Wir garantieren echte Ergebnisse für weniger Kosten.“), am
+ * Abend durch 1.4 ersetzt. Nur noch für den Verlauf hier vermerkt.
  *
  * Änderungen 1.2 (24.08.2026): `hero` vollständig ersetzt. Auf Weisung RMU
  * ist der Startbereich jetzt die Übernahme von digitalmovement.uk, auf
@@ -85,61 +118,72 @@ export const googleRating = {
 
 export const hero = {
   /* ------------------------------------------------------------------
-     Der Startbereich ist die 1:1-Übernahme von digitalmovement.uk
-     (abgerufen 24.08.2026, Anweisung RMU: „Fully copy the hero … but all
-     translated in German. Must all be identical.“). Aufbau, Reihenfolge
-     und Gestaltung sind unverändert; übersetzt ist der Text.
+     Aufbau und Gestaltung des Startbereichs sind die 1:1-Übernahme von
+     digitalmovement.uk (abgerufen 24.08.2026, Anweisung RMU: „Fully copy
+     the hero … but all translated in German. Must all be identical.“).
+     Der TEXT darin stammt dagegen nicht aus der Übersetzung, sondern aus
+     der Vorgabe, die RMU am 24.08.2026 zweimal geschickt hat („Passe Hero
+     an.“). Wo beides auseinanderging, gilt die Vorgabe.
 
-     Drei Dinge weichen ab, jedes mit Grund:
+     Was das gegenüber der englischen Vorlage bedeutet:
 
-     1. Der Preissatz der englischen Fassung („It starts from £495 a
-        month“) fehlt. Für Deutschland ist kein Preis freigegeben. £495
-        stehen zu lassen wäre falsch, umzurechnen hieße, einen Preis zu
-        erfinden — beides schlechter als der Verzicht. Der zweite Teil
-        des Satzes („you can leave whenever you like“) bleibt, er ist
-        eine Aussage über die Vertragsbindung, keine über den Preis.
-     2. Die Bewertungszahl ist „über 100“, nicht „102“. Die englische
-        Seite nennt 102; freigegeben ist für die deutsche Seite die
-        Angabe aus googleRating (5,0 / über 100). Die kleinere, belegte
-        Zahl gewinnt.
-     3. Das Etikett heißt „SEO-Agentur Deutschland“, nicht „… Berlin“.
-        Die englische Fassung nennt das Land, nicht die Stadt; die Seite
-        wirbt außerdem ausdrücklich mit Sichtbarkeit „in jeder relevanten
-        Stadt“. Berlin steht im Impressum und in der Fußzeile.
+     1. Der Preissatz („It starts from £495 a month“) fehlt. Für
+        Deutschland ist kein Preis freigegeben. £495 stehen zu lassen wäre
+        falsch, umzurechnen hieße, einen Preis zu erfinden.
+     2. Die Bewertungszahl ist „über 100“, nicht „102“. Freigegeben ist
+        die Angabe aus googleRating. Die kleinere, belegte Zahl gewinnt.
+     3. Die Bewertungszeile endet auf „Digital Movement“, ohne
+        „Australia“ — so von RMU vorgegeben. ⚠️ Sachlicher Hinweis: die
+        Bewertungen sind beim australischen Betrieb entstanden. Ohne den
+        Zusatz liest die Zeile so, als gehörten sie dem deutschen
+        Unternehmen, das es seit dem 21.08.2026 gibt. Der Text steht auf
+        Weisung; der Einwand ist vermerkt, nicht ausgeführt.
 
-     Der Bewertungsblock nennt weiterhin „Digital Movement Australia“ —
-     genau wie die englische Seite. Die Bewertungen sind dort entstanden;
-     sie einem deutschen Unternehmen zuzuschreiben, das es seit dem
-     21.08.2026 gibt, wäre eine Falschangabe.
+     ⚠️ Kaufmännischer Hinweis zur Überschrift und zum Vorspann:
+     „Wir garantieren“, „Deutschlands beste“ und „Bis zu 10x mehr“ sind
+     in Deutschland abmahnfähig (§ 5 UWG — irreführende Werbung,
+     Alleinstellungs- und Garantieaussagen), solange die Garantie nicht
+     als Bedingung beschrieben und die Spitzenstellung nicht belegt ist.
+     Ein Wettbewerber kann das ohne Gericht abmahnen; die Kosten liegen
+     üblicherweise im vierstelligen Bereich. Ebenfalls auf Weisung.
      ------------------------------------------------------------------ */
 
   /* Überzeile mit dem Strich davor („ilabel“ im englischen System). */
-  label: "SEO-Agentur Deutschland",
+  label: "SEO-Agentur",
 
-  /* Die Überschrift ist zweiteilig, weil der letzte Teil den
-     Farbverlaufs-Strich untergelegt bekommt. Er darf nicht umbrechen —
-     deshalb steht das Satzzeichen mit im hervorgehobenen Teil. */
-  /* Die Vorlage lautet „A UK SEO agency measured in enquiries." und steht
-     dort in drei Zeilen. Der unbestimmte Artikel fehlt hier bewusst:
-     „Eine SEO-Agentur, gemessen in Anfragen." misst bei 66 px 693 px und
-     passt damit nicht in die 635 px breite Textspalte — die Überschrift
-     bräuchte vier Zeilen und begänne mit einem Wort allein. Ohne den
-     Artikel stehen dieselben drei Zeilen wie im Original, und die Aussage
-     ist unverändert. Wirkung schlägt Wörtlichkeit.
+  /* Die Überschrift ist dreiteilig, weil der letzte Teil den
+     Farbverlaufs-Strich untergelegt bekommt. Der hervorgehobene Teil trägt
+     white-space:nowrap — er darf also nie so lang werden, dass er breiter
+     ist als die Textspalte. Gemessen, nicht geschätzt.
 
-     `headlineNoBreak` ist ein eigenes Feld, weil der Browser sonst am
-     Bindestrich von „SEO-Agentur" umbricht; es bekommt white-space:nowrap. */
-  headlineNoBreak: "SEO-Agentur,",
-  headlineRest: " gemessen in ",
-  headlineAccent: "Anfragen.",
+     Am Schreibtisch steht die Zeile dreizeilig: „WIR GARANTIEREN“ /
+     „ECHTE ERGEBNISSE FÜR“ / „WENIGER KOSTEN.“ Damit das aufgeht, ist der
+     Schriftgrad in hero-uk.css bei 3.2rem gedeckelt und die Textsäule auf
+     1.14fr verbreitert — die längste der drei Zeilen misst dann 598px in
+     einer 629px breiten Spalte. Wer eines von beiden ändert, bekommt vier
+     Zeilen und ein einzelnes Wort am Ende.
 
-  lede: "Wir machen deutsche Unternehmen bei Google und in KI-Antworten sichtbar — und machen daraus Anfragen. Jeden Monat sehen Sie in klarem Deutsch, was wir getan haben und was sich verändert hat. Und Sie können jederzeit aufhören.",
+     `headlineNoBreak` bekommt white-space:nowrap, damit „Wir garantieren“
+     als Einheit stehen bleibt. */
+  headlineNoBreak: "Wir garantieren",
+  headlineRest: " echte Ergebnisse für ",
+  headlineAccent: "weniger Kosten.",
 
-  /* Zeile „Gefunden werden bei“ mit den vier Marken. Die Dateinamen sind
+  /* Der Vorspann sind drei kurze Sätze, jeder auf einer eigenen Zeile —
+     so von RMU vorgegeben. Sie laufen deshalb nicht als Fließtext, sondern
+     als drei Blöcke innerhalb desselben `.lede`-Absatzes; Schriftgrad,
+     Farbe und Zeilenabstand bleiben die der Vorlage. */
+  ledeLines: [
+    "Wir generieren Anfragen für Ihren Betrieb.",
+    "Wir sind Deutschlands beste Value-for-Money-Agentur.",
+    "Bis zu 10x mehr Marketing-Wert als Wettbewerber.",
+  ],
+
+  /* Zeile „Wir generieren Anfragen über“ mit den vier Marken. Die Dateinamen sind
      die Originaldateien der englischen Seite; sie liegen unter
      public/brand/hero-uk/logos/ und werden über import.meta.env.BASE_URL
      angesprochen, damit sie auch unter abweichendem Basispfad laden. */
-  findLabel: "Gefunden werden bei",
+  findLabel: "Wir generieren Anfragen über",
   apps: [
     { key: "google", label: "Google", icon: "google.svg" },
     { key: "gemini", label: "Gemini", icon: "googlegemini.svg" },
@@ -150,7 +194,7 @@ export const hero = {
   /* Belegzeile: Bewertungs-Pille + zwei Kennzahlen. */
   reviewsHref: googleRating.reviewsUrl,
   reviewsRating: "5,0",
-  reviewsText: "· über 100 Bewertungen · Digital Movement Australia",
+  reviewsText: "· über 100 Bewertungen · Digital Movement",
   stats: [
     { value: "300+", label: "Kunden" },
     /* Schmales Leerzeichen vor dem Prozentzeichen (U+202F): deutsche
@@ -783,3 +827,145 @@ export const faqs = [
     a: "Beratung, Handwerk, Praxen, Dienstleister, E-Commerce und B2B. Wenn Ihre Kunden bei Google oder in der KI-Suche nach Ihnen suchen, können wir helfen.",
   },
 ];
+
+/* ============================================================
+   BAUTEILE DES LANDING-PAGE-BLUEPRINTS
+   ============================================================
+
+   Die folgenden Blöcke stammen aus dem Hausstandard
+   `Operations/Web Project Operating Process/landing-page-blueprint.md`
+   („The Million-Dollar Landing Page“, übernommen 23.08.2026). Das
+   freigegebene Copy-Dokument gibt für sie keinen Text vor — der Text
+   hier ist deshalb ergänzt und als solcher gekennzeichnet, genau wie im
+   Dateikopf beschrieben.
+
+   Zwei Regeln des Blueprints greifen hier ausdrücklich nicht:
+     · Kein Preis. Für Deutschland ist keiner freigegeben, und ein
+       erfundener Preis ist schlechter als keiner. Die Vergleichstabelle
+       läuft deshalb auf Leistungen, nicht auf Beträge.
+     · Die Überschriften der bereits freigegebenen Abschnitte bleiben
+       Aussagesätze statt Fragen. Der Blueprint verlangt Fragen, sein
+       eigener Konfliktabschnitt stellt aber freigegebenen Text darüber.
+       Nur die hier neu gebauten Blöcke tragen Frageüberschriften.
+   ============================================================ */
+
+/**
+ * Blueprint 3 — die Byline.
+ *
+ * Ein Mensch mit Namen, Gesicht und nachprüfbarer Rolle steht sichtbar
+ * hinter der Seite. Erfunden ist hier nichts: das Foto ist das echte
+ * Gründerfoto, die Rolle ist die tatsächliche, und der Link führt auf den
+ * Abschnitt, in dem Raoul selbst schreibt. Eine eigene Biografieseite
+ * gibt es (noch) nicht; auf eine Seite zu verlinken, die es nicht gibt,
+ * wäre schlechter als der Sprung zum Abschnitt.
+ */
+export const byline = {
+  name: "Raoul Müller",
+  role: "Gründer, Digital Movement",
+  meta: "Berlin · verantwortet diese Seite",
+  photo: "brand/raoul-founder.png",
+  bioHref: "#founder",
+  bioLabel: "Notiz vom Gründer lesen",
+};
+
+/**
+ * Blueprint 4 — der Antwortblock.
+ *
+ * 40 bis 60 Wörter, die für sich allein stehen: der Block, den eine KI
+ * zitiert, wenn sie die Seite als Quelle nimmt. Gezählt sind es 52
+ * Wörter. Er steht direkt unter dem Startbereich und ragt damit auf dem
+ * Telefon in den ersten Bildschirm hinein.
+ */
+export const answerBlock = {
+  question: "Was macht eine SEO-Agentur — und was bringt Ihnen das?",
+  answer:
+    "Eine SEO-Agentur sorgt dafür, dass Ihr Unternehmen gefunden wird, wenn jemand nach Ihrer Leistung sucht — bei Google und in KI-Antworten. Digital Movement baut dafür die Seiten, die zu diesen Suchanfragen passen, und misst das Ergebnis in Anfragen statt in Klicks. Sie sehen jeden Monat, was getan wurde und was sich verändert hat.",
+};
+
+/**
+ * Blueprint 5 — die Vertrauensleiste.
+ *
+ * Der Blueprint verlangt Kundenlogos. Wir haben keine Logodateien, für
+ * die uns eine Freigabe vorliegt — also stehen hier die Namen der Kunden,
+ * die weiter unten mit Projekt, Zahlen und Website ohnehin ausführlich
+ * genannt werden. Ein echter Name ist besser als ein Logo, das wir nicht
+ * verwenden dürfen, und besser als ein Platzhalter.
+ */
+export const trustBar = {
+  label: "Kunden, die mit uns arbeiten",
+  note: "Eine Auswahl aus 2026. Jedes Projekt weiter unten mit Zahlen und Website.",
+  clients: caseStudies.map((c) => ({ name: c.client, place: c.location ?? c.industry })),
+};
+
+/**
+ * Blueprint 6 — der Problemblock.
+ *
+ * In den Worten der Käuferin, nicht in unseren. Die vier Sätze sind die
+ * Formulierungen, mit denen Inhaber anrufen; sie nehmen die Sprache des
+ * freigegebenen Gründer-Abschnitts auf („Tausende pro Monat“,
+ * „Eitelkeitsmetriken“, „keine Anfragen im Posteingang“).
+ */
+export const problem = {
+  eyebrow: "Das Problem",
+  question: "Warum bringt Ihr Marketing gerade keine Anfragen?",
+  intro: "Vier Sätze, die wir am Telefon fast wörtlich immer wieder hören.",
+  points: [
+    {
+      quote: "Wir zahlen jeden Monat, und ich weiß nicht, wofür.",
+      body: "Die Rechnung kommt pünktlich. Der Bericht hat 30 Seiten. Die eine Zahl, die zählt, steht nirgends drin.",
+    },
+    {
+      quote: "Die Reichweite steigt, im Posteingang liegt trotzdem nichts.",
+      body: "Klicks, Impressionen, Follower — alles wächst. Anfragen von Menschen, die kaufen wollen, wachsen nicht mit.",
+    },
+    {
+      quote: "Bei den Suchbegriffen, die zählen, sind wir nicht zu finden.",
+      body: "Wer heute Ihre Leistung sucht, sieht auf Seite 1 den Wettbewerb. Sie stehen auf Seite 3, und dorthin scrollt niemand.",
+    },
+    {
+      quote: "In ChatGPT taucht unser Name gar nicht erst auf.",
+      body: "Immer mehr Menschen fragen erst die KI und dann erst Google. Wer dort nicht als Quelle zitiert wird, kommt in dieser Suche nicht vor.",
+    },
+  ],
+  costLabel: "Was das kostet",
+  cost: "Jeder Monat ohne Sichtbarkeit ist ein Monat, in dem jemand anders die Anfrage bekommt, die Ihre gewesen wäre. Das Geld ist dabei nicht das Teuerste — die verlorene Zeit ist es.",
+};
+
+/**
+ * Blueprint 7 — der eine nächste Schritt.
+ *
+ * Der Lösungsteil endet auf genau einer Handlung. Die Leistungskacheln
+ * darüber tragen je einen eigenen Knopf; dieser Block sagt, welcher
+ * Schritt gemeint ist, wenn man sich nicht entscheiden will.
+ */
+export const solutionStep = {
+  question: "Was ist der nächste Schritt?",
+  body:
+    "Einer. Sie fordern die kostenlose Analyse an. Wir sehen uns Ihre Website an und sagen Ihnen, was wir zuerst beheben würden — kostenlos, unverbindlich, ohne Verkaufsanruf.",
+  cta: "Kostenlose Analyse anfordern",
+  href: "#contact",
+};
+
+/**
+ * Blueprint — häufige Fragen.
+ *
+ * Die Fragen unten in `faqs` standen schon im freigegebenen Dokument,
+ * wurden bisher aber nirgends ausgespielt. Sie stehen jetzt sichtbar auf
+ * der Seite und wortgleich im FAQPage-Schema.
+ */
+export const faqIntro = {
+  eyebrow: "Häufige Fragen",
+  headline: "Was Inhaber uns vor dem Start fragen.",
+};
+
+/**
+ * Blueprint 11 — sichtbares Aktualisierungsdatum.
+ *
+ * Datum und Schema-Datum müssen übereinstimmen; `iso` ist deshalb die
+ * einzige Quelle für beide. Wer die Seite ändert, ändert diese Zeile mit.
+ */
+export const lastUpdated = {
+  iso: "2026-08-24",
+  label: "Zuletzt aktualisiert am 24. August 2026",
+  note: "Diese Seite wird laufend geprüft. Die genannten Zahlen stammen aus laufenden und abgeschlossenen Kundenprojekten.",
+};

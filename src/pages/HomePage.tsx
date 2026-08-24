@@ -1,37 +1,75 @@
 import { lazy, Suspense, type ComponentType } from "react";
 import { Hero } from "../components/Hero";
-import { AgencySnapshot } from "../components/AgencySnapshot";
-import { Seo } from "../seo";
+import { AnswerBlock } from "../components/AnswerBlock";
+import { TrustBar } from "../components/TrustBar";
+import { Seo, faqSchema } from "../seo";
+import { faqs } from "../content";
 
 /**
- * Reihenfolge der Startseite, wie im freigegebenen Dokument:
+ * Reihenfolge der Startseite nach dem Landing-Page-Blueprint v1.1
+ * (Operations/Web Project Operating Process/landing-page-blueprint.md).
  *
- *   Hero → Snapshot → Leistungen → Prozess → Zahlen → Kundenprojekte
- *   → Vergleich → Stimmen → Gründer-Notiz → Kontakt
+ * Die elf Bausteine des Blueprints in dieser Seite:
+ *
+ *   1+2+3  Überschrift, Unterzeile, Absender ...... Hero (unverändert)
+ *   3+4    Absenderzeile + Antwortblock ........... AnswerBlock
+ *   5      Vertrauensleiste ....................... TrustBar
+ *   6      Problem ................................ Problem
+ *   7      Lösung mit EINEM nächsten Schritt ...... Snapshot → Leistungen
+ *                                                   → Prozess → NextStep
+ *   8      Beleg .................................. Zahlen → Kundenprojekte
+ *                                                   → Stimmen
+ *   9      Vergleichstabelle ...................... Comparison
+ *   10     Abschluss mit Handlungsaufruf .......... Gründer-Notiz → FAQ
+ *                                                   → Kontakt
+ *   11     Sichtbares Datum der letzten Prüfung ... LastUpdated
+ *
+ * Zwei Abweichungen, beide bewusst:
+ *
+ *  - Der Hero bleibt, wie er ist. Ausdrückliche Anweisung ("except hero"),
+ *    und er folgt bereits der Hausregel 2/3-Viewport mit Zwei-Säulen-Formular.
+ *  - Die acht freigegebenen Abschnittsüberschriften bleiben Aussagesätze
+ *    statt Fragen. Der Blueprint verlangt Fragen, seine eigene
+ *    Konflikttabelle stellt aber freigegebenen Kundentext darüber, und der
+ *    Text dieser Seite ist auf das RMU-Dokument gesperrt. Nur die neu
+ *    gebauten Blöcke tragen Frageüberschriften.
  *
  * Alles unterhalb des ersten Bildschirms wird nachgeladen. Der erste
- * Aufbau braucht nur Hero und Snapshot; der Rest kommt in einem zweiten
- * Paket, damit er auf dem Handy nicht den ersten sichtbaren Inhalt
- * blockiert.
+ * Aufbau braucht nur Hero, Antwortblock und Vertrauensleiste; der Rest
+ * kommt in einem zweiten Paket, damit er auf dem Handy nicht den ersten
+ * sichtbaren Inhalt blockiert.
  */
+const Problem = lazy(() =>
+  import("../components/Problem").then((m) => ({ default: m.Problem })),
+);
+const AgencySnapshot = lazy(() =>
+  import("../components/AgencySnapshot").then((m) => ({ default: m.AgencySnapshot })),
+);
 const ServicesCarousel = lazy(() =>
   import("../components/ServicesCarousel").then((m) => ({ default: m.ServicesCarousel })),
 );
 const ProcessTimeline = lazy(() =>
   import("../components/ProcessTimeline").then((m) => ({ default: m.ProcessTimeline })),
 );
+const NextStep = lazy(() =>
+  import("../components/NextStep").then((m) => ({ default: m.NextStep })),
+);
 const Metrics = lazy(() => import("../components/Metrics").then((m) => ({ default: m.Metrics })));
 const ClientCases = lazy(() =>
   import("../components/ClientCases").then((m) => ({ default: m.ClientCases })),
 );
+const Reviews = lazy(() => import("../components/Reviews").then((m) => ({ default: m.Reviews })));
 const Comparison = lazy(() =>
   import("../components/Comparison").then((m) => ({ default: m.Comparison })),
 );
-const Reviews = lazy(() => import("../components/Reviews").then((m) => ({ default: m.Reviews })));
 const FounderNote = lazy(() =>
   import("../components/FounderNote").then((m) => ({ default: m.FounderNote })),
 );
+const Faq = lazy(() => import("../components/Faq").then((m) => ({ default: m.Faq })));
 const Contact = lazy(() => import("../components/Contact").then((m) => ({ default: m.Contact })));
+const LastUpdated = lazy(() =>
+  import("../components/LastUpdated").then((m) => ({ default: m.LastUpdated })),
+);
 
 function SectionFallback() {
   return <div className="min-h-[40vh] surface-light" aria-hidden />;
@@ -55,18 +93,30 @@ export function HomePage() {
         /* ORGANIZATION, WEBSITE, LOCAL_BUSINESS und der WebPage-Knoten
            dieser Route kommen automatisch aus <Seo> — siehe src/seo.tsx.
            Hier noch einmal übergeben hieße, jede @id im @graph zu
-           verdoppeln. */
+           verdoppeln.
+
+           Der FAQPage-Knoten steht hier erst, seit <Faq /> die sechs
+           Fragen aus content.faqs auch wirklich anzeigt. Beides speist
+           sich aus derselben Konstante, damit Auszeichnung und sichtbarer
+           Text nicht auseinanderlaufen können. */
+        schema={[faqSchema(faqs)]}
       />
       <Hero />
-      <AgencySnapshot />
+      <AnswerBlock />
+      <TrustBar />
+      {defer(Problem)}
+      {defer(AgencySnapshot)}
       {defer(ServicesCarousel)}
       {defer(ProcessTimeline)}
+      {defer(NextStep)}
       {defer(Metrics)}
       {defer(ClientCases)}
-      {defer(Comparison)}
       {defer(Reviews)}
+      {defer(Comparison)}
       {defer(FounderNote)}
+      {defer(Faq)}
       {defer(Contact)}
+      {defer(LastUpdated)}
     </>
   );
 }
