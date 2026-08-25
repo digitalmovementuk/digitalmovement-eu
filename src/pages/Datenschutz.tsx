@@ -5,9 +5,11 @@ import { Seo, breadcrumbs } from "../seo";
  * Datenschutzerklärung. Beschreibt genau das, was diese Seite tatsächlich
  * tut: Auslieferung über GitHub Pages, ein Kontaktformular an unseren
  * eigenen Endpunkt, eingebettete Kundenwebsites als iFrame, eine Karte,
- * die erst auf Klick zu Google verbindet — und sonst nichts. Kein
- * Tracking, keine Cookies, keine Analyse-Tools. Sobald sich daran etwas
- * ändert, muss dieser Text mitgeändert werden.
+ * die erst auf Klick zu Google verbindet, und seit dem 24.08.2026 eine
+ * Reichweitenmessung mit Google Analytics 4, die erst nach Zustimmung im
+ * Banner überhaupt geladen wird. Sobald sich daran etwas ändert, muss
+ * dieser Text mitgeändert werden — Abschnitt 9 ist der, der als Erstes
+ * falsch wird.
  */
 export function Datenschutz() {
   return (
@@ -229,12 +231,74 @@ export function Datenschutz() {
             </p>
           </Block>
 
-          <Block title="9. Cookies, Tracking und Analyse">
+          <Block title="9. Reichweitenmessung mit Google Analytics 4">
             <p>
-              Diese Website setzt keine Cookies zu Analyse-, Marketing- oder
-              Tracking-Zwecken. Es sind keine Analyse-Dienste, keine
-              Werbe-Pixel und keine Social-Media-Plugins eingebunden. Deshalb
-              gibt es hier auch kein Cookie-Banner.
+              Wir möchten wissen, wie viele Menschen diese Website besuchen und
+              welche Abschnitte gelesen werden. Dafür nutzen wir Google
+              Analytics 4 (Property „Digital Movement Germany“, Mess-ID
+              G-R5ZFKGZKCZ). Anbieter ist Google Ireland Limited, Gordon House,
+              Barrow Street, Dublin 4, Irland.
+            </p>
+            <p>
+              <strong className="font-semibold text-ink">
+                Ohne Ihre Zustimmung wird nichts geladen.
+              </strong>{" "}
+              Solange Sie im Banner nicht zugestimmt haben, ruft diese Seite
+              keine Datei von Google ab, setzt keine Cookies und überträgt
+              nichts an Google — auch keine IP-Adresse. Erst Ihr Klick auf
+              „Zustimmen“ lädt das Messskript nach.
+            </p>
+            <p>
+              Stimmen Sie zu, speichert Google Analytics Cookies auf Ihrem
+              Gerät (unter anderem „_ga“ und „_ga_…“, Laufzeit bis zu zwei
+              Jahre) und erhebt: aufgerufene Seiten und Verweildauer, die
+              Seite, von der Sie kamen, Gerätetyp, Browser und Bildschirmgröße,
+              den ungefähren Ort auf Stadtebene sowie das Ereignis
+              „generate_lead“, wenn eine Anfrage über eines unserer Formulare
+              tatsächlich versendet wurde. Ihre IP-Adresse wird gekürzt
+              verarbeitet („anonymize_ip“) und nicht gespeichert. Wir erhalten
+              ausschließlich zusammengefasste Auswertungen und können Sie
+              darüber nicht persönlich identifizieren.
+            </p>
+            <p>
+              Rechtsgrundlage für das Speichern und Auslesen auf Ihrem Gerät
+              ist Ihre Einwilligung nach § 25 Abs. 1 TDDDG, für die
+              anschließende Verarbeitung Art. 6 Abs. 1 lit. a DSGVO. Eine
+              Übermittlung in die USA an Google LLC ist nicht ausgeschlossen;
+              dort besteht kein dem europäischen entsprechendes
+              Datenschutzniveau, insbesondere ist ein Zugriff durch
+              US-Behörden möglich. Mit Ihrer Einwilligung willigen Sie auch in
+              diese Übermittlung ein (Art. 49 Abs. 1 lit. a DSGVO). Die Daten
+              werden nach 14 Monaten gelöscht.
+            </p>
+            <p>
+              <strong className="font-semibold text-ink">
+                Sie können jederzeit widerrufen.
+              </strong>{" "}
+              Unten in der Fußzeile öffnet „Cookie-Einstellungen“ dasselbe
+              Fenster wie beim ersten Besuch; ein Klick auf „Ablehnen“ beendet
+              die Messung sofort und löscht die gesetzten Cookies. Der Widerruf
+              wirkt für die Zukunft, die Rechtmäßigkeit der Verarbeitung bis
+              dahin bleibt unberührt.
+            </p>
+            <p>
+              Ihre Entscheidung selbst merkt sich Ihr Browser lokal unter
+              „dm-eu-consent-v1“. Dieser Eintrag ist erforderlich, um Ihre Wahl
+              umzusetzen, wird an niemanden übertragen und lässt sich über die
+              Browsereinstellungen löschen. Darüber hinaus setzt diese Website
+              keine Werbe-Pixel und keine Social-Media-Plugins ein.
+            </p>
+            <p>
+              Mehr dazu in der{" "}
+              <a
+                href="https://policies.google.com/privacy?hl=de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkCls}
+              >
+                Datenschutzerklärung von Google
+              </a>
+              .
             </p>
           </Block>
 

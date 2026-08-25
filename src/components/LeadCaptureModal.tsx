@@ -6,6 +6,7 @@ import { submitLead, trackLead } from "../lib/submitLead";
 import { LEAD_FIELDS, LEAD_FIELD_ORDER, websiteMessage, validateLead } from "../lib/leadForm";
 import type { LeadFieldErrors } from "../lib/leadForm";
 import { ConsentCheckbox, ConsentNotice } from "./Consent";
+import { readConsent, CONSENT_DECIDED_EVENT } from "../lib/analytics";
 
 /**
  * Das Pop-up „Potenzialanalyse" — Abschnitt 14 des freigegebenen Dokuments.
@@ -51,6 +52,9 @@ export function LeadCaptureModal() {
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState(false);
   const hasShownRef = useRef(false);
+  /* Der Auslöser hat gefeuert, das Fenster durfte aber noch nicht auf, weil
+     die Einwilligungsleiste noch offen stand. */
+  const wartetRef = useRef(false);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -78,15 +82,36 @@ export function LeadCaptureModal() {
     if (!reviews) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !hasShownRef.current) {
-          hasShownRef.current = true;
-          setOpen(true);
+        if (!entry.isIntersecting || hasShownRef.current) return;
+        /* Solange die Einwilligungsleiste noch auf eine Antwort wartet,
+           bleibt das Fenster zu. Sonst legt es sich über die Leiste und
+           deckt „Zustimmen" zu — im Test war der Knopf nicht mehr
+           anklickbar. Zwei Dialoge übereinander sind außerdem für
+           Bildschirmleser ein Sackgassen-Zustand. */
+        if (readConsent() === null) {
+          wartetRef.current = true;
+          return;
         }
+        hasShownRef.current = true;
+        setOpen(true);
       },
       { rootMargin: "0px 0px 240px 0px", threshold: 0 },
     );
     obs.observe(reviews);
     return () => obs.disconnect();
+  }, []);
+
+  /* Sobald die Entscheidung gefallen ist, darf das aufgeschobene Fenster
+     nachkommen — einmal pro Seitenaufruf, wie vorher. */
+  useEffect(() => {
+    const onDecided = () => {
+      if (!wartetRef.current || hasShownRef.current) return;
+      hasShownRef.current = true;
+      wartetRef.current = false;
+      setOpen(true);
+    };
+    window.addEventListener(CONSENT_DECIDED_EVENT, onDecided);
+    return () => window.removeEventListener(CONSENT_DECIDED_EVENT, onDecided);
   }, []);
 
   // Seite feststellen und Esc zum Schließen, solange offen.

@@ -6,6 +6,7 @@ import { Footer } from "./Footer";
 import { StickyGoogleRatingBadge } from "./GoogleRatingBadge";
 import { StickyCTA } from "./StickyCTA";
 import { LeadCaptureModal } from "./LeadCaptureModal";
+import { CookieBanner } from "./CookieBanner";
 
 // Legt um jede Route den Rahmen (Navigation, Fußzeile, Sticky-Elemente)
 // und regelt zwei Dinge über Routen hinweg: Sprung nach oben beim
@@ -45,6 +46,7 @@ export function Layout() {
       <StickyGoogleRatingBadge />
       <StickyCTA />
       <LeadCaptureModal />
+      <CookieBanner />
     </>
   );
 }

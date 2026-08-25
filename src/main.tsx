@@ -18,57 +18,30 @@ import "@fontsource/inter/latin-500.css";
 import "./index.css";
 
 /**
- * GA4, loaded only when VITE_GA4_ID is set, and only in the browser — the
- * pre-render pass must not try to load a tag. Key events are sent from
- * src/lib/submitLead.ts on a genuine send, never on form submit, so a
- * failed delivery can't be counted as a conversion.
+ * GA4 — aber nicht hier.
  *
- * `gtag` must go on `window`, and must push the `arguments` object rather
- * than an array. This is the shape gtag.js actually reads: pushing a plain
- * object like `{ event: "generate_lead" }` is Tag Manager's convention and
- * gtag.js ignores it silently — the event simply never arrives, and the
- * property reports zero key events while looking correctly installed.
+ * Das Tag wird NICHT beim Seitenaufruf geladen. § 25 TDDDG verlangt eine
+ * Einwilligung, bevor etwas auf dem Endgerät gespeichert oder ausgelesen
+ * wird; die deutschen Aufsichtsbehörden halten Google Analytics ohne
+ * Einwilligung für unzulässig. Der Ladevorgang steckt deshalb in
+ * src/lib/analytics.ts und wird vom Banner ausgelöst
+ * (src/components/CookieBanner.tsx).
+ *
+ * Der Aufruf unten schaltet die Messung nur dann sofort ein, wenn eine
+ * frühere Einwilligung im Speicher liegt — dann soll der erste Treffer nicht
+ * erst warten, bis React fertig gerendert hat.
+ *
+ * Schlüsselereignisse gehen aus src/lib/submitLead.ts raus, erst bei
+ * tatsächlichem Versand, nie beim Absenden des Formulars — eine
+ * fehlgeschlagene Zustellung darf nicht als Anfrage gezählt werden. Dort
+ * muss `gtag` das `arguments`-Objekt schieben, nicht ein Array oder ein
+ * schlichtes `{ event: … }`: Letzteres ist die Schreibweise von Tag Manager,
+ * gtag.js überliest sie stillschweigend, und die Property meldet null
+ * Schlüsselereignisse, während alles richtig eingebaut aussieht.
  */
-const GA4_ID = import.meta.env.VITE_GA4_ID as string | undefined;
-if (typeof window !== "undefined" && GA4_ID) {
-  const w = window as unknown as {
-    dataLayer: unknown[];
-    gtag: (...args: unknown[]) => void;
-  };
-  w.dataLayer = w.dataLayer || [];
-  // eslint-disable-next-line prefer-rest-params
-  w.gtag = function gtag() {
-    w.dataLayer.push(arguments);
-  };
-  /* Consent Mode v2, gesetzt VOR dem config-Aufruf, damit die Vorgaben schon
-     für den allerersten Treffer gelten.
+import { initAnalyticsFromStoredConsent } from "./lib/analytics";
 
-     Diese Seite richtet sich an ein deutsches Publikum. § 25 TDDDG verlangt
-     eine Einwilligung, bevor irgendetwas auf dem Endgerät gespeichert oder
-     ausgelesen wird — für Analyse-Cookies genauso wie für Werbe-Cookies.
-     Solange es auf dieser Seite kein Einwilligungsbanner gibt, steht hier
-     deshalb alles auf "denied". GA4 sendet dann nur cookielose Pings, legt
-     nichts auf dem Gerät ab und ordnet niemanden zu.
-
-     Das ist bewusst so und kein Versehen: lieber weniger Messung als eine
-     Messung, die ohne Einwilligung läuft.
-
-     Kommt ein Banner dazu (Hausstandard: Real Cookie Banner, nichts extern
-     Gehostetes), muss es diese Werte per gtag("consent","update",…) auf
-     "granted" setzen — nicht diese Zeilen hier ändern. */
-  w.gtag("consent", "default", {
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    analytics_storage: "denied",
-  });
-  w.gtag("js", new Date());
-  w.gtag("config", GA4_ID, { anonymize_ip: true });
-  const s = document.createElement("script");
-  s.async = true;
-  s.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
-  document.head.appendChild(s);
-}
+initAnalyticsFromStoredConsent();
 
 // vite-react-ssg owns the router: at build time it walks `routes`, renders
 // each static path to its own HTML file, and on the client it hydrates the

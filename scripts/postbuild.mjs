@@ -197,10 +197,23 @@ async function main() {
       console.log("postbuild: lead destination present in the bundle");
     }
 
+    // Ohne Mess-ID im Bündel misst die Seite gar nichts, und man sieht es
+    // ihr nicht an: sie lädt, das Banner erscheint, „Zustimmen" tut etwas —
+    // nur kommt nirgends ein Treffer an. Genau in diesem Zustand lief
+    // digitalmovement.eu bis zum 24.08.2026, weil hier nur eine Warnung
+    // stand und Warnungen im Bau-Protokoll untergehen. Seit dem 25.08.2026
+    // bricht der Bau ab. Wer bewusst ohne Messung bauen will (z. B. ein
+    // Vorschau-Bau ohne .env), setzt ALLOW_NO_GA4=1.
     if (/G-[A-Z0-9]{6,}/.test(bundle)) {
       console.log("postbuild: GA4 measurement ID present in the bundle");
+    } else if (process.env.ALLOW_NO_GA4 === "1") {
+      console.warn(
+        "postbuild: WARNING — no GA4 measurement ID in the bundle. Building anyway because ALLOW_NO_GA4=1.",
+      );
     } else {
-      console.warn("postbuild: WARNING — no GA4 measurement ID in the bundle (VITE_GA4_ID unset).");
+      fail(
+        "no GA4 measurement ID reached the bundle — VITE_GA4_ID is unset (see .env.example; the German property is G-R5ZFKGZKCZ). Set it, or set ALLOW_NO_GA4=1 to build without measurement deliberately.",
+      );
     }
   }
 

@@ -1,5 +1,6 @@
 import { Mail, Phone, MessageCircle, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { openConsentDialog } from "./CookieBanner";
 import { business, footer } from "../content";
 import { FooterMap } from "./FooterMap";
 import { ADDRESS_LINE, VAT_ID } from "../seo";
@@ -132,6 +133,17 @@ export function Footer() {
                 {l.label}
               </Link>
             ))}
+            {/* Widerruf. Art. 7 Abs. 3 DSGVO verlangt, dass das Zurücknehmen
+                so einfach ist wie das Erteilen — also ein Klick von jeder
+                Seite aus, dasselbe Fenster wie beim ersten Mal. Ein Link auf
+                einen Absatz in der Datenschutzerklärung genügt dafür nicht. */}
+            <button
+              type="button"
+              onClick={openConsentDialog}
+              className="hover:text-ink underline-offset-2 hover:underline"
+            >
+              Cookie-Einstellungen
+            </button>
             <span className="text-ink-faint">·</span>
             <span>Berlin, Deutschland</span>
           </div>
