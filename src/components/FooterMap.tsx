@@ -104,15 +104,27 @@ export function FooterMap() {
             />
           ) : (
             <>
-              <img
-                src={`${import.meta.env.BASE_URL}brand/karte-kolonnenstrasse-8.jpg`}
-                alt={`Kartenausschnitt mit dem Standort ${business.addressLine}`}
-                width="1600"
-                height="600"
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
+              {/* Auf dem Telefon reichen 800 Bildpunkte: 63 KB statt 218 KB.
+                  Die Kartenspalte ist am Schreibtisch rund 900 Punkte breit
+                  (Raster `300px + Rest`), darum diese Angabe in `sizes`. */}
+              <picture className="contents">
+                <source
+                  type="image/webp"
+                  sizes="(min-width: 1024px) 900px, 100vw"
+                  srcSet={`${import.meta.env.BASE_URL}brand/karte-kolonnenstrasse-8-800.webp 800w, ${import.meta.env.BASE_URL}brand/karte-kolonnenstrasse-8-1600.webp 1600w`}
+                />
+                <img
+                  src={`${import.meta.env.BASE_URL}brand/karte-kolonnenstrasse-8.jpg`}
+                  srcSet={`${import.meta.env.BASE_URL}brand/karte-kolonnenstrasse-8-800.jpg 800w, ${import.meta.env.BASE_URL}brand/karte-kolonnenstrasse-8.jpg 1600w`}
+                  sizes="(min-width: 1024px) 900px, 100vw"
+                  alt={`Kartenausschnitt mit dem Standort ${business.addressLine}`}
+                  width="1600"
+                  height="600"
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </picture>
 
               {/* Der Standort selbst — die Mitte des Bildes ist die Anschrift. */}
               <span

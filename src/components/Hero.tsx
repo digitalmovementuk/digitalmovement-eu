@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { hero } from "../content";
+import { business, hero } from "../content";
 import { submitLead, trackLead } from "../lib/submitLead";
 import { LEAD_FIELD_ORDER, websiteMessage, validateLead } from "../lib/leadForm";
 import type { LeadFieldErrors } from "../lib/leadForm";
@@ -130,14 +130,29 @@ export function Hero() {
     <header id="top" className="uk-hero" data-surface="dark">
       {/* ---------- Hintergrundbild + Schleier ---------- */}
       <div className="hero-bg">
-        <img
-          src={`${BASE}brand/hero-uk/hero-agency.jpg`}
-          alt=""
-          width={1600}
-          height={900}
-          fetchPriority="high"
-          decoding="async"
-        />
+        {/* Dasselbe Bild in drei Fassungen, damit ein Telefon nicht die
+            Schreibtisch-Datei lädt: WebP zuerst (81 KB statt 131 KB), JPG
+            als Rückfall. `sizes="100vw"` stimmt hier wörtlich — das Bild
+            liegt hinter dem gesamten Startbereich. `contents` am <picture>
+            nimmt dem Umschlag jede eigene Box, damit die Regel
+            `.uk-hero .hero-bg img` unverändert greift. */}
+        <picture className="contents">
+          <source
+            type="image/webp"
+            sizes="100vw"
+            srcSet={`${BASE}brand/hero-uk/hero-agency-800.webp 800w, ${BASE}brand/hero-uk/hero-agency-1600.webp 1600w`}
+          />
+          <img
+            src={`${BASE}brand/hero-uk/hero-agency.jpg`}
+            srcSet={`${BASE}brand/hero-uk/hero-agency-800.jpg 800w, ${BASE}brand/hero-uk/hero-agency.jpg 1600w`}
+            sizes="100vw"
+            alt=""
+            width={1600}
+            height={900}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
       <div className="hero-veil" aria-hidden />
 
@@ -374,6 +389,19 @@ export function Hero() {
           </p>
 
           <p className="form-note">{hero.formNote}</p>
+
+          {/* Ohne JavaScript kommt aus diesem Formular nichts an — der Versand
+              läuft über fetch(). Eine Schaltfläche, die dann ins Leere führt,
+              ist schlimmer als gar keine: sie sieht aus wie eine abgeschickte
+              Anfrage. Also nennen wir in diesem Fall den Weg, der ohne
+              JavaScript funktioniert. */}
+          <noscript>
+            <p className="form-note">
+              Ohne JavaScript kann dieses Formular nichts absenden. Rufen Sie uns an unter{" "}
+              <a href={business.phoneHref}>{business.phone}</a> oder schreiben Sie an{" "}
+              <a href={`mailto:${business.email}`}>{business.email}</a>.
+            </p>
+          </noscript>
         </form>
       </div>
     </header>

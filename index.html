@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1B0E2E" />
+    <!-- Herkunftsangabe: bei einem Wechsel auf eine fremde Seite geht nur
+         noch "https://digitalmovement.eu" mit, nicht der volle Pfad. Auf
+         GitHub Pages ist das die einzige der drei Sicherheits-Kopfzeilen,
+         die sich ueberhaupt setzen laesst — HSTS und
+         X-Content-Type-Options brauchen Zugriff auf den Server, den es
+         dort nicht gibt. Siehe Entscheidungsvermerk im Projektordner. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <!-- Hintergrund vor dem ersten Anstrich, damit Adressleiste und erstes
          Bild nicht weiß aufblitzen, bevor das Stylesheet da ist. -->
     <style>

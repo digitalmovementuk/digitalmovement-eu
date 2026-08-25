@@ -31,15 +31,25 @@ export function AnswerBlock() {
         {/* ---------- Byline: ein Mensch mit Namen und Gesicht ---------- */}
         <Reveal>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-            <img
-              src={`${BASE}${byline.photo}`}
-              width={52}
-              height={52}
-              alt={`${byline.name}, ${byline.role}`}
-              loading="lazy"
-              decoding="async"
-              className="h-[52px] w-[52px] shrink-0 rounded-full object-cover ring-1 ring-ink/10"
-            />
+            {/* 52 Punkte groß dargestellt, doppelt aufgelöst für scharfe
+                Bildschirme — 5 KB statt der 78-KB-Quelle. Die Fassungen
+                stehen als eigene Felder im Inhalt, nicht als aus dem
+                Dateinamen geratene Pfade: ein anderes Foto ohne erzeugte
+                Fassungen würde sonst still ins Leere zeigen. */}
+            <picture className="contents">
+              <source type="image/webp" srcSet={`${BASE}${byline.photoWebp} 104w`} sizes="52px" />
+              <img
+                src={`${BASE}${byline.photoFallback}`}
+                srcSet={`${BASE}${byline.photoFallback} 104w`}
+                sizes="52px"
+                width={52}
+                height={52}
+                alt={`${byline.name}, ${byline.role}`}
+                loading="lazy"
+                decoding="async"
+                className="h-[52px] w-[52px] shrink-0 rounded-full object-cover ring-1 ring-ink/10"
+              />
+            </picture>
             <p className="text-[14.5px] leading-snug text-ink-soft">
               {/* `byline-author` ist keine Gestaltungsklasse, sondern die
                   maschinenlesbare Markierung der Verfasserzeile. Ohne sie ist

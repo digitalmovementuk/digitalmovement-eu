@@ -35,14 +35,29 @@ export function FounderNote() {
           <Reveal>
             <div className="relative mx-auto lg:mx-0 max-w-[420px] lg:max-w-none">
               <div className="relative aspect-[4/5] rounded-[28px] sm:rounded-[36px] overflow-hidden bg-surface-2 shadow-[0_30px_80px_-30px_rgba(38,39,47,0.25)]">
-                <motion.img
-                  src={`${import.meta.env.BASE_URL}brand/raoul-founder.png`}
-                  alt={t.founder.signatureBlock}
-                  style={{ y: portraitY }}
-                  className="absolute inset-0 h-[112%] w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
+                {/* Das Porträt hatte als einziges Bild der Seite keine
+                    Maßangaben — der Browser kannte seine Höhe erst nach dem
+                    Laden und sprang. 320x320 ist die echte Größe der Quelle;
+                    die Gestaltung überschreibt sie ohnehin per CSS. */}
+                <picture className="contents">
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 1024px) 420px, 320px"
+                    srcSet={`${import.meta.env.BASE_URL}brand/raoul-founder-320.webp 320w`}
+                  />
+                  <motion.img
+                    src={`${import.meta.env.BASE_URL}brand/raoul-founder.png`}
+                    srcSet={`${import.meta.env.BASE_URL}brand/raoul-founder.png 320w`}
+                    sizes="(min-width: 1024px) 420px, 320px"
+                    alt={t.founder.signatureBlock}
+                    width={320}
+                    height={320}
+                    style={{ y: portraitY }}
+                    className="absolute inset-0 h-[112%] w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
               {/* Decorative offset square — adds depth, matches About page */}
               <span

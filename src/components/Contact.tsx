@@ -337,6 +337,25 @@ export function Contact() {
                 <p className="text-[12px] text-ink-muted">{hero.formNote}</p>
 
                 <ConsentNotice />
+
+                {/* Ohne JavaScript kommt aus diesem Formular nichts an — der Versand
+              läuft über fetch(). Eine Schaltfläche, die dann ins Leere führt,
+              ist schlimmer als gar keine: sie sieht aus wie eine abgeschickte
+              Anfrage. Also nennen wir in diesem Fall den Weg, der ohne
+              JavaScript funktioniert. */}
+                <noscript>
+                  <p className="text-[12px] text-ink-muted">
+                    Ohne JavaScript kann dieses Formular nichts absenden. Rufen Sie uns an unter{" "}
+                    <a className="underline" href={business.phoneHref}>
+                      {business.phone}
+                    </a>{" "}
+                    oder schreiben Sie an{" "}
+                    <a className="underline" href={`mailto:${business.email}`}>
+                      {business.email}
+                    </a>
+                    .
+                  </p>
+                </noscript>
               </motion.form>
             ) : (
               <motion.div

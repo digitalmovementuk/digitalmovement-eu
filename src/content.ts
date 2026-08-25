@@ -932,6 +932,10 @@ export const byline = {
   role: "Gründer, Digital Movement",
   meta: "Berlin · verantwortet diese Seite",
   photo: "brand/raoul-founder.png",
+  /* Zugeschnittene Fassungen für die 52-Punkte-Verfasserzeile. Erzeugt aus
+     `photo`, aber ausdrücklich benannt — siehe Kommentar in AnswerBlock. */
+  photoWebp: "brand/raoul-founder-104.webp",
+  photoFallback: "brand/raoul-founder-104.png",
   bioHref: "#founder",
   bioLabel: "Notiz vom Gründer lesen",
 };
