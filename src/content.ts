@@ -136,9 +136,9 @@ export const contactChannels = {
 };
 
 export const navLinks = [
-  { label: "Offer", href: "#services" },
+  { label: "Leistungen", href: "#services" },
   { label: "Über uns", href: "#founder" },
-  { label: "Success Stories", href: "#cases" },
+  { label: "Referenzen", href: "#cases" },
   { label: "Kontakt", href: "#contact" },
 ];
 
@@ -309,8 +309,8 @@ export const heroEyebrow = {
 
 export const servicesIntro = {
   eyebrow: "Was wir tun",
-  headlineMain: "Vier Services.",
-  headlineSub: "Ein Ziel – Ihr Unternehmenswachstum.",
+  headlineMain: "Was können wir für Sie tun?",
+  headlineSub: "Vier Services. Ein Ziel – Ihr Unternehmenswachstum.",
 };
 
 export const services = [
@@ -386,9 +386,9 @@ export const services = [
 
 export const metrics = {
   eyebrow: "Zahlen",
-  headlineMain: "Was wirklich zählt.",
-  headlineSub: "Anfragen. Nicht Klicks.",
-  intro: "Drei Zahlen aus laufenden Kunden. Gemessen. Nicht behauptet.",
+  headlineMain: "Was zählt wirklich?",
+  headlineSub: "",
+  intro: "Anfragen. Nicht Klicks. Drei Zahlen aus laufenden Kunden. Gemessen. Nicht behauptet.",
   items: [
     { value: 8, suffix: "×", label: "mehr Anfragen pro Monat", highlight: false },
     { value: 90, suffix: "", label: "Tage bis Google Seite 1", highlight: false },
@@ -430,9 +430,9 @@ export const results = [
 
 export const processIntro = {
   eyebrow: "Ihre ersten 90 Tage mit uns",
-  headlineMain: "Fünf Meilensteine.",
+  headlineMain: "Wie läuft Ihr Projekt ab?",
   intro:
-    "Verbindliche Meilensteine, professionelles Projektmanagement von Senior-Beratern.",
+    "Fünf Meilensteine. Verbindlich, mit professionellem Projektmanagement von Senior-Beratern.",
 };
 
 export const processSteps = [
@@ -648,9 +648,9 @@ export const testimonials: Review[] = [
 
 export const comparison = {
   eyebrow: "Digital Movement vs. Andere",
-  headlineMain: "Was wir anders machen.",
-  headlineSub: "Sechs Punkte.",
-  intro: "Damit Sie wissen, worauf Sie sich einlassen. Bevor Sie sich einlassen.",
+  headlineMain: "Was machen wir anders?",
+  headlineSub: "",
+  intro: "Sechs Punkte. Damit Sie wissen, worauf Sie sich einlassen. Bevor Sie sich einlassen.",
   columns: { topic: "Thema", other: "Andere Agenturen", neo: "Digital Movement" },
   rows: [
     {
@@ -691,28 +691,56 @@ export const comparison = {
    ============================================================ */
 
 export const snapshot = {
-  title: "Snapshot",
-  tagline: "Digital Movement in 30 Sekunden.",
+  eyebrow: "Snapshot",
+  /* Überschrift als Frage — Blueprint LB1.4. Die freigegebenen Wörter
+     ("Snapshot", "in 30 Sekunden") bleiben erhalten, sie stehen jetzt nur
+     an anderer Stelle: das eine als Kicker, das andere in der Frage.
+     Erfunden ist nichts, umgestellt ist alles. */
+  title: "Was bekommen Sie von uns — in 30 Sekunden?",
   items: [
     {
       index: "01",
       label: "Was",
       headline: "Mehr Anfragen.",
       detail: "Sichtbarkeit in Google und ChatGPT.",
+      /* Leere Listen statt fehlender Felder: so ist der Elementtyp der
+         drei Einträge identisch und die Karte kann `item.tags.length`
+         abfragen, ohne dass TypeScript über eine Vereinigung stolpert. */
+      tags: [] as string[],
+      points: [] as string[],
     },
     {
       index: "02",
       label: "Für wen",
       headline: "Inhaber & Mittelstand.",
-      detail: "Beratung. Handwerk. Praxen. Dienstleister. E-Commerce. B2B.",
+      detail: "",
+      /* Dieselben sechs Wörter wie vorher — vorher als ein Satz mit fünf
+         Punkten, jetzt als sechs Marken. Eine Aufzählung, die aussieht wie
+         eine Aufzählung, wird gelesen; ein Satz aus Einzelwörtern nicht. */
+      tags: [
+        "Beratung",
+        "Handwerk",
+        "Praxen",
+        "Dienstleister",
+        "E-Commerce",
+        "B2B",
+      ],
+      points: [] as string[],
     },
     {
       index: "03",
       label: "Was Sie bekommen",
-      headline:
-        "Premium-Website. SEO-Pages, optimiert für KI-Suche. Monatliche Performance-Berichte.",
+      /* Die Überschrift bestand aus drei Sätzen hintereinander. Wortgleich,
+         aber getrennt: der erste bleibt Überschrift, die anderen beiden
+         werden zu Punkten. */
+      headline: "Premium-Website.",
       detail:
         "Brandneues Premium-Website-Design, optimiert für Ranking auf Google Seite 1.",
+      tags: [] as string[],
+      points: [
+        "SEO-Pages, optimiert für KI-Suche.",
+        "Monatliche Performance-Berichte.",
+      ],
     },
   ],
 };
@@ -991,7 +1019,7 @@ export const solutionStep = {
  */
 export const faqIntro = {
   eyebrow: "Häufige Fragen",
-  headline: "Was Inhaber uns vor dem Start fragen.",
+  headline: "Was fragen Inhaber uns vor dem Start?",
 };
 
 /**
@@ -1001,7 +1029,7 @@ export const faqIntro = {
  * einzige Quelle für beide. Wer die Seite ändert, ändert diese Zeile mit.
  */
 export const lastUpdated = {
-  iso: "2026-08-24",
-  label: "Zuletzt aktualisiert am 24. August 2026",
+  iso: "2026-08-25",
+  label: "Zuletzt aktualisiert am 25. August 2026",
   note: "Diese Seite wird laufend geprüft. Die genannten Zahlen stammen aus laufenden und abgeschlossenen Kundenprojekten.",
 };

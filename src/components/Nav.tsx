@@ -11,9 +11,9 @@ type Surface = "dark" | "light";
 // keine Unterseiten. Ein Menü, das auf Seiten zeigt, die es nicht gibt,
 // ist schlimmer als ein kurzes Menü.
 const subpageLinks = [
-  { label: "Offer", to: "/#services" },
+  { label: "Leistungen", to: "/#services" },
   { label: "Über uns", to: "/#founder" },
-  { label: "Success Stories", to: "/#cases" },
+  { label: "Referenzen", to: "/#cases" },
   { label: "Kontakt", to: "/#contact" },
 ];
 

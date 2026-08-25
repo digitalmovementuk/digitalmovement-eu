@@ -99,8 +99,8 @@ export function Reviews() {
                   fontWeight: 700,
                 }}
               >
-                Was Kunden sagen
-                <span className="block text-ink/55">über die Arbeit mit uns.</span>
+                Was sagen Kunden
+                <span className="block text-ink/55">über die Arbeit mit uns?</span>
               </h2>
             </Reveal>
           </div>

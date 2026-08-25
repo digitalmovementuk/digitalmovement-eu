@@ -61,10 +61,22 @@ export function AnswerBlock() {
 
         {/* ---------- Antwortblock ---------- */}
         <Reveal delay={0.06}>
+          {/* Antwort vor Frage — im Quelltext, nicht im Bild.
+              Der Blueprint verlangt den Antwortabsatz zwischen der
+              Seitenüberschrift und der ersten Zwischenüberschrift: Das ist
+              die Stelle, an der eine Suchmaschine oder eine KI die Antwort
+              erwartet. Im Bild bleibt die Reihenfolge Frage → Antwort,
+              dafür sorgen die order-Klassen.
+              Für Screenreader geht dabei nichts verloren: Der Abschnitt
+              trägt aria-labelledby="antwort-frage", wird also mit der Frage
+              als Namen angekündigt, bevor die Antwort gelesen wird. */}
           <div className="mt-8 sm:mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-12 lg:items-start">
+            <p className="order-2 text-[16.5px] sm:text-[18px] leading-relaxed text-ink-soft max-w-[62ch]">
+              {answerBlock.answer}
+            </p>
             <h2
               id="antwort-frage"
-              className="balance text-ink"
+              className="order-1 balance text-ink"
               style={{
                 fontSize: "clamp(24px, 2.2vw, 32px)",
                 lineHeight: "1.1",
@@ -74,9 +86,6 @@ export function AnswerBlock() {
             >
               {answerBlock.question}
             </h2>
-            <p className="text-[16.5px] sm:text-[18px] leading-relaxed text-ink-soft max-w-[62ch]">
-              {answerBlock.answer}
-            </p>
           </div>
         </Reveal>
       </div>

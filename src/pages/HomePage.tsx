@@ -45,8 +45,8 @@ const Problem = lazy(() =>
 const AgencySnapshot = lazy(() =>
   import("../components/AgencySnapshot").then((m) => ({ default: m.AgencySnapshot })),
 );
-const ServicesCarousel = lazy(() =>
-  import("../components/ServicesCarousel").then((m) => ({ default: m.ServicesCarousel })),
+const Services = lazy(() =>
+  import("../components/Services").then((m) => ({ default: m.Services })),
 );
 const ProcessTimeline = lazy(() =>
   import("../components/ProcessTimeline").then((m) => ({ default: m.ProcessTimeline })),
@@ -112,7 +112,7 @@ export function HomePage() {
       <TrustBar />
       {defer(Problem)}
       {defer(AgencySnapshot)}
-      {defer(ServicesCarousel)}
+      {defer(Services)}
       {defer(ProcessTimeline)}
       {defer(NextStep)}
       {defer(Metrics)}

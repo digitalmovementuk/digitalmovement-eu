@@ -591,7 +591,8 @@
     background: rgba(9, 18, 34, 0.82);
   }
 }
-.uk-hero .lead-form h2 {
+.uk-hero .lead-form h2,
+.uk-hero .lead-form .form-title {
   font-size: 1.24rem;
   margin-bottom: 4px;
   text-transform: none;
@@ -817,6 +818,7 @@
     text-align: left;
   }
   .uk-hero .lead-form h2,
+  .uk-hero .lead-form .form-title,
   .uk-hero .lead-form .form-intro {
     text-align: center;
   }

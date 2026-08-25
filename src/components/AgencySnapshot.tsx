@@ -1,189 +1,133 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { Reveal } from "../lib/Reveal";
 import { useT } from "../lib/i18n";
 
-const AUTOPLAY_MS = 8000;
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
-
-const SLIDE_BG = [
-  "snapshot/slide-01.jpg",
-  "snapshot/slide-02.jpg",
-  "snapshot/slide-03.jpg",
-];
-
-type SlideContent = {
-  index: string;
-  label: string;
-  headline: string;
-  detail: string;
-};
-
 /**
- * AgencySnapshot — auto-advancing horizontal carousel (mirrors ServicesCarousel).
- * Three slides cycle through "What / For whom / What you get". Each slide is a
- * full-width rounded card with a background image, big italic numeral, label,
- * headline, and detail. Auto-advances every 8 s; hover pauses; arrow keys nav.
+ * Kurzprofil — drei Antworten nebeneinander, alle gleichzeitig sichtbar.
+ *
+ * Vorher war das ein Karussell: drei Karten, alle acht Sekunden schob sich
+ * die nächste ins Bild, 680 px Höhe für jeweils einen Halbsatz. Wer die
+ * dritte Antwort lesen wollte, musste sechzehn Sekunden warten oder raten,
+ * dass man wischen kann. Das ist teuer erkaufte Bewegung: die Seite
+ * verspricht "in 30 Sekunden" und braucht allein für den Abschnitt 24.
+ *
+ * Jetzt stehen die drei Antworten als Raster nebeneinander. Kein
+ * Selbstlauf, keine Punkte-Leiste, keine Pfeiltasten, kein
+ * IntersectionObserver — und vor allem keine drei Stockfotos mehr
+ * (Hochhäuser, ein Mann am Schreibtisch, eine Teambesprechung), die mit
+ * "Mehr Anfragen", "Inhaber & Mittelstand" und "Premium-Website" nichts zu
+ * tun hatten und 620 kB gekostet haben. Bild ohne Aussage erhöht die Last,
+ * es senkt sie nicht.
+ *
+ * Der Text ist wortgleich der freigegebene. Umgestellt ist nur die Form:
+ * aus einem Satz aus sechs Einzelwörtern werden sechs Marken, aus einer
+ * Überschrift aus drei Sätzen werden eine Überschrift und zwei Punkte.
  */
 export function AgencySnapshot() {
   const t = useT();
-  // Die Seite ist deutschsprachig; die englischen Zweige sind entfallen.
-  const items = t.snapshot.items;
-
-  const trackRef = useRef<HTMLDivElement>(null);
-  const slideRefs = useRef<(HTMLElement | null)[]>([]);
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [hovering, setHovering] = useState(false);
-
-  const goTo = useCallback((idx: number) => {
-    const track = trackRef.current;
-    const slide = slideRefs.current[idx];
-    if (!track || !slide) return;
-    track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: "smooth" });
-  }, []);
-
-  const next = useCallback(() => {
-    setActiveIdx((i) => {
-      const ni = (i + 1) % items.length;
-      goTo(ni);
-      return ni;
-    });
-  }, [goTo, items.length]);
-
-  const prev = useCallback(() => {
-    setActiveIdx((i) => {
-      const ni = (i - 1 + items.length) % items.length;
-      goTo(ni);
-      return ni;
-    });
-  }, [goTo, items.length]);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        let best: IntersectionObserverEntry | null = null;
-        for (const e of entries) {
-          if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
-            best = e;
-          }
-        }
-        if (best) {
-          const idx = slideRefs.current.findIndex((el) => el === best!.target);
-          if (idx !== -1) setActiveIdx(idx);
-        }
-      },
-      { root: track, threshold: [0.4, 0.6, 0.8] },
-    );
-    slideRefs.current.forEach((el) => el && obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (hovering) return;
-    const track = trackRef.current;
-    if (!track) return;
-    let visible = false;
-    const sectionObs = new IntersectionObserver(
-      ([entry]) => {
-        visible = entry.isIntersecting;
-      },
-      { threshold: 0.35 },
-    );
-    sectionObs.observe(track);
-    const tick = () => {
-      if (!visible || document.hidden) return;
-      next();
-    };
-    const id = window.setInterval(tick, AUTOPLAY_MS);
-    return () => {
-      window.clearInterval(id);
-      sectionObs.disconnect();
-    };
-  }, [hovering, next]);
+  const { eyebrow, title, items } = t.snapshot;
 
   return (
     <section
       id="snapshot"
       data-surface="light"
-      aria-label="Agentur-Snapshot"
-      aria-roledescription="carousel"
-      className="surface-light relative flex flex-col pt-16 sm:pt-20 md:pt-24 pb-16 sm:pb-20 md:pb-24 md:min-h-[680px]"
+      className="surface-light py-20 sm:py-24 md:py-28"
+      aria-labelledby="snapshot-title"
     >
-      <div className="container-v3 shrink-0">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.6, ease: EASE_OUT }}
-          className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 sm:gap-6 pb-5 sm:pb-6 border-b border-ink/10"
-        >
-          <h2
-            className="text-ink"
-            style={{
-              fontSize: "clamp(20px, 2.2vw, 26px)",
-              lineHeight: "1.0",
-              letterSpacing: "-0.024em",
-              fontWeight: 700,
-            }}
-          >
-            {t.snapshot.title}
-          </h2>
-          <p className="text-[12px] sm:text-[13px] text-ink-muted leading-relaxed">
-            {t.snapshot.tagline}
-          </p>
-        </motion.div>
-      </div>
+      <div className="container-v3">
+        <div className="mx-auto max-w-[30ch] text-center lg:mx-0 lg:text-left">
+          <Reveal>
+            <p className="eyebrow text-ink-muted">{eyebrow}</p>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <h2
+              id="snapshot-title"
+              className="mt-3 balance text-ink"
+              style={{
+                fontSize: "clamp(24px, 2.6vw, 38px)",
+                lineHeight: "1.04",
+                letterSpacing: "-0.034em",
+                fontWeight: 700,
+              }}
+            >
+              {title}
+            </h2>
+          </Reveal>
+        </div>
 
-      <div
-        ref={trackRef}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-        className="snap-x mt-5 sm:mt-6 flex overflow-x-auto flex-1 min-h-0 gap-3 sm:gap-4"
-        style={{
-          scrollSnapType: "x mandatory",
-          paddingLeft:
-            "max(var(--gutter), calc((100vw - var(--container-max)) / 2 + var(--gutter)))",
-          paddingRight:
-            "max(var(--gutter), calc((100vw - var(--container-max)) / 2 + var(--gutter)))",
-        }}
-        tabIndex={0}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowRight") {
-            e.preventDefault();
-            next();
-          } else if (e.key === "ArrowLeft") {
-            e.preventDefault();
-            prev();
-          }
-        }}
-      >
-        {items.map((s, i) => (
-          <SnapshotSlide
-            key={s.index}
-            slide={s}
-            index={i}
-            total={items.length}
-            ref={(el) => {
-              slideRefs.current[i] = el;
-            }}
-          />
-        ))}
-      </div>
+        <div className="mt-9 grid gap-4 sm:mt-11 sm:gap-5 md:grid-cols-3">
+          {items.map((item, i) => (
+            <Reveal key={item.index} delay={0.06 * i} className="h-full">
+              <article className="group relative flex h-full flex-col overflow-hidden rounded-[24px] bg-white p-7 pt-8 shadow-card ring-1 ring-ink/[0.06] transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-8 sm:pt-9">
+                {/* Markenkante statt Stockfoto: trägt die Farbe des Hauses,
+                    kostet keine Ladezeit und behauptet nichts. */}
+                <span aria-hidden className="absolute inset-x-0 top-0 h-[5px] bg-dm-brand" />
+                <p className="relative eyebrow text-ink-muted">{item.label}</p>
+                <h3
+                  className="relative mt-2.5 balance text-ink"
+                  style={{
+                    fontSize: "clamp(21px, 1.9vw, 27px)",
+                    lineHeight: "1.08",
+                    letterSpacing: "-0.03em",
+                    fontWeight: 700,
+                  }}
+                >
+                  {item.headline}
+                </h3>
 
-      <div className="container-v3 mt-5 sm:mt-7 shrink-0 flex items-center justify-center">
-        <div className="flex items-center gap-2 sm:gap-3 rounded-full bg-ink/[0.10] backdrop-blur-md px-4 py-3 sm:px-6 sm:py-4">
-          {items.map((s, i) => (
-            <button
-              key={s.index}
-              type="button"
-              onClick={() => goTo(i)}
-              aria-label={`Zu ${s.headline} springen`}
-              className={`h-2.5 sm:h-3 rounded-full transition-all ${
-                activeIdx === i ? "w-9 sm:w-12 bg-ink/85" : "w-2.5 sm:w-3 bg-ink/35 hover:bg-ink/55"
-              }`}
-            />
+                {item.detail && (
+                  <p
+                    className="relative mt-3 text-ink-muted"
+                    style={{ fontSize: "clamp(15px, 1.05vw, 16.5px)", lineHeight: 1.5 }}
+                  >
+                    {item.detail}
+                  </p>
+                )}
+
+                {item.points.length > 0 && (
+                  <ul className="relative mt-4 space-y-2.5">
+                    {item.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex gap-2.5 text-ink-soft"
+                        style={{ fontSize: "15px", lineHeight: 1.45 }}
+                      >
+                        <Check />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {item.tags.length > 0 && (
+                  <ul className="relative mt-4 flex flex-wrap gap-2">
+                    {item.tags.map((tag) => (
+                      <li
+                        key={tag}
+                        className="rounded-pill bg-surface-2 px-3 py-1.5 text-[13.5px] font-semibold text-ink-soft ring-1 ring-ink/[0.05]"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {/* Fußzeile: die Ziffer sitzt bei jeder Karte auf gleicher
+                    Höhe am unteren Rand. Dadurch ist der Weißraum unter der
+                    kürzesten Antwort ("Mehr Anfragen.") gesetzt und nicht
+                    übrig geblieben — und die drei Karten haben denselben
+                    unteren Anker. */}
+                <div className="relative mt-auto flex items-end justify-between pt-7">
+                  <span aria-hidden className="h-px flex-1 bg-ink/[0.07]" />
+                  <span
+                    aria-hidden
+                    className="ml-4 select-none font-semibold italic leading-none text-ink/[0.09]"
+                    style={{ fontSize: "clamp(40px, 3.4vw, 52px)", marginBottom: "-0.12em" }}
+                  >
+                    {item.index}
+                  </span>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -191,113 +135,22 @@ export function AgencySnapshot() {
   );
 }
 
-const SnapshotSlide = ({
-  ref,
-  slide,
-  index,
-  total,
-}: {
-  ref: (el: HTMLElement | null) => void;
-  slide: SlideContent;
-  index: number;
-  total: number;
-}) => {
-  const base = import.meta.env.BASE_URL;
-  const bgUrl = `${base}${SLIDE_BG[index] ?? SLIDE_BG[0]}`;
+/** Häkchen für die Punkte-Liste. Rein dekorativ, deshalb aria-hidden. */
+function Check() {
   return (
-    <article
-      ref={ref}
-      className="snap-card flex-shrink-0"
-      style={{
-        scrollSnapAlign: "center",
-        scrollSnapStop: "always",
-        width: "calc(min(100vw, var(--container-max)) - 2 * var(--gutter))",
-      }}
-      aria-roledescription="slide"
-      aria-label={`${index + 1} / ${total}: ${slide.headline}`}
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="mt-[3px] shrink-0 text-dm-violet-deep"
+      aria-hidden
     >
-      <div className="relative grid h-full min-h-[460px] w-full grid-rows-[200px_1fr] overflow-hidden rounded-[24px] bg-white shadow-card sm:min-h-[480px] sm:rounded-[32px] sm:grid-rows-[240px_1fr] lg:grid-cols-[1.05fr_1fr] lg:grid-rows-1">
-        <div className="relative overflow-hidden">
-          <img
-            src={bgUrl}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 pointer-events-none lg:hidden"
-            style={{
-              background:
-                "linear-gradient(180deg, rgba(255,255,255,0) 55%, rgba(255,255,255,0.95) 100%)",
-            }}
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 hidden lg:block"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(255,255,255,0) 50%, rgba(255,255,255,0.92) 92%, #ffffff 100%)",
-            }}
-          />
-        </div>
-
-        <div className="relative flex flex-col justify-center px-6 py-7 sm:px-10 sm:py-9 md:px-12 md:py-10 lg:px-14 lg:py-14">
-          <span
-            aria-hidden
-            className="pointer-events-none absolute right-5 top-4 select-none text-ink/[0.06] sm:right-7 sm:top-5 lg:right-8 lg:top-7"
-            style={{
-              fontSize: "clamp(96px, 14vw, 180px)",
-              fontWeight: 600,
-              fontStyle: "italic",
-              letterSpacing: "-0.05em",
-              lineHeight: 0.85,
-            }}
-          >
-            {slide.index}
-          </span>
-
-          <div className="relative max-w-[44ch]">
-            <div className="flex items-center gap-3">
-              <span className="rounded-full bg-ink/[0.06] px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[0.18em] text-ink-soft">
-                {slide.index} / {String(total).padStart(2, "0")}
-              </span>
-              <Reveal>
-                <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-ink-muted sm:text-[12px]">
-                  {slide.label}
-                </p>
-              </Reveal>
-            </div>
-
-            <Reveal delay={0.05}>
-              <h3
-                className="mt-4 balance text-ink sm:mt-5"
-                style={{
-                  fontSize: "clamp(18px, 1.5vw, 21px)",
-                  lineHeight: "1.04",
-                  letterSpacing: "-0.028em",
-                  fontWeight: 700,
-                }}
-              >
-                {slide.headline}
-              </h3>
-            </Reveal>
-
-            <Reveal delay={0.12}>
-              <p
-                className="mt-4 max-w-[44ch] text-ink-soft sm:mt-5"
-                style={{
-                  fontSize: "clamp(15px, 1.15vw, 17px)",
-                  lineHeight: 1.55,
-                }}
-              >
-                {slide.detail}
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </div>
-    </article>
+      <path d="M4 12.5l5 5L20 6.5" />
+    </svg>
   );
-};
+}

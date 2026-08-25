@@ -201,8 +201,23 @@ export function Hero() {
             des Browsers, nicht in der der Seite, und verdecken unsere
             eigenen. Die required-Attribute bleiben trotzdem stehen — sie
             sind das, was ein Screenreader vorliest. */}
-        <form className="lead-form" id="hero-form" onSubmit={onSubmit} noValidate>
-          <h2>{hero.formTitle}</h2>
+        {/* aria-labelledby statt <h2>: Die Formularüberschrift ist eine
+            Beschriftung, kein Abschnitt der Seite. Als <h2> war sie die
+            erste Zwischenüberschrift des Dokuments — die Gliederung las
+            sich damit „Überschrift der Seite → Formularbeschriftung“, und
+            der Absatz, der die Frage der Seite beantwortet, stand hinter
+            einer Formularbeschriftung. Als Absatz mit aria-labelledby
+            bleibt das Formular für Screenreader genauso benannt. */}
+        <form
+          className="lead-form"
+          id="hero-form"
+          aria-labelledby="hero-form-title"
+          onSubmit={onSubmit}
+          noValidate
+        >
+          <p className="form-title" id="hero-form-title">
+            {hero.formTitle}
+          </p>
           <p className="form-intro">{hero.formIntro}</p>
 
           <div className="form-grid">
