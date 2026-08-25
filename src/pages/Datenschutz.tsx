@@ -236,7 +236,7 @@ export function Datenschutz() {
               Wir möchten wissen, wie viele Menschen diese Website besuchen und
               welche Abschnitte gelesen werden. Dafür nutzen wir Google
               Analytics 4 (Property „Digital Movement Germany“, Mess-ID
-              G-R5ZFKGZKCZ). Anbieter ist Google Ireland Limited, Gordon House,
+              G-H2NP3R3KJT). Anbieter ist Google Ireland Limited, Gordon House,
               Barrow Street, Dublin 4, Irland.
             </p>
             <p>

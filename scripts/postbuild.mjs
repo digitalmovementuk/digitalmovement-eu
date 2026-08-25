@@ -212,7 +212,7 @@ async function main() {
       );
     } else {
       fail(
-        "no GA4 measurement ID reached the bundle — VITE_GA4_ID is unset (see .env.example; the German property is G-R5ZFKGZKCZ). Set it, or set ALLOW_NO_GA4=1 to build without measurement deliberately.",
+        "no GA4 measurement ID reached the bundle — VITE_GA4_ID is unset (see .env.example; the German property is G-H2NP3R3KJT). Set it, or set ALLOW_NO_GA4=1 to build without measurement deliberately.",
       );
     }
   }
