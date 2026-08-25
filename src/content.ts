@@ -333,9 +333,13 @@ export const services = [
   {
     key: "google-ads",
     title: "Google Ads",
-    promise:
-      "Wir finden Ihre Zielgruppe. Unmittelbare Kundenanfragen und Sales-Gespräche für Ihren Vertrieb.",
-    detail: "Zielgerichtete Kampagnen. Conversion-Tracking.",
+    /* Der Titel trug bis 25.08.2026 beide Sätze und lief auf dem Desktop
+       über drei Zeilen — das Tor (check-render) lässt zwei zu. Kein Wort ist
+       weg, der zweite Satz steht jetzt in der Erklärung. Damit sind alle
+       vier Karten gleich gebaut: kurzes Versprechen, dann die Erklärung. */
+    promise: "Wir finden Ihre Zielgruppe.",
+    detail:
+      "Unmittelbare Kundenanfragen und Sales-Gespräche für Ihren Vertrieb. Zielgerichtete Kampagnen. Conversion-Tracking.",
     bullets: [
       "Search + Performance Max",
       "Conversion-Tracking",

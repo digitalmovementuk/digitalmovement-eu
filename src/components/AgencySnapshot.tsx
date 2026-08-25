@@ -34,7 +34,13 @@ export function AgencySnapshot() {
       aria-labelledby="snapshot-title"
     >
       <div className="container-v3">
-        <div className="mx-auto max-w-[30ch] text-center lg:mx-0 lg:text-left">
+        {/* 30ch sind gemessen an der Grundschrift (16px), nicht an der
+            Überschrift — bei 38px passen darin nur ~13 Zeichen pro Zeile,
+            und "Was bekommen Sie von uns — in 30 Sekunden?" lief auf DREI
+            Zeilen. Das Tor (check-render) lässt auf dem Desktop höchstens
+            zwei zu und hat die Veröffentlichung gestoppt. Ab lg deshalb
+            eine feste Breite in px. */}
+        <div className="mx-auto max-w-[30ch] text-center lg:mx-0 lg:max-w-[620px] lg:text-left">
           <Reveal>
             <p className="eyebrow text-ink-muted">{eyebrow}</p>
           </Reveal>
