@@ -83,7 +83,13 @@ try {
   run("git", ["init", "-q", "-b", BRANCH], work);
   run("git", ["add", "-A"], work);
 
-  const tracked = run("git", ["ls-files"], work).split("\n").filter(Boolean).sort();
+  // -c core.quotepath=false: ohne das schreibt Git jeden Nicht-ASCII-Pfad in
+  // Anfuehrungszeichen und mit Oktal-Escapes -- "mehr-sales-f\\303\\274r-..." --
+  // und der Vergleich unten haelt jede Datei mit Umlaut im Namen fuer fehlend.
+  // Umgekehrt gefaehrlicher: haette der Vergleich anders herum gestimmt, waere
+  // eine wirklich fehlende Datei nicht aufgefallen.
+  const tracked = run("git", ["-c", "core.quotepath=false", "ls-files"], work)
+    .split("\n").filter(Boolean).sort();
 
   // Prüfung 1: nichts darf unterwegs verloren gehen.
   const missing = expected.filter((f) => !tracked.includes(f));
