@@ -80,6 +80,11 @@ async function main() {
   for (const file of await findHtml(DIST)) {
     const path = toRoutePath(file);
     if (path === "/" || path === "/404") continue;
+    // Eine Datei, die schon dir/index.html heißt, ist selbst der Zwilling.
+    // Ein zweiter davon hieße dir/index/index.html und wäre eine Adresse, die
+    // niemand aufruft. Betrifft alles, was fertig aus public/ mitkommt --
+    // etwa die Anzeigen-Landingpage.
+    if (file.endsWith(`${sep}index.html`)) continue;
     const dir = join(DIST, path.slice(1));
     await mkdir(dir, { recursive: true });
     await writeFile(join(dir, "index.html"), await readFile(file, "utf8"), "utf8");
