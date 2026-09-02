@@ -2,16 +2,16 @@ keyword;cluster;evidenz;intention;prioritaet;einsatz_auf_der_cex_seite
 KI-Beratung Köln;A Kern;AC, T×10, H1×3, URL×5;kommerziell-lokal;Fokus;Title, H1, URL, Meta, Lead, vier H2
 KI Beratung Köln;A Kern;AC (identisch mit Bindestrich-Variante);kommerziell-lokal;Fokus;wie oben, Schreibweise mit Bindestrich
 KI-Beratung in Köln;A Kern;H1×4, H2×6, FAQ×8;kommerziell-lokal;Primär;H2 Antwortblock, Leistungen, Vorgehen, FAQ
-KI-Beratung für Köln;A Kern;H1×2, H2×3;kommerziell-lokal;Sekundär;Köln-Block
+KI-Beratung für Köln;A Kern;H1×2, H2×3;kommerziell-lokal;Sekundär;Block 06 Anwendungsfälle und Köln
 KI-Beratung für Unternehmen;A Kern;AC, T, H1×2, FAQ×2;kommerziell;Primär;Antwortblock, Link auf Hub /ki-beratung/
-KI-Beratung für Unternehmen in Köln;A Kern;T, H1×2;kommerziell-lokal;Primär;Antwortblock, Block 04
-KI Berater Köln;A Kern;AC;kommerziell-lokal;Sekundär;Verfasserzeile, Prinzipien
+KI-Beratung für Unternehmen in Köln;A Kern;T, H1×2;kommerziell-lokal;Primär;Antwortblock, Block 05 Leistungen
+KI Berater Köln;A Kern;AC;kommerziell-lokal;Sekundär;Verfasserzeile, Block 08 Warum CEx
 KI Consulting Köln;A Kern;AC;kommerziell-lokal;Sekundär;einmal im Fließtext
 KI-Beratung Mittelstand;A Kern;AC, T×2, H1×3, FAQ×3;kommerziell;Verlinken;eigene CEx-Seite /ki-beratung/ki-beratung-mittelstand/
 KI-Beratung für den Mittelstand;A Kern;AC, T×2;kommerziell;Verlinken;wie oben
 KI-Beratung KMU;A Kern;AC, FAQ;kommerziell;Sekundär;FAQ 5
 KI-Beratung für kleine Unternehmen;A Kern;AC, FAQ;kommerziell;Sekundär;FAQ 5
-KI-Beratung in der Nähe;A Kern;AC;lokal;Sekundär;Schema areaServed, Köln-Block
+KI-Beratung in der Nähe;A Kern;AC;lokal;Sekundär;Schema areaServed, Block 06 Anwendungsfälle und Köln
 KI Agentur Köln;B Agentur;AC, T×6, H1×3, URL×4;kommerziell-lokal;Abfangen;FAQ 8
 KI-Agentur für Köln;B Agentur;T×2, H1×2;kommerziell-lokal;Abfangen;FAQ 8
 KI-Unternehmen Köln;B Agentur;H1×2, AC;kommerziell-lokal;Nicht bedienen;–
@@ -19,49 +19,49 @@ KI Firma Köln;B Agentur;AC;kommerziell-lokal;Nicht bedienen;–
 KI Experte Köln;B Agentur;AC, H1;kommerziell-lokal;Sekundär;Verfasserzeile
 KI Dienstleister Köln;B Agentur;H2×2;kommerziell-lokal;Nicht bedienen;–
 KI Entwicklung Köln;B Agentur;T, URL;kommerziell (Entwicklung);Nicht bedienen;andere Leistung
-KI Workshop Köln;C Leistung;AC, T×2, H2×2;kommerziell-lokal;Bedingt;Block 04 Befähigung, nur wenn CEx Schulungen anbietet
+KI Workshop Köln;C Leistung;AC, T×2, H2×2;kommerziell-lokal;Bedingt;Block 05 Befähigung, nur wenn CEx Schulungen anbietet
 KI Schulung Köln;C Leistung;AC;kommerziell-lokal;Bedingt;wie oben
 KI Seminar Köln;C Leistung;AC, H2;kommerziell-lokal;Bedingt;wie oben
-KI-Automatisierung Köln;C Leistung;AC, T×3;kommerziell-lokal;Primär;Block 04, Link auf /prozessberatung/digitale-prozesse-ki/
-KI Strategie Beratung;C Leistung;AC, H2×5, FAQ;kommerziell;Primär;Block 04 Potenzial-Check, Vorgehen
-KI-Strategie;C Leistung;H2×5, H3×4;kommerziell;Primär;Block 04
-KI Implementierung;C Leistung;AC, T×2, FAQ;kommerziell;Sekundär;Vorgehen Schritt 6
+KI-Automatisierung Köln;C Leistung;AC, T×3;kommerziell-lokal;Primär;Block 05 Leistungen, Link auf /prozessberatung/digitale-prozesse-ki/
+KI Strategie Beratung;C Leistung;AC, H2×5, FAQ;kommerziell;Primär;Block 05 Leistungen Potenzial-Check, Vorgehen
+KI-Strategie;C Leistung;H2×5, H3×4;kommerziell;Primär;Block 05 Leistungen
+KI Implementierung;C Leistung;AC, T×2, FAQ;kommerziell;Sekundär;Block 07 Schritt 6
 KI Implementierung Beratung;C Leistung;AC;kommerziell;Sekundär;Vorgehen
 KI Einführung Unternehmen;C Leistung;AC, H2, FAQ;kommerziell/informationell;Sekundär;Antwortblock
-KI-Agenten Köln;C Leistung;T, H1, H3×4;kommerziell-lokal;Sekundär;Block 04, Link auf /ki-beratung/ki-chatbot-beratung/
+KI-Agenten Köln;C Leistung;T, H1, H3×4;kommerziell-lokal;Sekundär;Block 05 Leistungen, Link auf /ki-beratung/ki-chatbot-beratung/
 KI Chatbot Köln;C Leistung;T, H3×2;kommerziell-lokal;Verlinken;eigene CEx-Seite /ki-beratung/ki-chatbot-beratung/
-KI Potenzialanalyse;C Leistung;H3×2;kommerziell;Primär;Block 04 als Potenzial-Check, Vorgehen Schritt 2
-Prozessautomatisierung KI;C Leistung;H3×5;kommerziell;Sekundär;Block 04, Link auf Digitale Prozesse KI
+KI Potenzialanalyse;C Leistung;H3×2;kommerziell;Primär;Block 05 Leistungen als Potenzial-Check, Block 07 Schritt 2
+Prozessautomatisierung KI;C Leistung;H3×5;kommerziell;Sekundär;Block 05 Leistungen, Link auf Digitale Prozesse KI
 Microsoft Copilot Beratung Köln;C Leistung;eigene CEx-Seite;kommerziell;Verlinken;Weitere Themen
 KI Beratung Kosten;D Kosten;AC, FAQ×11;kommerziell (Vergleich);Primär;FAQ 1
 KI Beratung kostenlos;D Kosten;AC;kommerziell;Primär;FAQ 1 (Erstgespräch kostenlos)
 KI Beratung Stundensatz;D Kosten;AC;kommerziell (Vergleich);Sekundär;FAQ 1
-KI Beratung Förderung;D Förderung;AC, H2×2, FAQ×4;kommerziell/informationell;Primär;Block 07, FAQ 7
-BAFA KI Beratung;D Förderung;AC, H2, FAQ×2;kommerziell/informationell;Primär;Block 07, FAQ 7 (Listung klären)
-KI Förderung Köln;D Förderung;H2×2, FAQ×2;informationell-lokal;Sekundär;Block 07
-KI Förderung NRW;D Förderung;H2, H3×3;informationell;Sekundär;Block 07 (Zukunftszentrum KI NRW, NRW.BANK)
-KI für Versicherungen;E Branche;T×3, H3×5;kommerziell (Branche);Sekundär;Köln-Block
-KI für Medienunternehmen;E Branche;T×3, H3×5;kommerziell (Branche);Sekundär;Köln-Block
-KI Handel E-Commerce Köln;E Branche;T, H3×3;kommerziell (Branche);Sekundär;Köln-Block
-KI in der Industrie Köln;E Branche;eigene CEx-Seiten;kommerziell (Branche);Primär;Köln-Block, Link auf /ki-beratung/ki-in-der-industrie/
-KI öffentliche Verwaltung Köln;E Branche;CEx-Zielgruppe, kein Wettbewerber;kommerziell (Branche);Primär;Köln-Block, Link auf Prozessoptimierung öffentliche Verwaltung
-KI Logistik Köln;E Branche;CEx-Zielgruppe;kommerziell (Branche);Sekundär;Köln-Block
+KI Beratung Förderung;D Förderung;AC, H2×2, FAQ×4;kommerziell/informationell;Primär;Block 09 Förderung und Recht, FAQ 7
+BAFA KI Beratung;D Förderung;AC, H2, FAQ×2;kommerziell/informationell;Primär;Block 09 Förderung und Recht, FAQ 7 (Listung klären)
+KI Förderung Köln;D Förderung;H2×2, FAQ×2;informationell-lokal;Sekundär;Block 09 Förderung und Recht
+KI Förderung NRW;D Förderung;H2, H3×3;informationell;Sekundär;Block 09 Förderung und Recht (Zukunftszentrum KI NRW, NRW.BANK)
+KI für Versicherungen;E Branche;T×3, H3×5;kommerziell (Branche);Sekundär;Block 06 Anwendungsfälle und Köln
+KI für Medienunternehmen;E Branche;T×3, H3×5;kommerziell (Branche);Sekundär;Block 06 Anwendungsfälle und Köln
+KI Handel E-Commerce Köln;E Branche;T, H3×3;kommerziell (Branche);Sekundär;Block 06 Anwendungsfälle und Köln
+KI in der Industrie Köln;E Branche;eigene CEx-Seiten;kommerziell (Branche);Primär;Block 06 Anwendungsfälle und Köln, Link auf /ki-beratung/ki-in-der-industrie/
+KI öffentliche Verwaltung Köln;E Branche;CEx-Zielgruppe, kein Wettbewerber;kommerziell (Branche);Primär;Block 06 Anwendungsfälle und Köln, Link auf Prozessoptimierung öffentliche Verwaltung
+KI Logistik Köln;E Branche;CEx-Zielgruppe;kommerziell (Branche);Sekundär;Block 06 Anwendungsfälle und Köln
 KI im Handwerk;E Branche;H1, FAQ;kommerziell (Branche);Nicht bedienen;nicht CEx-Zielgruppe
 KI Beratung Bonn;F Region;AC, FAQ;kommerziell-lokal;Nebenseite;spätere Route /ki-beratung/bonn/
 KI Beratung Düsseldorf;F Region;AC;kommerziell-lokal;Nebenseite;spätere Route /ki-beratung/duesseldorf/
 KI Agentur Bonn;F Region;AC;kommerziell-lokal;Nebenseite;–
-KI Beratung NRW;F Region;AC, T, Meta;kommerziell-regional;Nebenseite;einmal im Köln-Block, spätere Route
-KI Beratung Rheinland;F Region;T, H3;kommerziell-regional;Sekundär;Köln-Block, Link auf Projektmanagement Rheinland
-KI Beratung Aachen;F Region;AC;kommerziell-lokal;Nebenseite;Teilregion im Köln-Block
+KI Beratung NRW;F Region;AC, T, Meta;kommerziell-regional;Nebenseite;einmal im Block 06 Anwendungsfälle und Köln, spätere Route
+KI Beratung Rheinland;F Region;T, H3;kommerziell-regional;Sekundär;Block 06 Anwendungsfälle und Köln, Link auf Projektmanagement Rheinland
+KI Beratung Aachen;F Region;AC;kommerziell-lokal;Nebenseite;Teilregion im Block 06 Anwendungsfälle und Köln
 KI Beratung Wuppertal;F Region;AC;kommerziell-lokal;Nebenseite;–
 KI Beratung Mönchengladbach;F Region;AC;kommerziell-lokal;Nebenseite;–
 KI Beratung Dortmund;F Region;AC;kommerziell-lokal;Nebenseite;–
 Künstliche Intelligenz Beratung;G Semantik;AC;kommerziell/informationell;Sekundär;Antwortblock ausgeschrieben
-Künstliche Intelligenz Köln;G Semantik;AC, T, H1×2;informationell-lokal;Sekundär;Köln-Block ausgeschrieben
+Künstliche Intelligenz Köln;G Semantik;AC, T, H1×2;informationell-lokal;Sekundär;Block 06 Anwendungsfälle und Köln ausgeschrieben
 Was ist KI-Beratung;G Semantik;FAQ×2;informationell;Primär;Antwortblock-H2
 Unterschied KI-Beratung und KI-Agentur;G Semantik;FAQ×2;informationell;Primär;FAQ 8
 KI Unternehmensberatung;G Semantik;AC;kommerziell;Primär;Lead und Antwortblock („Unternehmensberatung mit Sitz in Köln“)
-KI-Transformation;G Semantik;T, H2, H3;kommerziell;Sekundär;Vorgehen-Einleitung
+KI-Transformation;G Semantik;T, H2, H3;kommerziell;Sekundär;Block 07 Vorgehen
 KI im Unternehmen;G Semantik;eigene CEx-Seite;kommerziell;Verlinken;Weitere Themen
 KI Beratung Jobs;X Rauschen;AC;Bewerber;Nicht bedienen;–
 KI Beratung Ausbildung;X Rauschen;AC;Bewerber;Nicht bedienen;–

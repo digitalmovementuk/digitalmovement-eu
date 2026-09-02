@@ -3,6 +3,7 @@
 **Kunde:** CEx UG (haftungsbeschränkt), Unternehmensberatung, Stolberger Straße 90 a, 50933 Köln
 **Zielseite:** `https://cex.koeln/ki-beratung/koeln/`
 **Fokus-Keyword:** KI-Beratung Köln
+**Zweck der Seite:** Anfragen von Unternehmen aus Köln und dem Rheinland, die KI einführen oder Prozesse mit KI optimieren wollen
 **Verfasser der Seite (E-E-A-T):** Johannes Niklas Reusch und Hans-Helmut Scheel, Geschäftsführer
 **Stand:** 02.09.2026 · Grundlage: SERP-Analyse in `serp-analyse.md`, Varianten in `keyword-varianten.csv`
 
@@ -10,36 +11,63 @@
 
 ## 0. Kurzfassung
 
-- **Fokus-Keyword:** „KI-Beratung Köln“, mit Bindestrich. 9 der 10 Top-Seiten schreiben es so, Google-Autocomplete liefert für beide Schreibweisen nur „ki beratung köln“.
-- **Suchintention:** kommerziell und lokal, Phase Anbieterauswahl. 9 der 10 Top-Ergebnisse sind Anbieterseiten mit Kontakt-CTA, eines ist die Wirtschaftsförderung. Kein Ratgeber, kein Blog, kein Shop. Details in Abschnitt 2.
-- **Seitentyp:** Service-Landingpage mit Standortbezug, keine Ratgeberseite. Aufbau nach dem Muster der bestehenden CEx-Seiten (Hero mit Formular, Problem, Leistungen, Vorgehen, Prinzipien, FAQ, weitere Themen, CTA).
-- **Positionierung CEx:** „Vor Ort in Köln, vom Anwendungsfall bis in den Betrieb.“ Nur 2 der 13 Anbieterseiten haben eine echte Kölner Adresse, nur 3 zeigen die Personen dahinter. CEx hat beides.
-- **Kannibalisierung:** keine. Der bestehende Hub `/ki-beratung/` und seine neun Unterseiten nennen Köln kein einziges Mal und zielen auf „KI Beratung für Unternehmen“ bzw. Themen wie Mittelstand, Copilot, Chatbot.
-- **Umfang:** 1.800 bis 2.200 Wörter. Die CEx-Hausseiten liegen bei 2.400 bis 2.800 Wörtern, der SERP-Median bei rund 1.050. Die Stadtseite bleibt unter den Themenseiten des Hubs, aber über der SERP.
+- **Zweck:** Die Seite soll Kunden gewinnen. Ein Unternehmen aus Köln sucht „KI-Beratung Köln“, landet auf der Seite, versteht in 30 Sekunden, was CEx für es einführt und verbessert, und fragt ein Erstgespräch an. Sichtbarkeit ist das Mittel, die Anfrage ist das Ziel. Gemessen wird in Formularanfragen und Rückrufen pro Monat.
+- **Angebot auf der Seite:** dasselbe Leistungsspektrum, mit dem die Top 10 Kunden gewinnen: KI-Strategie und Potenzialanalyse, KI-Einführung und Umsetzung, Prozessautomatisierung mit KI, KI-Assistenten und Chatbots, Microsoft 365 Copilot und generative KI, Befähigung der Teams plus Datenschutz und EU AI Act. CEx hat zu jeder dieser Leistungen bereits eine Unterseite; die Köln-Seite ist der lokale Einstieg zu allen.
+- **Fokus-Keyword:** „KI-Beratung Köln“ mit Bindestrich, wie 9 der 10 Top-Seiten. Google-Autocomplete behandelt beide Schreibweisen gleich.
+- **Suchintention:** kommerziell und lokal, Phase Anbieterauswahl. 9 der 10 Top-Ergebnisse sind Anbieterseiten mit Kontakt-CTA. Details in Abschnitt 2.
+- **Seitentyp:** Service-Landingpage mit Formular im Hero, aufgebaut wie die Wettbewerber und im Hausmuster der CEx-Seiten: Angebot, Nutzen, Leistungen, Anwendungsfälle aus Köln, Ablauf, Warum CEx, Förderung und Recht, FAQ, Erstgespräch.
+- **Was CEx im Verkaufsgespräch auf der Seite voraus hat:** Sitz in Köln (nur 2 von 13 Wettbewerbern), zwei Geschäftsführer als Ansprechpartner, Umsetzung bis in den Betrieb statt Workshop und Pilot, Microsoft-Copilot-Kompetenz (nur 1 von 13).
+- **Kannibalisierung:** keine. Der Hub `/ki-beratung/` und seine neun Unterseiten nennen Köln kein einziges Mal.
+- **Umfang:** 1.800 bis 2.200 Wörter.
 
 ---
 
-## 1. Kunde und Ausgangslage
+## 1. Zweck der Seite, Zielgruppe, Angebot
 
-**Was CEx ist.** Unternehmensberatung aus Köln mit zwei Säulen und sechs Beratungsfeldern: Prozessoptimierung & BPM, Projektmanagement & IT-Umsetzung, Digitalisierung & Transformation, Change Management, KI-Beratung & Strategie, Enterprise Architecture. Senior-Experten, DACH-weit, Zielkunden vom Mittelstand bis zum Konzern, genannt werden Produktion, Logistik und öffentliche Verwaltung. Anfragen beantworten die Geschäftsführer persönlich, werktags innerhalb von 24 Stunden. Erstgespräch 30 bis 45 Minuten.
+### 1.1 Wer der Kunde ist
 
-**Stimme der Website.** Sie-Form, nüchtern, methodisch, ohne Superlative. Vier Sätze von der Über-uns-Seite tragen die Haltung: „Wir fangen mit Zahlen an, nicht mit einer Meinung.“ · „Wir arbeiten im Tagesgeschäft mit.“ · „Wir übergeben so, dass es ohne uns trägt.“ · „Wir sagen Nein, wenn wir nicht passen.“ Die neue Seite spricht genauso.
+Unternehmensberatung aus Köln mit zwei Säulen und sechs Beratungsfeldern: Prozessoptimierung & BPM, Projektmanagement & IT-Umsetzung, Digitalisierung & Transformation, Change Management, KI-Beratung & Strategie, Enterprise Architecture. Senior-Experten, DACH-weit, Zielkunden vom Mittelstand bis zum Konzern, genannt werden Produktion, Logistik und öffentliche Verwaltung. Anfragen beantworten die Geschäftsführer persönlich, werktags innerhalb von 24 Stunden. Erstgespräch 30 bis 45 Minuten. Stimme: Sie-Form, nüchtern, ohne Superlative („Wir fangen mit Zahlen an, nicht mit einer Meinung.“ · „Wir arbeiten im Tagesgeschäft mit.“ · „Wir übergeben so, dass es ohne uns trägt.“ · „Wir sagen Nein, wenn wir nicht passen.“).
 
-**Bestehende KI-Seiten (Stand 02.09.2026, alle ohne Köln-Nennung):**
+### 1.2 Was die Seite erreichen soll
 
-| URL | Title | Fokus |
-|---|---|---|
-| /ki-beratung/ | KI Beratung für Unternehmen \| Strategie bis Umsetzung \| CEx | KI Beratung für Unternehmen (Hub, 2.378 Wörter, 12 FAQ) |
-| /ki-beratung/ki-beratung-mittelstand/ | KI Beratung Mittelstand — Einstieg mit Plan \| CEx | KI Beratung Mittelstand (2.487 Wörter) |
-| /ki-beratung/ki-im-unternehmen/ | KI im Unternehmen: vom Pilot zum Programm \| CEx | KI im Unternehmen |
-| /ki-beratung/generative-ki-beratung/, /ki-chatbot-beratung/, /daten-und-ki/, /ki-in-der-industrie/, /ki-maschinenbau/, /ki-microsoft-365/, /microsoft-copilot-beratung/ | Themenseiten | je ein Thema |
-| /prozessberatung/digitale-prozesse-ki/ | Digitale Prozesse KI — Automatisierung \| CEx | Prozessautomatisierung mit KI |
+| Frage | Antwort |
+|---|---|
+| Ziel | Qualifizierte Anfragen von Unternehmen aus Köln und dem Rheinland, die KI einführen, erste KI-Piloten in den Betrieb bringen oder bestehende Prozesse mit KI schneller und günstiger machen wollen. |
+| Primäre Conversion | Formular „Erstgespräch anfragen“ im Hero (Name, E-Mail optional, Telefon, Thema, Einwilligung), wie auf allen CEx-Seiten. |
+| Sekundäre Conversion | Rückruf über die Kontaktseite, E-Mail an info@cex.koeln, Anruf (sobald eine Nummer veröffentlicht ist). |
+| Messgröße | Formularanfragen und Rückrufe pro Monat über diese Seite, Anteil der daraus entstehenden Erstgespräche. Rankings und Klicks sind nachrangig. |
+| Zielgruppe | Geschäftsführung, Bereichsleitung Operations, IT oder Digitalisierung, Projektleitung in Mittelstand und Konzernbereichen. Vier typische Ausgangslagen: noch keine KI im Einsatz und Einstieg gesucht · erste Piloten laufen, kommen aber nicht in den Betrieb · ChatGPT oder Copilot werden genutzt, ohne Regeln und ohne Nutzenmessung · ein konkreter Prozess soll automatisiert werden. |
+| Was die Seite nicht ist | Kein Ratgeber, keine Seite über CEx als Unternehmen, kein Verzeichnis. Sie ist eine Verkaufsseite für KI-Leistungen mit Kölner Bezug. |
 
-**Regionale Muster, die es schon gibt:** `/projektmanagement-beratung/projektmanagement-rheinland/` (Title „Projektmanagement Rheinland — vor Ort in Köln“, Schema mit City und AdministrativeArea, Teilregionen Köln/Bonn, Düsseldorf/Niederrhein, Aachen) und `/change-management-beratung/berlin/` (Stadtseite unter dem Leistungs-Hub). Die neue Seite folgt dem Berlin-Muster: `/ki-beratung/koeln/`.
+### 1.3 Was die Top 10 verkaufen und was CEx dafür hat
 
-**Was CEx gegenüber der SERP mitbringt:** echte Kölner Adresse im Impressum und im Schema (nur 2 von 13 Wettbewerbern), zwei namentlich sichtbare Geschäftsführer mit Person-Schema (nur 3 von 13), ein KI-Cluster mit zehn Seiten (kein Wettbewerber außer Ziya hat vergleichbare Tiefe), Methodentiefe (CRISP-DM, MLOps, EU-AI-Act-Risikoklassen, DSGVO und Auftragsverarbeitung), vollständiges Yoast-Schema (Service mit OfferCatalog, FAQPage, Person, PostalAddress).
+Leistungen, mit denen die 13 Anbieterseiten der SERP Kunden gewinnen, und die CEx-Seiten, die genau das abdecken. Die Köln-Seite bündelt alles und verlinkt auf die Unterseiten.
 
-**Was CEx gegenüber der SERP fehlt:** keine Telefonnummer auf der Website (10 von 13 Wettbewerber zeigen eine), keine Kundenlogos, keine Stimmen, keine Praxisbeispiele, keine Preisangabe, kein Förderhinweis (5 von 13 haben einen), kein Köln-Bezug auf den KI-Seiten.
+| Leistung, wie die Wettbewerber sie nennen | Anbieterseiten mit dieser Leistung | CEx-Leistung auf der Köln-Seite | Bestehende CEx-Unterseite |
+|---|---|---|---|
+| KI-Strategie, Roadmap | 11 von 13 | KI-Strategie und Potenzialanalyse: Anwendungsfälle finden und nach Nutzen und Aufwand bewerten, Roadmap | /ki-beratung/, /ki-beratung/ki-beratung-mittelstand/ |
+| Prozessautomatisierung, KI-Automatisierung | 11 von 13 | Prozesse mit KI automatisieren: Rechnungen, Eingangsdokumente, Anfragen, Berichte | /prozessberatung/digitale-prozesse-ki/ |
+| KI-Agenten, Chatbots, Assistenten | 10 von 13 | KI-Assistenten und Chatbots für Kundenservice und internes Wissen | /ki-beratung/ki-chatbot-beratung/ |
+| Workshops, Schulungen | 9 von 13 | Befähigung der Teams und Change: Regeln, Schulung an echten Prozessen, Verankerung | /ki-beratung/ki-im-unternehmen/, /change-management-beratung/ |
+| Implementierung, Umsetzung, Entwicklung | 8 von 13 | KI-Einführung und Umsetzung: Pilot im echten Prozess, Integration in bestehende Systeme, Übergabe in den Betrieb | /ki-beratung/ (technische KI-Umsetzung) |
+| Branchenlösungen (Medien, Versicherungen, Handel) | 6 von 13 | Anwendungsfälle nach Kölner Branchen, dazu Industrie, Logistik und Verwaltung | /ki-beratung/ki-in-der-industrie/, /ki-beratung/ki-maschinenbau/, /prozessberatung/prozessoptimierung-oeffentliche-verwaltung/ |
+| Datenschutz, Governance, EU AI Act | 6 von 13 | Governance, DSGVO und EU AI Act: Risikoklasse, Auftragsverarbeitung, Mitbestimmung, KI-Kompetenz | /ki-beratung/ (Verantwortung und Regeln) |
+| Förderung | 5 von 13 | Hinweis auf BAFA, Zukunftszentrum KI NRW, NRW.BANK | neu auf der Köln-Seite |
+| Datenanalyse, Datenbasis | 4 von 13 | Daten und KI: Datenqualität, Prognosen für Einkauf und Disposition | /ki-beratung/daten-und-ki/ |
+| Generative KI, Content | 3 von 13 | Generative KI: Angebote, Berichte, Korrespondenz | /ki-beratung/generative-ki-beratung/ |
+| Microsoft 365 Copilot | 1 von 13 | Microsoft 365 Copilot sicher einführen | /ki-beratung/microsoft-copilot-beratung/, /ki-beratung/ki-microsoft-365/ |
+
+**Lesart:** CEx deckt jede Leistung ab, mit der die Wettbewerber Kunden gewinnen, und hat mit Copilot, Verwaltung und Industrie drei Felder, die in der Kölner SERP fast niemand anbietet. Die Seite muss diese Leistungen so konkret nennen wie die Wettbewerber (Chatbot, Automatisierung, Copilot), nicht nur die Methode dahinter.
+
+### 1.4 Conversion-Pfad
+
+Suche „KI-Beratung Köln“ → Hero mit Angebot und Formular → Nutzen und Leistungen → Anwendungsfälle aus der eigenen Branche → Ablauf und Warum CEx → FAQ zu Kosten, Dauer, Datenschutz, Förderung → Formular oder Rückruf → Antwort binnen 24 Stunden → Erstgespräch 30 bis 45 Minuten → Potenzial-Check als erstes Angebot.
+
+### 1.5 Bestehende KI-Seiten und regionale Muster
+
+Alle KI-Seiten von CEx sind ohne Köln-Nennung: `/ki-beratung/` (Title „KI Beratung für Unternehmen | Strategie bis Umsetzung | CEx“, 2.378 Wörter, 12 FAQ), `/ki-beratung/ki-beratung-mittelstand/` (2.487 Wörter), `/ki-beratung/ki-im-unternehmen/`, dazu Generative KI, Chatbot, Daten und KI, Industrie, Maschinenbau, Microsoft 365, Copilot und `/prozessberatung/digitale-prozesse-ki/`. Regionale Muster: `/projektmanagement-beratung/projektmanagement-rheinland/` (Schema mit City und AdministrativeArea, Teilregionen Köln/Bonn, Düsseldorf/Niederrhein, Aachen) und `/change-management-beratung/berlin/`. Die neue Seite folgt dem Berlin-Muster: `/ki-beratung/koeln/`.
+
+**Was CEx gegenüber der SERP fehlt und die Seite nicht erfinden darf:** Telefonnummer (10 von 13 Wettbewerber zeigen eine), Kundenlogos, Stimmen, Praxisbeispiele, Preisangabe. Was davon CEx freigibt, kommt auf die Seite; der Rest bleibt weg.
 
 ---
 
@@ -175,14 +203,18 @@ Vollständige Liste mit Evidenz, Priorität und Einsatzort: `keyword-varianten.c
 
 ---
 
-## 7. Lücken: Was CEx besetzen kann
+## 7. Verkaufsargumente: Womit CEx sich von den Top 10 abhebt
 
-1. **Vor Ort mit echter Adresse.** 11 von 13 Wettbewerbern behaupten Köln, 2 haben eine Adresse dort. CEx sitzt in der Stolberger Straße. Das gehört in Lead, Köln-Block, FAQ und Schema.
-2. **Vom Pilot in den Betrieb.** Die SERP verkauft Workshops, Agenten, Chatbots. Niemand verspricht die Übergabe in den Betrieb. CEx hat dafür Methode und Vokabular („Betrieb wird mitgebaut“, „Wir übergeben so, dass es ohne uns trägt“).
-3. **Kölner Verwaltung und Industrie.** Alle Wettbewerber zielen auf Medien, Versicherungen, Handel. CEx bedient zusätzlich öffentliche Verwaltung, Produktion und Logistik; in Köln sind das Stadtverwaltung, Chemie in Leverkusen und Hürth, Logistik am Rhein und Flughafen Köln/Bonn. Diese Nische ist frei.
-4. **Personen mit Namen.** 3 von 13 zeigen Menschen. Zwei Geschäftsführer mit Foto, Rolle und Person-Schema sind ein E-E-A-T-Signal, das die Seite fast allein hat.
-5. **Recht und Governance.** Nur 6 von 13 nennen DSGVO oder EU AI Act, meist als Nebensatz. CEx behandelt Risikoklassen, Auftragsverarbeitung und Mitbestimmung auf jeder KI-Seite. Auf der Stadtseite reicht ein kompakter Block mit Link auf den Hub.
-6. **Was fehlt und die Seite nicht erfinden darf:** Praxisbeispiele, Kundenstimmen, Logos. Wenn CEx anonymisierte Kölner Fälle freigibt, sind sie das stärkste Element der Seite. Wenn nicht, bleibt der Block weg. Kein Platzhalter, keine erfundene Referenz.
+Argumente für den Kunden, der gerade zehn Anbieterseiten vergleicht. Sie gehören in Hero, Block „Warum CEx“ und FAQ.
+
+1. **Sitz in Köln, Termine bei Ihnen.** 11 von 13 Wettbewerbern schreiben „Köln“, 2 haben dort eine Adresse. CEx sitzt in der Stolberger Straße und arbeitet vor Ort in Köln, Bonn, Düsseldorf und Aachen.
+2. **Bis in den Betrieb, nicht bis zum Pilot.** Die SERP verkauft Workshops, Piloten, Agenten. CEx führt ein, integriert in bestehende Systeme und übergibt so, dass es ohne Berater läuft.
+3. **Sie sprechen mit den Geschäftsführern.** 3 von 13 zeigen Personen. Bei CEx beantworten Johannes Niklas Reusch und Hans-Helmut Scheel die Anfrage selbst.
+4. **Copilot, Verwaltung, Industrie.** Microsoft 365 Copilot bietet 1 von 13 an, öffentliche Verwaltung und Produktion niemand in Köln. CEx hat für alle drei eigene Seiten und Erfahrung.
+5. **Datenschutz und EU AI Act geregelt, nicht erwähnt.** 6 von 13 nennen DSGVO oder AI Act im Nebensatz. CEx regelt Risikoklasse, Auftragsverarbeitung und Mitbestimmung in jedem Projekt.
+6. **Nutzen vor Technik.** Kein Tool-Verkauf: Anwendungsfall und Nutzenrechnung zuerst, dann die Entscheidung, ob vorhandene Systeme reichen.
+
+Nicht als Argument verwenden, solange nicht freigegeben: Referenzen, Kundenzahlen, Preise, BAFA-Listung.
 
 ---
 
@@ -193,81 +225,78 @@ Vollständige Liste mit Evidenz, Priorität und Einsatzort: `keyword-varianten.c
 | Element | Wert | Länge |
 |---|---|---|
 | URL | `https://cex.koeln/ki-beratung/koeln/` | Muster wie `/change-management-beratung/berlin/` |
-| Title | **KI-Beratung Köln — vor Ort, vom Pilot in den Betrieb \| CEx** | 58 Zeichen |
-| Title-Alternative | KI-Beratung Köln — Anwendungsfall, Pilot, Betrieb \| CEx | 55 Zeichen |
-| Meta Description | **KI-Beratung Köln: Anwendungsfall wählen, Daten prüfen, Pilot sicher in den Betrieb bringen. Sitz in Köln, vor Ort im Rheinland, DSGVO- und AI-Act-fest.** | 151 Zeichen |
+| Title | **KI-Beratung Köln — KI einführen, Prozesse optimieren \| CEx** | 58 Zeichen |
+| Title-Alternative | KI-Beratung Köln für Unternehmen — Strategie bis Betrieb \| CEx | 62 Zeichen |
+| Meta Description | **KI-Beratung Köln: Anwendungsfälle finden, KI einführen, Prozesse automatisieren und sicher betreiben. Vor Ort in Köln. Antwort werktags in 24 Stunden.** | 150 Zeichen |
 | OG-Title / OG-Description | wie Title und Description | |
 | Canonical | `https://cex.koeln/ki-beratung/koeln/` | |
 | Breadcrumb | Home › KI-Beratung › Köln | |
-| Eyebrow über der H1 | Köln · KI-Beratung | Hausmuster wie „Rheinland · Projektmanagement“ |
+| Eyebrow über der H1 | Köln · KI-Beratung für Unternehmen | Hausmuster wie „Rheinland · Projektmanagement“ |
 
-Title und Description folgen dem Hausmuster der CEx-Titles („Keyword — Versprechen | CEx“) und der bestehenden Descriptions („Keyword: was, wie. Zusatz.“). Der Gedankenstrich im Title ist die Konvention der Website, nicht Fließtext.
+Title und Description nennen, was der Kunde bekommt (einführen, automatisieren, betreiben), den Standort und die Reaktionszeit, im Hausmuster der CEx-Titles („Keyword — Versprechen | CEx“). Der Gedankenstrich im Title ist die Konvention der Website.
 
 ### 8.2 H1, Unterzeile, erster Absatz
 
-**H1:** KI-Beratung Köln — vor Ort, vom Anwendungsfall bis in den Betrieb
+**H1:** KI-Beratung Köln — KI im Unternehmen einführen, Prozesse optimieren
 
-Alternative H1 im Muster der Mittelstand-Seite: „KI-Beratung in Köln — KI, die im Betrieb ankommt“ (zu nah an der Mittelstand-H1, deshalb zweite Wahl).
+Alternative im Muster der Wettbewerber: „KI-Beratung in Köln für Unternehmen: von der Idee zur produktiven KI“.
 
 **Erster Absatz (Hero-Lead, Keyword in den ersten 15 Wörtern, Marke in Satz 2):**
 
-> KI-Beratung in Köln heißt bei CEx: ein Anwendungsfall mit messbarem Nutzen, geeignete Daten, ein Pilot im echten Prozess und ein Betrieb, der ohne uns trägt. CEx ist eine Unternehmensberatung mit Sitz in Köln. Wir arbeiten bei Ihnen vor Ort, im Rheinland von Bonn bis Düsseldorf und Aachen, und DACH-weit per Video, mit klar geregelter Verantwortung für Qualität, Datenschutz und Risiko.
+> KI-Beratung in Köln für Unternehmen, die künstliche Intelligenz einführen oder bestehende Abläufe mit KI schneller, günstiger und verlässlicher machen wollen. CEx ist eine Unternehmensberatung mit Sitz in Köln: Wir finden mit Ihnen die Anwendungsfälle mit dem größten Nutzen, führen KI-Lösungen ein, automatisieren Prozesse, integrieren KI-Assistenten und Microsoft Copilot und bringen alles sicher in den Betrieb, DSGVO- und AI-Act-fest. Vor Ort in Köln, Bonn, Düsseldorf und Aachen.
 
-Rund 60 Wörter. Keyword an Position 1, Marke in Satz 2, Standort als Fakt, Versprechen im Vokabular der Website, kein Superlativ.
+Rund 65 Wörter. Satz 1 sagt, für wen und wofür. Satz 2 nennt die Marke und fünf konkrete Leistungen. Satz 3 den Standort.
 
-**Hero-CTAs:** „Erstgespräch anfragen“ (primär) · „Leistungen ansehen“ (Anker) · Formular „Lassen Sie uns sprechen“ mit Name, E-Mail (optional), Telefon, Thema, Einwilligung, wie auf allen CEx-Seiten. Zusatzzeile unter dem Formular: „Wir melden uns werktags innerhalb von 24 Stunden. Termin vor Ort in Köln nach Absprache.“
+**Hero-CTAs:** „Erstgespräch anfragen“ (primär) · „Leistungen ansehen“ (Anker) · Formular „Lassen Sie uns sprechen“ mit Name, E-Mail (optional), Telefon, Thema, Einwilligung. Zeile unter dem Formular: „Wir melden uns werktags innerhalb von 24 Stunden. Termin bei Ihnen in Köln nach Absprache.“
 
 ### 8.3 Antwortblock (für KI-Suche und Snippet)
 
-**H2:** KI-Beratung in Köln: Was CEx darunter versteht
+**H2:** Was KI-Beratung in Köln für Ihr Unternehmen leistet
 
-> KI-Beratung unterstützt Unternehmen dabei, künstliche Intelligenz für konkrete Anwendungsfälle einzuführen: Anwendungsfälle auswählen und bewerten, die Datengrundlage prüfen, einen Piloten bauen, Datenschutz und Risiko regeln, die Lösung einführen und betreiben. CEx bietet KI-Beratung in Köln als Unternehmensberatung mit Sitz in Köln an, vor Ort im Rheinland und DACH-weit, vom ersten Anwendungsfall bis zum geregelten Betrieb nach DSGVO und EU AI Act.
+> KI-Beratung hilft Unternehmen, künstliche Intelligenz mit messbarem Nutzen einzuführen: Anwendungsfälle bewerten, Daten prüfen, Lösungen wie Prozessautomatisierung, KI-Assistenten oder Microsoft Copilot einführen und sicher betreiben. CEx berät Unternehmen in Köln und im Rheinland von der Potenzialanalyse bis zum laufenden Betrieb, vor Ort und nach DSGVO und EU AI Act.
 
-Rund 60 Wörter, neutraler Ton, zitierfähig. Darunter die Verfasserzeile: Johannes Niklas Reusch und Hans-Helmut Scheel, Geschäftsführer, mit Foto und Link auf die Über-uns-Seite. Person-Schema ist im Yoast-Graph bereits vorhanden.
+Rund 50 Wörter, zitierfähig. Darunter die Verfasserzeile: Johannes Niklas Reusch und Hans-Helmut Scheel, Geschäftsführer, mit Foto und Link auf die Über-uns-Seite.
 
-### 8.4 Seitenstruktur (Hausmuster der CEx-Seiten)
+### 8.4 Seitenstruktur (Aufbau wie die Top 10, Blocknamen wie die CEx-Seiten)
 
-Reihenfolge und Blocknamen wie auf `/ki-beratung/ki-beratung-mittelstand/` und `/projektmanagement-beratung/projektmanagement-rheinland/`. Neu gegenüber dem Hausmuster sind nur der Antwortblock (02), der Köln-Block (05) und der Block Förderung und Recht (07).
-
-| # | Block | H2 | Inhalt und Keyword-Aufgabe | Wörter |
+| # | Block | H2 | Inhalt und Aufgabe für die Kundengewinnung | Wörter |
 |---|---|---|---|---|
-| 01 | Hero | H1 siehe 8.2 | Eyebrow „Köln · KI-Beratung“, H1, Lead, zwei CTAs, Formular. | 80 |
-| 02 | Antwortblock | KI-Beratung in Köln: Was CEx darunter versteht | Text aus 8.3, Verfasserzeile mit beiden Geschäftsführern. | 60 |
-| 03 | Problem | Warum KI-Vorhaben in Kölner Unternehmen vor dem Betrieb stoppen | Drei Karten im Hausmuster: „Die Software wird vor dem Anwendungsfall gewählt“ · „Die Daten liegen verstreut in mehreren Systemen“ · „Der Pilot bleibt in der Entwicklung stehen“. Je ein Satz mit Kölner Bezug (Konzernzentrale, Verwaltung, Produktionsstandort). | 160 |
-| 04 | Leistungen | Unsere KI-Beratung in Köln: Was wir für Ihr Unternehmen übernehmen | Sechs H3 wie der Hub: Potenzial-Check und Anwendungsfall-Auswahl · Datengrundlage und Integration · Pilot mit Betriebsreife · Governance, DSGVO und EU AI Act · Befähigung und Change · Betrieb und Verbesserung. Varianten aus Cluster C hier. Jede H3 verlinkt auf die passende Hub-Unterseite. | 260 |
-| 05 | Köln-Block (neu) | KI-Beratung für die Kölner Wirtschaft: Versicherer, Medien, Handel, Industrie, Verwaltung | Absatz 1: Wirtschaftsstruktur (zweitgrößter Versicherungsstandort, Medienstadt, Handel und Messe, Chemie und Industrie im Umland, Stadtverwaltung) und je ein typischer Anwendungsfall pro Branche (Schaden- und Dokumentenbearbeitung, Rechte- und Archivrecherche, Retouren und Service, Prognose und Wartung, Antrags- und Aktenbearbeitung). Absatz 2: Arbeitsweise vor Ort mit Adresse, Teilregionen Köln und Bonn, Düsseldorf und Niederrhein, Aachen, wie auf der Rheinland-Seite; Link dorthin. Cluster E hier, 4 bis 5 Köln-Nennungen. | 230 |
-| 06 | Vorgehen | So läuft die KI-Beratung in Köln ab | Sechs Schritte: 1 Erstgespräch (30 bis 45 Minuten, vor Ort oder per Video) · 2 Potenzial-Check · 3 Anwendungsfall und Erfolgskriterien · 4 Daten, Sicherheit und Risiko · 5 Pilot im echten Prozess · 6 Einführung, Betrieb, Übergabe. HowTo-Schema optional. | 200 |
-| 07 | Förderung und Recht (neu) | Förderung, DSGVO und EU AI Act für Unternehmen in Köln | Drei Karten: Förderung (BAFA-Beratungsförderung für KMU, kostenfreie Erstberatung beim Zukunftszentrum KI NRW, Programme der NRW.BANK, Antrag vor Projektbeginn) · DSGVO (Auftragsverarbeitung, Datenresidenz, Mitbestimmung) · EU AI Act (Risikoklassen, Pflicht zur KI-Kompetenz). Cluster D hier. Keine Behauptung, dass CEx BAFA-gelistet ist, solange ungeklärt. | 160 |
-| 08 | Prinzipien | Was unsere KI-Beratung in Köln auszeichnet | Sechs Karten aus der Über-uns-Seite und dem Hub: Wir fangen mit Zahlen an · Anwendungsfall vor Modellwahl · Wir arbeiten im Tagesgeschäft mit · Betrieb wird mitgebaut · Sie sprechen mit den Geschäftsführern · Wir sagen Nein, wenn wir nicht passen. | 150 |
-| 09 | Zusagen | Diese Zusagen gelten für jedes KI-Projekt in Köln | Hausmuster der Mittelstand-Seite: messbare Qualität, nachvollziehbare Entscheidungen, Verantwortung mit Namen, Übergabe an Ihre Mannschaft. | 100 |
+| 01 | Hero | H1 siehe 8.2 | Eyebrow „Köln · KI-Beratung für Unternehmen“, H1, Lead mit fünf konkreten Leistungen, zwei CTAs, Formular. | 80 |
+| 02 | Antwortblock | Was KI-Beratung in Köln für Ihr Unternehmen leistet | Text aus 8.3, Verfasserzeile. | 55 |
+| 03 | Nutzen | Was Unternehmen in Köln davon haben | Vier Karten mit konkretem Ergebnis, ohne Zahlen, solange keine belegten vorliegen: Weniger Handarbeit bei wiederkehrenden Vorgängen (Rechnungen, Dokumente, Anfragen) · Schnellere Antworten für Kunden und Mitarbeitende (Assistenten, Wissenssuche) · Weniger Fehler und Nacharbeit (Prüfung, Zuordnung, Prognose) · Rechtssicher und im Betrieb verankert (DSGVO, EU AI Act, Übergabe an Ihr Team). | 150 |
+| 04 | Problem | Warum KI-Vorhaben in Kölner Unternehmen vor dem Betrieb stoppen | Drei Karten: Software vor Anwendungsfall · Daten verstreut in mehreren Systemen · Pilot bleibt in der Entwicklung stehen. Je ein Satz, wie CEx das verhindert. | 140 |
+| 05 | Leistungen | Unsere KI-Beratung in Köln: Das führen wir für Sie ein | Sechs Karten, jede mit Nutzen-Satz und Link auf die Unterseite: **KI-Strategie und Potenzialanalyse** · **KI-Einführung und Umsetzung** (Pilot, Integration, Betrieb) · **Prozesse mit KI automatisieren** · **KI-Assistenten und Chatbots** · **Microsoft 365 Copilot und generative KI** · **Befähigung, Datenschutz und EU AI Act**. Cluster C hier. | 280 |
+| 06 | Anwendungsfälle und Köln | KI-Anwendungsfälle aus Köln und dem Rheinland | Je Branche ein bis zwei konkrete Fälle mit Ergebnis: Versicherer und Finanzdienstleister (Schadenmeldungen und Eingangspost automatisch erfassen und zuordnen) · Medien und Agenturen (Recherche und Archivsuche über eigene Inhalte, Angebote und Berichte erstellen) · Handel und E-Commerce (Service- und Retourenanfragen vorqualifizieren, Prognosen für Einkauf und Disposition) · Industrie, Chemie und Maschinenbau im Umland (Qualitätsprüfung, Wartungsprognose, Dokumentenprüfung) · Logistik am Rhein und Flughafen Köln/Bonn (Disposition, Frachtpapiere, Statusanfragen) · Verwaltung und kommunale Betriebe (Antrags- und Aktenbearbeitung, Wissenssuche in Vorschriften). Dann: Arbeitsweise vor Ort mit Adresse, Teilregionen Köln und Bonn, Düsseldorf und Niederrhein, Aachen. Cluster E hier, 4 bis 5 Köln-Nennungen. Nur Fälle beschreiben, die CEx so umsetzen kann; keine erfundenen Referenzen. | 260 |
+| 07 | Vorgehen | So läuft die KI-Beratung in Köln ab | Sechs Schritte: 1 Erstgespräch (30 bis 45 Minuten, vor Ort oder per Video) · 2 Potenzial-Check · 3 Anwendungsfall und Erfolgskriterien · 4 Daten, Sicherheit und Risiko · 5 Pilot im echten Prozess · 6 Einführung, Betrieb, Übergabe. Mit Zeitrahmen je Schritt, sobald CEx ihn freigibt. | 200 |
+| 08 | Warum CEx | Warum Unternehmen in Köln mit CEx arbeiten | Die sechs Argumente aus Abschnitt 7 als Karten: Sitz in Köln, Termine bei Ihnen · Bis in den Betrieb · Sie sprechen mit den Geschäftsführern · Copilot, Verwaltung, Industrie · Datenschutz geregelt · Nutzen vor Technik. Fotos beider Geschäftsführer. | 170 |
+| 09 | Förderung und Recht | Förderung, DSGVO und EU AI Act für Unternehmen in Köln | Drei Karten: Förderung (BAFA-Beratungsförderung für KMU, kostenfreie Erstberatung beim Zukunftszentrum KI NRW, Programme der NRW.BANK, Antrag vor Projektbeginn) · DSGVO (Auftragsverarbeitung, Datenresidenz, Mitbestimmung) · EU AI Act (Risikoklassen, Pflicht zur KI-Kompetenz). Cluster D hier. Keine Behauptung, dass CEx BAFA-gelistet ist, solange ungeklärt. | 150 |
 | 10 | FAQ | Welche Fragen zur KI-Beratung in Köln hören wir häufiger? | Acht Fragen, siehe 8.5. FAQPage-Schema über Yoast. | 420 |
-| 11 | Weitere Themen | Weitere Themen zur KI-Beratung | Interne Links: Hub, KI-Beratung Mittelstand, Generative KI, KI-Chatbot, Microsoft Copilot, Digitale Prozesse und KI, Projektmanagement Rheinland. | 60 |
-| 12 | CTA und Vorab-Fragen | KI-Beratung in Köln › sinnvoll starten. / Welche Fragen klären wir vor Beginn der KI-Beratung in Köln? | Hausmuster: Abschluss-CTA mit Formularverweis, dann die vier Vorab-Fragen (Anwendungsfall, Daten, Verantwortung, Betrieb). | 120 |
+| 11 | Weitere Themen | Weitere Themen zur KI-Beratung | Interne Links: Hub, Mittelstand, Generative KI, Chatbot, Copilot, Digitale Prozesse und KI, Daten und KI, Industrie, Projektmanagement Rheinland. | 60 |
+| 12 | CTA und Vorab-Fragen | Sagen Sie uns, wo Sie mit KI stehen. / Welche Fragen klären wir vor Beginn der KI-Beratung in Köln? | Abschluss-CTA mit Formularverweis, dann die vier Vorab-Fragen (Anwendungsfall, Daten, Verantwortung, Betrieb). | 120 |
 
-Summe rund 2.000 Wörter. Kein Block „Praxisbeispiele“, solange keine freigegebenen Fälle vorliegen (siehe 8.9).
+Summe rund 2.100 Wörter. Kein Block „Praxisbeispiele“, solange keine freigegebenen Fälle vorliegen; sobald es sie gibt, kommt er zwischen 06 und 07.
 
 ### 8.5 FAQ (acht Fragen, abgeleitet aus 90 Wettbewerber-Fragen und den CEx-FAQs)
 
 Zahl in Klammern: Häufigkeit des Themas im FAQPage-Schema der Wettbewerber. Antworten 2 bis 4 Sätze, faktisch zuerst, im Ton der bestehenden CEx-FAQs.
 
-1. **Was kostet KI-Beratung in Köln?** (11) – Antwortlogik des Hubs: abhängig von Anwendungsfall, Datenlage und Umfang; Erstgespräch und Einordnung kostenlos; Angebot mit klaren Etappen und Stop-Punkten. Keine Zahl.
-2. **Wie läuft die KI-Beratung ab?** (8) – Die sechs Schritte aus Block 06 in drei Sätzen.
+1. **Was kostet KI-Beratung in Köln?** (11) – Antwortlogik des Hubs: abhängig von Anwendungsfall, Datenlage und Umfang; Erstgespräch und Einordnung ohne Kosten; Angebot mit klaren Etappen und Stop-Punkten. Keine Zahl.
+2. **Wie läuft die KI-Beratung ab?** (8) – Die sechs Schritte aus Block 07 in drei Sätzen.
 3. **Wie lange dauert es bis zum ersten Ergebnis?** (7) – Potenzial-Check in Tagen, ein Pilot an echten Daten in Wochen, Betrieb je nach Integration. Konkrete Erwartung nach dem Potenzial-Check.
-4. **Sind Sie in Köln vor Ort?** (6) – Ja, Sitz Stolberger Straße 90 a, Termine bei Ihnen in Köln, Bonn, Düsseldorf und Aachen, sonst per Video. Wer bei uns anfragt, spricht mit den Geschäftsführern.
-5. **Für welche Unternehmen in Köln lohnt sich KI-Beratung?** (6) – Mittelstand und Konzernbereiche mit wiederkehrenden, dokumentenlastigen Abläufen: Versicherer, Medien, Handel, Industrie, Logistik, Verwaltung. Kleinere Organisationen: siehe Über-uns-FAQ, ehrlich beantworten.
+4. **Sind Sie in Köln vor Ort?** (6) – Ja, Sitz Stolberger Straße 90 a, Termine bei Ihnen in Köln, Bonn, Düsseldorf und Aachen, sonst per Video. Wer anfragt, spricht mit den Geschäftsführern.
+5. **Für welche Unternehmen in Köln lohnt sich KI-Beratung?** (6) – Mittelstand und Konzernbereiche mit wiederkehrenden, dokumentenlastigen Abläufen: Versicherer, Medien, Handel, Industrie, Logistik, Verwaltung. Kleinere Organisationen ehrlich beantworten, wie in der Über-uns-FAQ.
 6. **Wie halten Sie DSGVO und EU AI Act ein?** (6) – Auftragsverarbeitung, Datenresidenz, Risikoklasse je Anwendungsfall, Mensch in der Schleife, Dokumentation, Mitbestimmung. Link auf den Hub.
 7. **Gibt es Förderung für KI-Beratung in Köln?** (5) – BAFA-Beratungsförderung, Zukunftszentrum KI NRW, NRW.BANK. Antrag vor Projektbeginn. Wir prüfen mit Ihnen, was passt.
-8. **Was unterscheidet KI-Beratung von einer KI-Agentur?** (3) – Agenturen liefern Tools und Workshops, Beratung klärt Anwendungsfall, Daten, Verantwortung und Betrieb und begleitet die Einführung. Fängt das Agentur-Lager ab.
+8. **Was unterscheidet KI-Beratung von einer KI-Agentur?** (3) – Agenturen liefern Tools und Workshops, Beratung klärt Anwendungsfall, Daten, Verantwortung und Betrieb und begleitet die Einführung bis zur Übergabe. Fängt das Agentur-Lager ab.
 
 ### 8.6 Strukturierte Daten der Seite
 
 Yoast liefert WebPage, WebSite, Organization mit PostalAddress, BreadcrumbList und FAQPage. Zusätzlich, wie auf der Rheinland-Seite:
 
-- `Service`: name „KI-Beratung Köln“, serviceType „KI-Beratung“, description gleich Meta Description, provider Organization, `areaServed` als City „Köln“ plus AdministrativeArea „Rheinland“ und „Nordrhein-Westfalen“, `hasOfferCatalog` mit den sechs Leistungen aus Block 04.
-- `Organization` um den Typ `ProfessionalService` ergänzen. Die Adresse steht im Impressum und in der Fußzeile, die Auszeichnung ist damit gedeckt. 7 von 13 Wettbewerbern haben LocalBusiness oder ProfessionalService.
-- `Person` für beide Geschäftsführer mit `jobTitle` „Geschäftsführer“ und `worksFor`; auf der Seite sichtbar in der Verfasserzeile.
-- `FAQPage` mit den acht Fragen, Text gleich sichtbarem Text.
-- `HowTo` optional für die sechs Schritte.
+- `Service`: name „KI-Beratung Köln“, serviceType „KI-Beratung“, description gleich Meta Description, provider Organization, `areaServed` City „Köln“ plus AdministrativeArea „Rheinland“ und „Nordrhein-Westfalen“, `hasOfferCatalog` mit den sechs Leistungen aus Block 05.
+- `Organization` um den Typ `ProfessionalService` ergänzen; die Adresse steht im Impressum und in der Fußzeile.
+- `Person` für beide Geschäftsführer mit `jobTitle` und `worksFor`, sichtbar in Verfasserzeile und Block 08.
+- `FAQPage` mit den acht Fragen, Text gleich sichtbarem Text. `HowTo` optional für die sechs Schritte.
 - Keine AggregateRating, keine erfundenen Bewertungen.
 
 ### 8.7 Keyword-Platzierung (Checkliste vor Freigabe)
@@ -276,15 +305,16 @@ Yoast liefert WebPage, WebSite, Organization mit PostalAddress, BreadcrumbList u
 - [ ] H1 enthält „KI-Beratung Köln“
 - [ ] Title beginnt mit „KI-Beratung Köln“
 - [ ] Meta Description beginnt mit „KI-Beratung Köln“
-- [ ] Erster Absatz: Keyword in den ersten 15 Wörtern, Marke in Satz 2
+- [ ] Erster Absatz: Keyword in den ersten 15 Wörtern, Marke in Satz 2, fünf konkrete Leistungen
 - [ ] Vier H2 mit „KI-Beratung in Köln“ (Antwortblock, Leistungen, Vorgehen, FAQ), die übrigen H2 ohne Keyword
-- [ ] H3 ohne Keyword-Wiederholung (anders als auf der Rheinland-Seite)
+- [ ] H3 ohne Keyword-Wiederholung
 - [ ] Alt-Text des Hero-Bildes
 - [ ] „KI-Beratung“ 14 bis 20 Mal, davon 6 bis 8 Mal mit Köln
 - [ ] „Köln“ 14 bis 18 Mal, „Kölner“ 2 bis 3 Mal, „Rheinland“ 2 bis 3 Mal, „NRW“ 1 bis 2 Mal
 - [ ] „Mittelstand“ 3 bis 4 Mal, „künstliche Intelligenz“ 2 bis 3 Mal ausgeschrieben
-- [ ] Je einmal: KI-Strategie, KI-Automatisierung, KI-Agentur (FAQ), KI Berater, Potenzial-Check, Anwendungsfall, Pilot, Betrieb
-- [ ] Adresse Stolberger Straße 90 a im Text (Köln-Block oder FAQ) und in der Fußzeile
+- [ ] Leistungsbegriffe je mindestens einmal: KI-Strategie, Potenzialanalyse, KI-Einführung, Prozessautomatisierung, KI-Assistent, Chatbot, Microsoft Copilot, generative KI, KI-Schulung oder Befähigung
+- [ ] Je einmal: KI-Agentur (FAQ), KI Berater, Anwendungsfall, Pilot, Betrieb
+- [ ] Adresse Stolberger Straße 90 a im Text und in der Fußzeile
 - [ ] Wortzahl 1.800 bis 2.200
 - [ ] FAQPage-Text gleich sichtbarem Text
 - [ ] Formular mit Einwilligung und Datenschutz-Link
@@ -294,28 +324,28 @@ Yoast liefert WebPage, WebSite, Organization mit PostalAddress, BreadcrumbList u
 - Vom Hub `/ki-beratung/` im Block „Vertiefen Sie Ihre KI-Beratung“: neuer Link „KI-Beratung Köln“.
 - Von der Startseite: Abschnitt „Was CEx als Unternehmensberatung in Köln ausmacht“ verlinkt auf die neue Seite.
 - Von der Rheinland-Seite und der Berlin-Seite: Querverweis „KI-Beratung in Köln“.
-- Aus der Seite heraus: Hub, Mittelstand, Generative KI, Chatbot, Copilot, Digitale Prozesse und KI, Projektmanagement Rheinland, Über uns, Kontakt, Impressum.
-- Sitemap-Seite `/sitemap/` ergänzen.
-- Später: Schwesterseiten `/ki-beratung/bonn/`, `/ki-beratung/duesseldorf/`, `/ki-beratung/nrw/` (Autocomplete belegt alle drei), untereinander verlinkt.
+- Aus der Seite heraus: jede Leistungskarte auf ihre Unterseite, dazu Über uns, Kontakt, Impressum. Sitemap-Seite `/sitemap/` ergänzen.
+- Später: `/ki-beratung/bonn/`, `/ki-beratung/duesseldorf/`, `/ki-beratung/nrw/` (Autocomplete belegt alle drei), untereinander verlinkt.
 
 ### 8.9 Offene Entscheidungen und Annahmen
 
-1. **URL.** `/ki-beratung/koeln/` nach dem Berlin-Muster. Alternative im Mittelstand-Muster: `/ki-beratung/ki-beratung-koeln/`. Beide funktionieren, eine Konvention für alle künftigen Stadtseiten festlegen.
-2. **Telefonnummer.** CEx veröffentlicht keine. 10 von 13 Wettbewerber tun es. Empfehlung: eine Nummer auf dieser Seite und im Schema, mindestens aber der Rückruf-Weg prominent im Hero.
-3. **Branchen.** Die SERP erwartet Versicherer, Medien, Handel. CEx nennt Produktion, Logistik, Verwaltung. Der Köln-Block beschreibt typische Kölner Anwendungsfälle je Branche, behauptet aber keine Referenzen, die es nicht gibt. Freigabe des Kunden nötig.
+1. **URL.** `/ki-beratung/koeln/` nach dem Berlin-Muster; Alternative `/ki-beratung/ki-beratung-koeln/`. Eine Konvention für alle künftigen Stadtseiten festlegen.
+2. **Telefonnummer.** CEx veröffentlicht keine, 10 von 13 Wettbewerber tun es. Empfehlung: eine Nummer auf dieser Seite und im Schema, mindestens der Rückruf-Weg prominent im Hero.
+3. **Branchen und Anwendungsfälle.** Block 06 beschreibt typische Kölner Fälle. Welche davon CEx tatsächlich umgesetzt hat oder umsetzen will, gibt CEx frei. Keine Referenz ohne Freigabe.
 4. **Praxisbeispiele.** Nur mit freigegebenen, anonymisierten Fällen. Sonst kein Block.
-5. **BAFA.** Förderung wird als Fakt beschrieben. Ob CEx als Berater gelistet ist, klären, bevor die FAQ das nahelegt.
-6. **Google-Unternehmensprofil.** Für das erwartete Local Pack nötig, außerhalb der Seite. Status klären.
-7. **Schulungen und Workshops.** Autocomplete kennt „KI Workshop Köln“ und „KI Schulung Köln“. Auf der Seite nur nennen, wenn CEx das anbietet; die Hub-Leistung „Befähigung“ deckt es sonst ab.
-8. **Umfang.** 1.800 bis 2.200 Wörter liegt unter dem Hausstandard von 2.400 plus. Bewusst, weil die Themenseiten des Hubs die Tiefe tragen und die Stadtseite den Standort.
-9. **Volumen.** Alle Prioritäten beruhen auf Evidenz aus SERP und Autocomplete. Semrush-Volumen und KD nachziehen, bevor Bonn, Düsseldorf und NRW geplant werden.
+5. **Nutzen-Zahlen.** Block 03 kommt ohne Prozentwerte aus. Belegte Zahlen aus CEx-Projekten würden ihn stärker machen.
+6. **BAFA.** Förderung wird als Fakt beschrieben. Ob CEx als Berater gelistet ist, klären, bevor die FAQ das nahelegt.
+7. **Google-Unternehmensprofil.** Für das erwartete Local Pack nötig, außerhalb der Seite. Status klären.
+8. **Schulungen.** Autocomplete kennt „KI Workshop Köln“ und „KI Schulung Köln“. Auf der Seite als „Befähigung“ enthalten; ein eigenes Workshop-Angebot nur, wenn CEx es hat.
+9. **Umfang.** 1.800 bis 2.200 Wörter, unter dem Hausstandard von 2.400 plus: die Themenseiten tragen die Tiefe, die Stadtseite den Standort und das Angebot.
+10. **Volumen.** Prioritäten beruhen auf Evidenz aus SERP und Autocomplete. Semrush-Volumen und KD nachziehen, bevor Bonn, Düsseldorf und NRW geplant werden.
 
 ---
 
 ## 9. Nächster Schritt
 
-1. Entscheidungen aus 8.9 mit CEx klären, vor allem Telefonnummer, Branchen, Praxisbeispiele.
-2. Copy schreiben: zwölf Blöcke ausformulieren nach 8.4 bis 8.7, im Ton der bestehenden CEx-Seiten.
-3. Seite in WordPress anlegen (Yoast: Title, Description, Canonical, Breadcrumb „KI-Beratung › Köln“), Service-Schema mit areaServed Köln, Organization um ProfessionalService ergänzen.
-4. Interne Links aus 8.8 setzen, Sitemap-Seite ergänzen, Google-Unternehmensprofil prüfen.
-5. Vor Freigabe: Checkliste 8.7.
+1. Entscheidungen aus 8.9 mit CEx klären, vor allem Telefonnummer, Anwendungsfälle, Praxisbeispiele.
+2. Copy schreiben: zwölf Blöcke nach 8.4 bis 8.7, im Ton der bestehenden CEx-Seiten, jede Leistung so konkret wie bei den Wettbewerbern.
+3. Seite in WordPress anlegen (Yoast: Title, Description, Canonical, Breadcrumb), Service-Schema mit areaServed Köln, Organization um ProfessionalService ergänzen.
+4. Interne Links setzen, Sitemap-Seite ergänzen, Google-Unternehmensprofil prüfen.
+5. Vor Freigabe: Checkliste 8.7. Nach Livegang: Anfragen über die Seite monatlich auswerten.
