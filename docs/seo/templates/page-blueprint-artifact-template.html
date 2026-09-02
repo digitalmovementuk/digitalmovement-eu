@@ -1,0 +1,575 @@
+<title>KI-Beratung Köln Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#fbfbfd; --bg-2:#f5f5f7; --panel:#ffffff;
+    --ink:#1b0e2e; --ink-soft:#3f3450; --ink-muted:#6e6478; --ink-faint:#a39cb2;
+    --line:rgba(27,14,46,.10); --line-strong:rgba(27,14,46,.18);
+    --accent:#ec178d; --accent-2:#9a2fc6; --accent-soft:rgba(236,23,141,.08);
+    --link:#7a1fb0; --ok:#1f8a5b;
+    --grad:linear-gradient(135deg,#ffb23d 14%,#f05f22 33%,#ec178d 59%,#d332ff 78%,#9a2fc6 100%);
+    --display:"Jost","Manrope","Segoe UI",system-ui,sans-serif;
+    --body:"Manrope","Segoe UI",system-ui,-apple-system,sans-serif;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#1b0e2e; --bg-2:#100620; --panel:#241538;
+      --ink:#f5f2fa; --ink-soft:#d8d0e3; --ink-muted:#a39cb2; --ink-faint:#6e6478;
+      --line:rgba(255,255,255,.12); --line-strong:rgba(255,255,255,.22);
+      --accent:#f13c64; --accent-2:#d332ff; --accent-soft:rgba(241,60,100,.14);
+      --link:#e0a8ff; --ok:#5fd39a; color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1b0e2e; --bg-2:#100620; --panel:#241538;
+    --ink:#f5f2fa; --ink-soft:#d8d0e3; --ink-muted:#a39cb2; --ink-faint:#6e6478;
+    --line:rgba(255,255,255,.12); --line-strong:rgba(255,255,255,.22);
+    --accent:#f13c64; --accent-2:#d332ff; --accent-soft:rgba(241,60,100,.14);
+    --link:#e0a8ff; --ok:#5fd39a; color-scheme:dark;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;hyphens:auto;hyphenate-limit-chars:12 5 4}
+  a{color:var(--link)}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .page{max-width:1240px;margin:0 auto;padding:clamp(20px,4vw,48px);display:grid;grid-template-columns:220px minmax(0,1fr);gap:clamp(24px,4vw,56px)}
+  @media (max-width:900px){.page{grid-template-columns:minmax(0,1fr)}}
+  .toc{position:sticky;top:24px;align-self:start;font-size:13px}
+  .toc .eyebrow{margin-bottom:10px}
+  .toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+  .toc a{display:block;padding:6px 10px;border-left:2px solid var(--line);color:var(--ink-soft);text-decoration:none;border-radius:0 6px 6px 0}
+  .toc a:hover{border-left-color:var(--accent);color:var(--ink);background:var(--bg-2)}
+  .toc .num{color:var(--ink-faint);font-variant-numeric:tabular-nums;margin-right:6px}
+  @media (max-width:900px){.toc{position:static}.toc ol{flex-direction:row;flex-wrap:wrap;gap:6px}.toc a{border:1px solid var(--line);border-radius:999px;padding:4px 10px}}
+  h1,h2,h3{font-family:var(--display);text-wrap:balance;hyphens:manual;margin:0}
+  h1{font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em;font-weight:600}
+  h2{font-size:clamp(24px,2.6vw,30px);line-height:1.15;letter-spacing:-.014em;font-weight:600;margin-bottom:6px}
+  h3{font-size:19px;line-height:1.3;font-weight:500;margin:26px 0 8px}
+  p{margin:0 0 12px;max-width:68ch}
+  .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);font-weight:600}
+  .lede{font-size:17px;color:var(--ink-soft);max-width:62ch}
+  section{padding:40px 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:0}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+  .sec-head .num{font-family:var(--display);font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+  ul,ol{padding-left:22px;margin:0 0 12px}
+  li{margin:0 0 6px;max-width:70ch}
+  li::marker{color:var(--ink-faint)}
+  strong{font-weight:700}
+  code{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;font-size:.92em;background:var(--bg-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;hyphens:manual}
+  .masthead{padding-bottom:36px}
+  .masthead .lede{margin-top:16px}
+  .rule{height:3px;background:var(--grad);border-radius:3px;margin:22px 0 26px;max-width:220px}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+  .fact{padding:16px 18px;border-right:1px solid var(--line)}
+  .fact:last-child{border-right:0}
+  @media (max-width:640px){.fact{border-right:0;border-bottom:1px solid var(--line)}.fact:last-child{border-bottom:0}}
+  .fact .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;margin-bottom:6px}
+  .fact .v{font-family:var(--display);font-size:20px;line-height:1.2;font-weight:500}
+  .fact .s{font-size:12.5px;color:var(--ink-muted);margin-top:4px}
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel);margin:14px 0 8px}
+  table{border-collapse:collapse;width:100%;min-width:720px;font-size:13.5px;font-variant-numeric:tabular-nums}
+  th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+  th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;background:var(--bg-2);position:sticky;top:0}
+  tr:last-child td{border-bottom:0}
+  td.n{color:var(--ink-muted);white-space:nowrap}
+  td.kw{font-weight:600;white-space:nowrap}
+  .pill{display:inline-block;border-radius:999px;padding:1px 9px;font-size:11.5px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+  .pill.com{background:var(--accent-soft);color:var(--accent)}
+  .pill.info{background:var(--bg-2);color:var(--ink-muted);border:1px solid var(--line-strong)}
+  .cap{font-size:12.5px;color:var(--ink-muted);margin:6px 0 0}
+  .cluster{margin:18px 0 6px}
+  .cluster h3{margin-top:0}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 4px}
+  .chip{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--line-strong);border-radius:999px;padding:4px 11px;font-size:12.5px;line-height:1.4;background:var(--panel)}
+  .chip.focus{border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+  .chip .ev{color:var(--ink-muted);font-size:11px;letter-spacing:.02em}
+  .legend{font-size:12.5px;color:var(--ink-muted);max-width:none}
+  .serp{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:var(--panel);max-width:640px;margin:14px 0 18px;font-family:Arial,Helvetica,sans-serif;hyphens:manual}
+  .serp .site{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink-soft)}
+  .serp .fav{width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);font:700 11px/26px var(--display);text-align:center;flex:none}
+  .serp .url{color:var(--ink-muted)}
+  .serp .t{font-size:19px;line-height:1.3;color:var(--link);margin:6px 0 4px}
+  .serp .d{font-size:13.5px;line-height:1.45;color:var(--ink-soft)}
+  .serp .m{font-size:11.5px;color:var(--ink-muted);margin-top:10px;font-family:var(--body)}
+  .copy{border-left:3px solid var(--accent);padding:6px 0 6px 18px;margin:12px 0 18px;max-width:70ch}
+  .copy .label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;margin-bottom:4px}
+  .copy .h1{font-family:var(--display);font-size:clamp(24px,3vw,34px);line-height:1.1;letter-spacing:-.016em;font-weight:600;hyphens:manual}
+  .copy .sub{color:var(--ink-soft);margin:8px 0 0}
+  .copy .body{font-size:15.5px;margin:6px 0 0}
+  .copy .note{font-size:12.5px;color:var(--ink-muted);margin-top:6px}
+  .stack{display:grid;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel);margin:14px 0 8px}
+  .blk{display:grid;grid-template-columns:44px 150px minmax(0,1fr) 72px;gap:14px;padding:14px 16px;border-bottom:1px solid var(--line);align-items:start}
+  .blk:last-child{border-bottom:0}
+  .blk.new{background:var(--accent-soft)}
+  .blk .i{font-family:var(--display);font-size:15px;color:var(--accent);font-variant-numeric:tabular-nums;padding-top:2px}
+  .blk .c{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);font-weight:600;padding-top:4px;overflow-wrap:anywhere}
+  .blk .h{font-weight:600;line-height:1.35}
+  .blk .h small{display:block;font-weight:400;color:var(--ink-soft);font-size:13px;margin-top:4px;max-width:72ch}
+  .blk .w{text-align:right;color:var(--ink-muted);font-size:13px;font-variant-numeric:tabular-nums;padding-top:3px;white-space:nowrap}
+  @media (max-width:640px){.blk{grid-template-columns:34px minmax(0,1fr) 60px}.blk .c{grid-column:2;grid-row:2}.blk .h{grid-column:2}.blk .w{grid-row:1}}
+  .faq{display:grid;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel);margin:14px 0 8px}
+  .qa{padding:14px 18px;border-bottom:1px solid var(--line)}
+  .qa:last-child{border-bottom:0}
+  .qa .q{font-weight:700;display:flex;gap:10px;align-items:baseline}
+  .qa .q .cnt{font-size:11px;color:var(--ink-muted);font-weight:600;letter-spacing:.04em;white-space:nowrap}
+  .qa .a{color:var(--ink-soft);margin:6px 0 0;font-size:14px;max-width:74ch}
+  .check{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:6px 22px}
+  .check li{display:flex;gap:10px;align-items:baseline;max-width:none}
+  .check .box{width:15px;height:15px;border:1.5px solid var(--line-strong);border-radius:4px;flex:none;transform:translateY(2px)}
+  .dec{display:grid;gap:10px;padding:0;list-style:none}
+  .dec li{border:1px solid var(--line);border-radius:12px;padding:12px 16px;background:var(--panel);max-width:none}
+  .dec .t{font-weight:700;display:block;margin-bottom:2px}
+  .gaps li{margin-bottom:10px}
+  .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px 28px}
+  .two p{max-width:none}
+  footer{border-top:1px solid var(--line);padding:28px 0 12px;font-size:13px;color:var(--ink-muted)}
+  footer p{max-width:78ch}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="page">
+  <aside class="toc" aria-label="Inhalt">
+    <div class="eyebrow">Inhalt</div>
+    <ol>
+      <li><a href="#kurzfassung"><span class="num">0</span>Kurzfassung</a></li>
+      <li><a href="#kunde"><span class="num">1</span>Zweck, Zielgruppe, Angebot</a></li>
+      <li><a href="#intent"><span class="num">2</span>Intent-Scan Top 10</a></li>
+      <li><a href="#methodik"><span class="num">3</span>Methodik und Grenzen</a></li>
+      <li><a href="#fokus"><span class="num">4</span>Fokus-Keywords</a></li>
+      <li><a href="#varianten"><span class="num">5</span>Keyword-Varianten</a></li>
+      <li><a href="#muster"><span class="num">6</span>SERP-Muster</a></li>
+      <li><a href="#luecken"><span class="num">7</span>Verkaufsargumente</a></li>
+      <li><a href="#meta"><span class="num">8.1</span>Title und Meta</a></li>
+      <li><a href="#h1"><span class="num">8.2</span>H1 und erster Absatz</a></li>
+      <li><a href="#antwort"><span class="num">8.3</span>Antwortblock</a></li>
+      <li><a href="#struktur"><span class="num">8.4</span>Seitenstruktur</a></li>
+      <li><a href="#faq"><span class="num">8.5</span>FAQ</a></li>
+      <li><a href="#schema"><span class="num">8.6</span>Schema</a></li>
+      <li><a href="#checkliste"><span class="num">8.7</span>Checkliste</a></li>
+      <li><a href="#links"><span class="num">8.8</span>Verlinkung</a></li>
+      <li><a href="#entscheidungen"><span class="num">8.9</span>Entscheidungen</a></li>
+      <li><a href="#next"><span class="num">9</span>Nächster Schritt</a></li>
+    </ol>
+  </aside>
+
+  <main>
+    <header class="masthead">
+      <div class="eyebrow">Page Blueprint · Kunde CEx UG, cex.koeln · Stand 02.09.2026</div>
+      <div class="rule" aria-hidden="true"></div>
+      <h1>KI-Beratung Köln</h1>
+      <p class="lede">Zielseite <code>https://cex.koeln/ki-beratung/koeln/</code> für die Unternehmensberatung CEx. Zweck: Anfragen von Unternehmen aus Köln und dem Rheinland, die KI einführen oder Prozesse mit KI optimieren wollen. Repo: <code>docs/seo/cex-koeln/ki-beratung-koeln/</code></p>
+      <div class="facts" style="margin-top:22px">
+        <div class="fact"><div class="k">Zweck der Seite</div><div class="v">Anfragen gewinnen</div><div class="s">Erstgespräch anfragen, gemessen in Formularanfragen und Rückrufen</div></div>
+        <div class="fact"><div class="k">Angebot</div><div class="v">Dieselben Leistungen wie die Top 10</div><div class="s">Strategie, Einführung, Automatisierung, Assistenten, Copilot, Befähigung</div></div>
+        <div class="fact"><div class="k">Intention der Suche</div><div class="v">9 von 10 kommerziell</div><div class="s">lokal, Phase Anbieterauswahl</div></div>
+        <div class="fact"><div class="k">Seitentyp</div><div class="v">Service-Landingpage</div><div class="s">Formular im Hero, kein Ratgeber</div></div>
+      </div>
+    </header>
+
+    <section id="kurzfassung">
+      <div class="sec-head"><span class="num">0</span><h2>Kurzfassung</h2></div>
+      <ul>
+        <li><strong>Zweck</strong> Die Seite soll Kunden gewinnen. Ein Unternehmen aus Köln sucht „KI-Beratung Köln“, versteht in 30 Sekunden, was CEx für es einführt und verbessert, und fragt ein Erstgespräch an. Sichtbarkeit ist das Mittel, die Anfrage das Ziel.</li>
+        <li><strong>Angebot</strong> Dasselbe Leistungsspektrum, mit dem die Top 10 Kunden gewinnen: KI-Strategie und Potenzialanalyse, KI-Einführung und Umsetzung, Prozessautomatisierung, KI-Assistenten und Chatbots, Microsoft 365 Copilot und generative KI, Befähigung plus Datenschutz und EU AI Act. CEx hat zu jeder Leistung eine Unterseite; die Köln-Seite ist der lokale Einstieg.</li>
+        <li><strong>Fokus-Keyword</strong> „KI-Beratung Köln“ mit Bindestrich, wie 9 der 10 Top-Seiten.</li>
+        <li><strong>Suchintention</strong> kommerziell und lokal, Phase Anbieterauswahl. 9 der 10 Top-Ergebnisse sind Anbieterseiten mit Kontakt-CTA.</li>
+        <li><strong>Seitentyp</strong> Service-Landingpage mit Formular im Hero, aufgebaut wie die Wettbewerber: Angebot, Nutzen, Leistungen, Anwendungsfälle aus Köln, Ablauf, Warum CEx, Förderung und Recht, FAQ, Erstgespräch.</li>
+        <li><strong>Vorsprung im Vergleich</strong> Sitz in Köln (2 von 13), Geschäftsführer als Ansprechpartner (3 von 13), Umsetzung bis in den Betrieb, Microsoft-Copilot-Kompetenz (1 von 13).</li>
+        <li><strong>Kannibalisierung</strong> keine. Hub und neun Unterseiten nennen Köln kein einziges Mal. <strong>Umfang</strong> 1.800 bis 2.200 Wörter.</li>
+      </ul>
+    </section>
+
+    <section id="kunde">
+      <div class="sec-head"><span class="num">1</span><h2>Zweck der Seite, Zielgruppe, Angebot</h2></div>
+      <h3 style="margin-top:0">Wer der Kunde ist</h3>
+      <p>Unternehmensberatung aus Köln, CEx UG (haftungsbeschränkt), Stolberger Straße 90 a, 50933 Köln. Sechs Beratungsfelder: Prozessoptimierung &amp; BPM, Projektmanagement &amp; IT-Umsetzung, Digitalisierung &amp; Transformation, Change Management, KI-Beratung &amp; Strategie, Enterprise Architecture. Senior-Experten, DACH-weit, Zielkunden vom Mittelstand bis zum Konzern in Produktion, Logistik und öffentlicher Verwaltung. Anfragen beantworten die Geschäftsführer Johannes Niklas Reusch und Hans-Helmut Scheel persönlich, werktags innerhalb von 24 Stunden. Stimme: Sie-Form, nüchtern, ohne Superlative.</p>
+      <h3>Was die Seite erreichen soll</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>Frage</th><th>Antwort</th></tr></thead>
+        <tbody>
+          <tr><td class="kw">Ziel</td><td>Qualifizierte Anfragen von Unternehmen aus Köln und dem Rheinland, die KI einführen, erste Piloten in den Betrieb bringen oder bestehende Prozesse mit KI schneller und günstiger machen wollen.</td></tr>
+          <tr><td class="kw">Primäre Conversion</td><td>Formular „Erstgespräch anfragen“ im Hero (Name, E-Mail optional, Telefon, Thema, Einwilligung), wie auf allen CEx-Seiten.</td></tr>
+          <tr><td class="kw">Sekundäre Conversion</td><td>Rückruf über die Kontaktseite, E-Mail an info@cex.koeln, Anruf, sobald eine Nummer veröffentlicht ist.</td></tr>
+          <tr><td class="kw">Messgröße</td><td>Formularanfragen und Rückrufe pro Monat über diese Seite, Anteil der daraus entstehenden Erstgespräche. Rankings und Klicks sind nachrangig.</td></tr>
+          <tr><td class="kw">Zielgruppe</td><td>Geschäftsführung, Bereichsleitung Operations, IT oder Digitalisierung, Projektleitung in Mittelstand und Konzernbereichen. Vier Ausgangslagen: noch keine KI im Einsatz · erste Piloten kommen nicht in den Betrieb · ChatGPT oder Copilot ohne Regeln und Nutzenmessung · ein konkreter Prozess soll automatisiert werden.</td></tr>
+          <tr><td class="kw">Was die Seite nicht ist</td><td>Kein Ratgeber, keine Seite über CEx als Unternehmen, kein Verzeichnis. Eine Verkaufsseite für KI-Leistungen mit Kölner Bezug.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Was die Top 10 verkaufen und was CEx dafür hat</h3>
+      <p>Leistungen, mit denen die 13 Anbieterseiten Kunden gewinnen, und die CEx-Seiten, die genau das abdecken. Die Köln-Seite bündelt alles und verlinkt auf die Unterseiten.</p>
+      <div class="scroll"><table>
+        <thead><tr><th>Leistung, wie die Wettbewerber sie nennen</th><th>Anbieter mit dieser Leistung</th><th>CEx-Leistung auf der Köln-Seite</th><th>Bestehende CEx-Unterseite</th></tr></thead>
+        <tbody>
+          <tr><td>KI-Strategie, Roadmap</td><td class="n">11 von 13</td><td>KI-Strategie und Potenzialanalyse: Anwendungsfälle finden, nach Nutzen und Aufwand bewerten, Roadmap</td><td>/ki-beratung/, /ki-beratung-mittelstand/</td></tr>
+          <tr><td>Prozessautomatisierung, KI-Automatisierung</td><td class="n">11 von 13</td><td>Prozesse mit KI automatisieren: Rechnungen, Eingangsdokumente, Anfragen, Berichte</td><td>/prozessberatung/digitale-prozesse-ki/</td></tr>
+          <tr><td>KI-Agenten, Chatbots, Assistenten</td><td class="n">10 von 13</td><td>KI-Assistenten und Chatbots für Kundenservice und internes Wissen</td><td>/ki-beratung/ki-chatbot-beratung/</td></tr>
+          <tr><td>Workshops, Schulungen</td><td class="n">9 von 13</td><td>Befähigung der Teams und Change: Regeln, Schulung an echten Prozessen, Verankerung</td><td>/ki-beratung/ki-im-unternehmen/, /change-management-beratung/</td></tr>
+          <tr><td>Implementierung, Umsetzung, Entwicklung</td><td class="n">8 von 13</td><td>KI-Einführung und Umsetzung: Pilot im echten Prozess, Integration, Übergabe in den Betrieb</td><td>/ki-beratung/ (technische KI-Umsetzung)</td></tr>
+          <tr><td>Branchenlösungen (Medien, Versicherungen, Handel)</td><td class="n">6 von 13</td><td>Anwendungsfälle nach Kölner Branchen, dazu Industrie, Logistik und Verwaltung</td><td>/ki-in-der-industrie/, /ki-maschinenbau/, /prozessoptimierung-oeffentliche-verwaltung/</td></tr>
+          <tr><td>Datenschutz, Governance, EU AI Act</td><td class="n">6 von 13</td><td>Governance, DSGVO und EU AI Act: Risikoklasse, Auftragsverarbeitung, Mitbestimmung, KI-Kompetenz</td><td>/ki-beratung/ (Verantwortung und Regeln)</td></tr>
+          <tr><td>Förderung</td><td class="n">5 von 13</td><td>Hinweis auf BAFA, Zukunftszentrum KI NRW, NRW.BANK</td><td>neu auf der Köln-Seite</td></tr>
+          <tr><td>Datenanalyse, Datenbasis</td><td class="n">4 von 13</td><td>Daten und KI: Datenqualität, Prognosen für Einkauf und Disposition</td><td>/ki-beratung/daten-und-ki/</td></tr>
+          <tr><td>Generative KI, Content</td><td class="n">3 von 13</td><td>Generative KI: Angebote, Berichte, Korrespondenz</td><td>/ki-beratung/generative-ki-beratung/</td></tr>
+          <tr><td>Microsoft 365 Copilot</td><td class="n">1 von 13</td><td>Microsoft 365 Copilot sicher einführen</td><td>/microsoft-copilot-beratung/, /ki-microsoft-365/</td></tr>
+        </tbody>
+      </table></div>
+      <p class="cap"><strong>Lesart.</strong> CEx deckt jede Leistung ab, mit der die Wettbewerber Kunden gewinnen, und hat mit Copilot, Verwaltung und Industrie drei Felder, die in der Kölner SERP fast niemand anbietet. Die Seite muss die Leistungen so konkret nennen wie die Wettbewerber (Chatbot, Automatisierung, Copilot), nicht nur die Methode dahinter.</p>
+      <h3>Conversion-Pfad</h3>
+      <p>Suche „KI-Beratung Köln“ → Hero mit Angebot und Formular → Nutzen und Leistungen → Anwendungsfälle aus der eigenen Branche → Ablauf und Warum CEx → FAQ zu Kosten, Dauer, Datenschutz, Förderung → Formular oder Rückruf → Antwort binnen 24 Stunden → Erstgespräch 30 bis 45 Minuten → Potenzial-Check als erstes Angebot.</p>
+      <h3>Bestehende KI-Seiten und regionale Muster</h3>
+      <p>Alle KI-Seiten von CEx sind ohne Köln-Nennung: Hub <code>/ki-beratung/</code> (2.378 Wörter, 12 FAQ), Mittelstand (2.487 Wörter), KI im Unternehmen, Generative KI, Chatbot, Daten und KI, Industrie, Maschinenbau, Microsoft 365, Copilot, Digitale Prozesse und KI. Regionale Muster: Projektmanagement Rheinland (Schema mit City und AdministrativeArea, Teilregionen Köln/Bonn, Düsseldorf/Niederrhein, Aachen) und Change Management Berlin. Die neue Seite folgt dem Berlin-Muster: <code>/ki-beratung/koeln/</code>. Was CEx fehlt und die Seite nicht erfinden darf: Telefonnummer, Kundenlogos, Stimmen, Praxisbeispiele, Preisangabe.</p>
+    </section>
+
+    <section id="intent">
+      <div class="sec-head"><span class="num">2</span><h2>Intent-Scan: Was die Top 10 über die Suchabsicht sagen</h2></div>
+      <h3 style="margin-top:0">Der Suchbegriff selbst</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>Bestandteil</th><th>Lesart</th><th>Folge</th></tr></thead>
+        <tbody>
+          <tr><td class="kw">„KI-Beratung“</td><td>Dienstleistungsnomen. Kein Informationsmodifier wie „was ist“, „wie funktioniert“, „Beispiele“.</td><td>Kommerzielle Absicht: jemand will eine Leistung einkaufen, nicht etwas lernen.</td></tr>
+          <tr><td class="kw">„Köln“</td><td>Ortsmodifier ohne „in der Nähe“, aber mit derselben Wirkung.</td><td>Lokale Dienstleistungssuche. Google zeigt dafür üblicherweise ein Local Pack mit Unternehmensprofilen.</td></tr>
+          <tr><td class="kw">Kein Preis-, Vergleichs- oder Markenzusatz</td><td>Weder „Kosten“ noch „beste“ noch ein Anbietername.</td><td>Phase Anbieterauswahl. Kosten- und Vergleichsfragen tauchen als Unterfragen auf und gehören in die FAQ.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Seitentyp und Intention je Ergebnis</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>Pos.</th><th>Seite</th><th>Seitentyp</th><th>Intention</th><th>Signale auf der Seite</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>ki-helden.net</td><td>Anbieter (Agentur)</td><td><span class="pill com">kommerziell · lokal</span></td><td>„Kostenlose KI-Erstberatung“, Telefon, Leistungen vor Ort, FAQ zu Kosten und Büro</td></tr>
+          <tr><td class="n">2</td><td>ziya.de</td><td>Anbieter (Agentur, Workshops)</td><td><span class="pill com">kommerziell · lokal</span></td><td>„Beratung anfragen“, Kalender, Telefon, Kundenlogos, Preislogik in der FAQ</td></tr>
+          <tr><td class="n">3</td><td>kiagentenberatung.de</td><td>Anbieter (Nische KI-Agenten)</td><td><span class="pill com">kommerziell · lokal</span></td><td>„Projekt in Köln besprechen“, Telefon, Vorgehen in vier Schritten</td></tr>
+          <tr><td class="n">4</td><td>octopus-genius.com</td><td>Anbieter (Beratung)</td><td><span class="pill com">kommerziell · lokal</span></td><td>„vor Ort in Köln, Bonn, NRW“, Gründer sichtbar, FAQ zu Anfahrt und Terminen</td></tr>
+          <tr><td class="n">5</td><td>dein-copilot.de</td><td>Anbieter (Agentur)</td><td><span class="pill com">kommerziell · lokal</span></td><td>„Buchen Sie jetzt Ihren Termin“, cal.com, Formular, kostenloses Erstgespräch</td></tr>
+          <tr><td class="n">6</td><td>ki-beratung-deutschland.de</td><td>Anbieter (Beratung)</td><td><span class="pill com">kommerziell · lokal</span> + informationeller Anteil</td><td>Preise, Vertragsmodelle, 21 FAQ, Förderprogramme, Compliance-Kapitel</td></tr>
+          <tr><td class="n">7</td><td>kiautomatisieren.de</td><td>Anbieter (Beratung)</td><td><span class="pill com">kommerziell · lokal</span></td><td>„Kostenlose KI-Erstberatung in Köln vereinbaren“, Telefon, WhatsApp, Branchen</td></tr>
+          <tr><td class="n">8</td><td>hypescale.com</td><td>Anbieter (Beratung)</td><td><span class="pill com">kommerziell · lokal</span> + informationeller Anteil</td><td>„Kostenlose Erstberatung“, Telefon, Förderblock, 8 FAQ</td></tr>
+          <tr><td class="n">9</td><td>konversion.digital</td><td>Anbieter (Beratung, Köln-Sitz)</td><td><span class="pill com">kommerziell · überregional</span></td><td>„Kostenloses Erstgespräch sichern“, offene Preise, Projekte</td></tr>
+          <tr><td class="n">10</td><td>koeln.business</td><td>Institution (Wirtschaftsförderung)</td><td><span class="pill info">informationell · navigational</span></td><td>keine Verkaufs-CTA, Verweis auf kostenfreie Beratung von KI.NRW, Fördermittelberatung</td></tr>
+        </tbody>
+      </table></div>
+      <p class="cap"><strong>Ergebnis:</strong> 9 von 10 kommerziell (Anbieterwahl), 1 von 10 informationell. Erweitertes Feld 11 bis 18: zwei Verzeichnisse (kommerziell-vergleichend), die IHK Köln (informationell), sonst Anbieter; 14 von 18 sind Anbieterseiten. Kein Ratgeber, kein Blogartikel, kein Glossar rankt.</p>
+      <h3>Konsequenzen für die CEx-Seite</h3>
+      <ol>
+        <li><strong>Seitentyp:</strong> Service-Landingpage mit Standortbezug und Formular im Hero. Keine Ratgeberseite.</li>
+        <li><strong>Der informationelle Anteil</strong> (10 bis 20 Prozent) wird auf der Seite bedient, nicht mit einer zweiten Seite: Definitionsabsatz, Faktenblock zu Förderung und Recht, FAQ mit Kosten, Ablauf, Dauer.</li>
+        <li><strong>Local Pack:</strong> Für eine lokale Dienstleistungssuche ist ein Unternehmensprofil-Block bei Google wahrscheinlich. CEx hat eine echte Adresse; ein gepflegtes Google-Unternehmensprofil gehört zum Vorhaben, liegt aber außerhalb der Seite. Live nicht geprüft.</li>
+        <li><strong>Kontaktwege:</strong> 10 von 13 Anbietern zeigen eine Telefonnummer. Die Seite braucht neben dem Formular einen direkten Kontaktweg, mindestens den Rückruf-Weg prominent im Hero.</li>
+      </ol>
+      <h3>Die Top 10 im Überblick</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>Pos.</th><th>Seite</th><th>Fokus-Keyword der Seite</th><th>Wörter</th><th>Schema</th><th>Was die Seite prägt</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>ki-helden.net/ki-agentur-koeln.php</td><td class="kw">KI-Agentur Köln</td><td class="n">~790</td><td>LocalBusiness, Breadcrumb</td><td>Kurze Standortseite, Du-Ansprache, kein Büro in Köln</td></tr>
+          <tr><td class="n">2</td><td>ziya.de/de/locations/koeln</td><td class="kw">KI-Agentur Köln</td><td class="n">~4.030</td><td>FAQPage</td><td>Workshop-Katalog, Kundenlogos, 8 FAQ, Kalender</td></tr>
+          <tr><td class="n">3</td><td>kiagentenberatung.de/in-der-naehe-von/koeln</td><td class="kw">KI-Beratung Köln</td><td class="n">~630</td><td>ProfessionalService, FAQPage, Breadcrumb</td><td>Programmatische Nähe-Seite, MCP-Nische</td></tr>
+          <tr><td class="n">4</td><td>octopus-genius.com/ki-agentur-koeln</td><td class="kw">KI-Beratung Köln + KI-Agentur Köln</td><td class="n">~915</td><td>LocalBusiness, Person, FAQPage, Breadcrumb</td><td>Gründer sichtbar, „nicht remote-only“</td></tr>
+          <tr><td class="n">5</td><td>dein-copilot.de/ki-agentur/koeln</td><td class="kw">KI Agentur Köln + KI Beratung Köln</td><td class="n">~1.080</td><td>Organization</td><td>Stärkstes Lokalkolorit, 4-Schritte-Ablauf</td></tr>
+          <tr><td class="n">6</td><td>ki-beratung-deutschland.de/ki-beratung-koeln</td><td class="kw">KI-Beratung Köln</td><td class="n">~5.100</td><td>Organization, Service, FAQPage, WebPage</td><td>Längste Seite, 21 FAQ, Preise, Förderung, Compliance</td></tr>
+          <tr><td class="n">7</td><td>kiautomatisieren.de/beratung/koeln</td><td class="kw">KI-Beratung Köln (exakt)</td><td class="n">~480</td><td>ProfessionalService, Service, Breadcrumb</td><td>Kürzeste Seite, Branchen-Karten</td></tr>
+          <tr><td class="n">8</td><td>hypescale.com/de/ki-beratung-koeln</td><td class="kw">KI-Beratung Köln</td><td class="n">~840</td><td>FAQPage, Organization</td><td>Förderblock, beste FAQ-Auswahl, Sitz Berlin</td></tr>
+          <tr><td class="n">9</td><td>konversion.digital/ki-beratung/</td><td class="kw">KI-Beratung Mittelstand</td><td class="n">~1.680</td><td>Service, FAQPage, Breadcrumb</td><td>Conversions statt Kosten, offene Preise, Kölner Sitz</td></tr>
+          <tr><td class="n">10</td><td>koeln.business/…/digitalisierung/ki</td><td class="kw">Künstliche Intelligenz Köln</td><td class="n">~1.440</td><td>Organization, LocalBusiness, ItemList</td><td>Wirtschaftsförderung, verweist auf KI.NRW</td></tr>
+        </tbody>
+      </table></div>
+      <p class="cap">Erweitertes Feld (11 bis 18): Hero Agency, Mentor Consulting, Franklin &amp; Partners, ki-agentur.com, feedbax, Sortlist, IHK Köln, rxm solutions. Pexon Consulting war nicht abrufbar. Details je Seite in <code>serp-analyse.md</code>.</p>
+    </section>
+
+    <section id="methodik">
+      <div class="sec-head"><span class="num">3</span><h2>Methodik und Grenzen</h2></div>
+      <p><strong>Quellen.</strong> Google-Autocomplete (hl=de, gl=de, 41 Seeds), Brave Search mit Länderfilter DE, vier Web-Suchen, Roh-HTML aller 22 Kandidaten (Title, Description, H1, Schema, Wortzahl, 25 Keyword-Muster), 90 FAQ-Fragen aus dem FAQPage-Schema der Wettbewerber, Roh-HTML von zehn CEx-Seiten.</p>
+      <p><strong>Grenzen.</strong> Google.de war nicht live abrufbar, Bing und DuckDuckGo blockierten. Die Top 10 sind ein Konsens, keine Live-Positionen; Local Pack und „Ähnliche Fragen“ sind eine begründete Erwartung, keine Beobachtung. Kein Semrush-Zugang, also <strong>kein Suchvolumen</strong>: Varianten sind nach Evidenz sortiert. Volumen und Keyword Difficulty für die 25 Kernvarianten nachziehen, bevor Nebenseiten geplant werden.</p>
+    </section>
+
+    <section id="fokus">
+      <div class="sec-head"><span class="num">4</span><h2>Fokus-Keywords der Wettbewerber</h2></div>
+      <div class="scroll"><table>
+        <thead><tr><th>Wettbewerber</th><th>Title sagt</th><th>H1 sagt</th><th>URL sagt</th><th>Fokus</th><th>Sekundär</th></tr></thead>
+        <tbody>
+          <tr><td>KI-Helden</td><td>KI-Agentur für Köln &amp; das Rheinland</td><td>KI-Agentur für Köln: Innovation am Dom</td><td>ki-agentur-koeln</td><td class="kw">KI-Agentur Köln</td><td>KI-Automatisierung, KI-Workshop, KI-Agenten, Rheinland</td></tr>
+          <tr><td>Ziya</td><td>KI-Agentur für Köln</td><td>Ihr KI-Unternehmen für Köln</td><td>locations/koeln</td><td class="kw">KI-Agentur Köln</td><td>KI-Workshop, KI-Seminar, KI-Schulung, EU AI Act</td></tr>
+          <tr><td>kiagentenberatung.de</td><td>KI-Beratung Köln: KI-Agenten &amp; MCP-Server</td><td>KI-Agenten Beratung für Unternehmen in Köln</td><td>in-der-naehe-von/koeln</td><td class="kw">KI-Beratung Köln</td><td>KI-Agenten, MCP-Server, NRW</td></tr>
+          <tr><td>OctopusGenius</td><td>KI-Beratung Köln — Strategie, Workshops &amp; Automatisierung</td><td>KI-Beratung Köln: Strategie &amp; Umsetzung für den Mittelstand</td><td>ki-agentur-koeln</td><td class="kw">KI-Beratung Köln + KI-Agentur Köln</td><td>KI-Workshops, KI-Agenten, Bonn, NRW</td></tr>
+          <tr><td>DeinCopilot</td><td>KI Agentur für Köln – KI Beratung &amp; Workshops</td><td>Ihre KI Beratungs Agentur in Köln</td><td>ki-agentur/koeln</td><td class="kw">KI Agentur Köln + KI Beratung Köln</td><td>KI Workshop Köln, KI Strategie</td></tr>
+          <tr><td>KI-Beratung Deutschland</td><td>KI-Beratung Köln – KI für Versicherungen &amp; Medien</td><td>KI-Beratung für Köln</td><td>ki-beratung-koeln</td><td class="kw">KI-Beratung Köln</td><td>KI für Versicherungen, KI für Medien, Förderung</td></tr>
+          <tr><td>kiautomatisieren.de</td><td>KI-Beratung Köln: Automatisierung für Medien und Versicherungen</td><td>KI-Beratung Köln</td><td>beratung/koeln</td><td class="kw">KI-Beratung Köln (exakt)</td><td>KI-Automatisierung, Medien, Versicherungen</td></tr>
+          <tr><td>hypescale</td><td>KI-Beratung Köln – AI für Medien, Versicherungen &amp; Handel</td><td>KI-Beratung in Köln für Mittelstand und Dienstleister</td><td>ki-beratung-koeln</td><td class="kw">KI-Beratung Köln</td><td>KI-Förderung Köln, KI-Strategie, KI-Chatbots</td></tr>
+          <tr><td>konversion.digital</td><td>KI-Beratung Köln für den Mittelstand</td><td>KI-Beratung, die Conversions bringt</td><td>ki-beratung</td><td class="kw">KI-Beratung (Mittelstand)</td><td>KI-Strategie, KI-Berater, Kosten</td></tr>
+          <tr><td>KölnBusiness</td><td>Künstliche Intelligenz (KI) in Köln entdecken</td><td>Künstliche Intelligenz in Köln</td><td>digitalisierung/ki</td><td class="kw">Künstliche Intelligenz Köln</td><td>KI-Region Köln, KI.NRW</td></tr>
+          <tr><td>Hero Agency</td><td>KI-Beratung Köln für Unternehmen</td><td>KI-Beratung für Unternehmen in Köln</td><td>ki-beratung-koeln</td><td class="kw">KI-Beratung Köln</td><td>KI-Beratung für Unternehmen, EU-KI-Verordnung</td></tr>
+          <tr><td>Mentor Consulting</td><td>KI-Beratung in Köln für Unternehmen</td><td>KI-Beratung in Köln für Unternehmen, Mittelstand und Handwerk</td><td>ki-beratung/koeln</td><td class="kw">KI-Beratung Köln</td><td>BAFA-geförderte KI-Beratung, Handwerk</td></tr>
+          <tr><td>Franklin &amp; Partners</td><td>KI-Beratung Köln – KI-Implementierung &amp; Automatisierung</td><td>KI-Beratung in Köln – Automatisierung für Ihr Unternehmen</td><td>ki-beratung-koeln</td><td class="kw">KI-Beratung Köln</td><td>KI-Implementierung, Prozessautomatisierung</td></tr>
+          <tr><td>ki-agentur.com</td><td>KI Agentur Köln – KI-Beratung &amp; Implementierung</td><td>Ihr KI-Unternehmen für Köln</td><td>standorte/koeln</td><td class="kw">KI Agentur Köln</td><td>KI-Implementierung, KI-Agenten</td></tr>
+          <tr><td>feedbax</td><td>Die 20 besten KI Agenturen in Köln</td><td>Top KI Agenturen in Köln</td><td>ki/koeln</td><td class="kw">KI Agentur Köln (Verzeichnis)</td><td>Stundensätze, Bewertungen</td></tr>
+          <tr><td>rxm solutions</td><td>KI Entwicklung Köln</td><td>KI-Agentur Köln</td><td>ki-entwicklung-koeln</td><td class="kw">KI Entwicklung Köln</td><td>KI-Consulting</td></tr>
+        </tbody>
+      </table></div>
+      <p class="cap"><strong>Lesart.</strong> Zwei Lager: „KI-Beratung Köln“ (10 Seiten) und „KI-Agentur Köln“ (6 Seiten). CEx ist eine Beratung, keine Agentur; die Seite gehört ins erste Lager und fängt „KI-Agentur“ über eine FAQ-Frage ab.</p>
+    </section>
+
+    <section id="varianten">
+      <div class="sec-head"><span class="num">5</span><h2>Keyword-Varianten aus der SERP-Analyse</h2></div>
+      <p class="legend">Evidenz: <strong>AC</strong> Google-Autocomplete · <strong>T</strong> Title eines Wettbewerbers · <strong>H1/H2</strong> Überschrift · <strong>FAQ</strong> Frage im FAQPage-Schema · <strong>URL</strong> Slug. Vollständige Liste mit Priorität und Einsatzort auf der CEx-Seite: <code>keyword-varianten.csv</code> (68 Zeilen).</p>
+      <div class="cluster"><h3>A · Kern: auf der Seite bedienen</h3><div class="chips">
+        <span class="chip focus">KI-Beratung Köln <span class="ev">AC · T×10 · H1×3 · URL×5</span></span>
+        <span class="chip">KI-Beratung in Köln <span class="ev">H1×4 · H2×6 · FAQ×8</span></span>
+        <span class="chip">KI-Beratung für Unternehmen in Köln <span class="ev">T · H1×2</span></span>
+        <span class="chip">KI Berater Köln <span class="ev">AC</span></span>
+        <span class="chip">KI Consulting Köln <span class="ev">AC</span></span>
+        <span class="chip">KI-Beratung Mittelstand <span class="ev">AC · T×2 · H1×3 · eigene CEx-Seite, verlinken</span></span>
+        <span class="chip">KI-Beratung KMU / kleine Unternehmen <span class="ev">AC · FAQ×2</span></span>
+        <span class="chip">KI-Beratung in der Nähe <span class="ev">AC</span></span>
+      </div></div>
+      <div class="cluster"><h3>B · Agentur-Lager: über die FAQ abfangen</h3><div class="chips">
+        <span class="chip">KI Agentur Köln <span class="ev">AC · T×6 · H1×3 · URL×4</span></span>
+        <span class="chip">KI-Unternehmen Köln <span class="ev">H1×2</span></span>
+        <span class="chip">KI Firma Köln <span class="ev">AC</span></span>
+        <span class="chip">KI Experte Köln <span class="ev">AC · H1</span></span>
+        <span class="chip">KI Dienstleister Köln <span class="ev">H2×2</span></span>
+      </div></div>
+      <div class="cluster"><h3>C · Leistung + Köln: Leistungsblock</h3><div class="chips">
+        <span class="chip">KI Strategie Beratung <span class="ev">AC · H2×5</span></span>
+        <span class="chip">KI-Automatisierung Köln <span class="ev">AC · T×3</span></span>
+        <span class="chip">KI Implementierung <span class="ev">AC · T×2 · FAQ</span></span>
+        <span class="chip">KI Potenzialanalyse <span class="ev">H3×2 · bei CEx: Potenzial-Check</span></span>
+        <span class="chip">KI Chatbot Köln <span class="ev">T · H3×2 · eigene CEx-Seite</span></span>
+        <span class="chip">KI Workshop / Schulung / Seminar Köln <span class="ev">AC · nur wenn CEx es anbietet</span></span>
+      </div></div>
+      <div class="cluster"><h3>D · Kosten und Förderung: FAQ-Pflicht</h3><div class="chips">
+        <span class="chip">KI Beratung Kosten <span class="ev">AC · FAQ×11</span></span>
+        <span class="chip">KI Beratung Förderung <span class="ev">AC · H2×2 · FAQ×4</span></span>
+        <span class="chip">BAFA KI Beratung <span class="ev">AC · H2 · FAQ×2</span></span>
+        <span class="chip">KI Förderung Köln / NRW <span class="ev">H2×2 · FAQ×2</span></span>
+        <span class="chip">KI Beratung Stundensatz <span class="ev">AC</span></span>
+      </div></div>
+      <div class="cluster"><h3>E · Branche in Köln: Köln-Block</h3><div class="chips">
+        <span class="chip">KI für Versicherungen <span class="ev">T×3 · H3×5</span></span>
+        <span class="chip">KI für Medienunternehmen <span class="ev">T×3 · H3×5</span></span>
+        <span class="chip">KI Handel / E-Commerce <span class="ev">T · H3×3</span></span>
+        <span class="chip">KI in der Industrie / Maschinenbau <span class="ev">eigene CEx-Seiten</span></span>
+        <span class="chip">KI öffentliche Verwaltung Köln <span class="ev">CEx-Zielgruppe · kein Wettbewerber</span></span>
+      </div></div>
+      <div class="cluster"><h3>F · Region: spätere Nebenseiten</h3><div class="chips">
+        <span class="chip">KI Beratung Bonn <span class="ev">AC · FAQ</span></span>
+        <span class="chip">KI Beratung Düsseldorf <span class="ev">AC</span></span>
+        <span class="chip">KI Beratung NRW <span class="ev">AC · T</span></span>
+        <span class="chip">KI Beratung Rheinland <span class="ev">T · H3</span></span>
+        <span class="chip">KI Beratung Aachen <span class="ev">AC</span></span>
+      </div></div>
+      <div class="cluster"><h3>G · Semantik: Antwortblock und FAQ</h3><div class="chips">
+        <span class="chip">Künstliche Intelligenz Beratung <span class="ev">AC</span></span>
+        <span class="chip">Künstliche Intelligenz Köln <span class="ev">AC · T · H1×2</span></span>
+        <span class="chip">KI Einführung Unternehmen <span class="ev">AC · H2</span></span>
+        <span class="chip">Was ist KI-Beratung <span class="ev">FAQ×2</span></span>
+        <span class="chip">Unterschied KI-Beratung und KI-Agentur <span class="ev">FAQ×2</span></span>
+        <span class="chip">KI Unternehmensberatung <span class="ev">AC · Lead</span></span>
+      </div></div>
+      <p class="cap"><strong>Nicht bedienen:</strong> KI Beratung Jobs, Ausbildung, Studium Köln, psychologische Beratung, KI im Handwerk (nicht CEx-Zielgruppe).</p>
+    </section>
+
+    <section id="muster">
+      <div class="sec-head"><span class="num">6</span><h2>SERP-Muster der 13 Anbieterseiten</h2></div>
+      <div class="scroll"><table>
+        <thead><tr><th>Muster</th><th>Häufigkeit</th><th>Konsequenz für die CEx-Seite</th></tr></thead>
+        <tbody>
+          <tr><td>Title beginnt mit dem Keyword</td><td class="n">13 von 13</td><td>Title beginnt mit „KI-Beratung Köln“</td></tr>
+          <tr><td>H1 enthält „Köln“</td><td class="n">12 von 13</td><td>Köln in die H1</td></tr>
+          <tr><td>Köln-Absatz mit Standort und Branchen</td><td class="n">11 von 13</td><td>Eigener Köln-Block, 200 bis 250 Wörter</td></tr>
+          <tr><td>FAQ sichtbar</td><td class="n">11 von 13</td><td>8 Fragen im Hausformat „Welche Fragen hören wir häufiger?“</td></tr>
+          <tr><td>H1 enthält „KI-Beratung“</td><td class="n">10 von 13</td><td>Ja</td></tr>
+          <tr><td>CTA kostenloses Erstgespräch / Erstberatung</td><td class="n">10 von 13</td><td>Hausformat „Erstgespräch anfragen“, FAQ „Was kostet ein Erstgespräch?“</td></tr>
+          <tr><td>Telefonnummer sichtbar</td><td class="n">10 von 13</td><td>Fehlt bei CEx. Entscheidung nötig, siehe 8.9</td></tr>
+          <tr><td>FAQ mit FAQPage-Schema</td><td class="n">9 von 13</td><td>Yoast liefert es, Text gleich sichtbarem Text</td></tr>
+          <tr><td>Ablauf in 4 bis 6 Schritten</td><td class="n">7 von 13</td><td>6 Schritte, Hausmuster der KI-Seiten</td></tr>
+          <tr><td>ProfessionalService oder LocalBusiness im Schema</td><td class="n">7 von 13</td><td>Organization um ProfessionalService ergänzen, Adresse ist real</td></tr>
+          <tr><td>DSGVO oder EU AI Act erwähnt</td><td class="n">6 von 13</td><td>CEx-Stärke, eigener Block</td></tr>
+          <tr><td>Förderung erwähnt</td><td class="n">5 von 13</td><td>Faktenblock, keine Zusage</td></tr>
+          <tr><td>Vor-Ort-Frage in der FAQ</td><td class="n">5 von 13</td><td>Ja, mit echter Adresse beantworten</td></tr>
+          <tr><td>Gründer oder Person sichtbar</td><td class="n">3 von 13</td><td>Beide Geschäftsführer mit Foto und Person-Schema</td></tr>
+          <tr><td>Preise konkret</td><td class="n">2 von 13</td><td>Preislogik wie auf dem Hub, keine Zahl</td></tr>
+          <tr><td>Echte Kölner Adresse</td><td class="n">2 von 13</td><td>CEx hat sie. Im Text und im Schema zeigen</td></tr>
+        </tbody>
+      </table></div>
+      <p class="cap"><strong>Wortzahl der Anbieterseiten:</strong> 480 bis 5.098, Median 1.050. <strong>Köln-Nennungen:</strong> 11 bis 95, Median rund 20. Ziel für CEx: 1.800 bis 2.200 Wörter, „Köln“ 14 bis 18 Mal im sichtbaren Text. Nicht wie die Rheinland-Seite von CEx, die „Rheinland“ 45 Mal und in fast jeder H3 wiederholt.</p>
+    </section>
+
+    <section id="luecken">
+      <div class="sec-head"><span class="num">7</span><h2>Verkaufsargumente: Womit CEx sich von den Top 10 abhebt</h2></div>
+      <p>Argumente für den Kunden, der gerade zehn Anbieterseiten vergleicht. Sie gehören in Hero, Block „Warum CEx“ und FAQ.</p>
+      <ol class="gaps">
+        <li><strong>Sitz in Köln, Termine bei Ihnen.</strong> 11 von 13 Wettbewerbern schreiben „Köln“, 2 haben dort eine Adresse. CEx sitzt in der Stolberger Straße und arbeitet vor Ort in Köln, Bonn, Düsseldorf und Aachen.</li>
+        <li><strong>Bis in den Betrieb, nicht bis zum Pilot.</strong> Die SERP verkauft Workshops, Piloten, Agenten. CEx führt ein, integriert in bestehende Systeme und übergibt so, dass es ohne Berater läuft.</li>
+        <li><strong>Sie sprechen mit den Geschäftsführern.</strong> 3 von 13 zeigen Personen. Bei CEx beantworten Johannes Niklas Reusch und Hans-Helmut Scheel die Anfrage selbst.</li>
+        <li><strong>Copilot, Verwaltung, Industrie.</strong> Microsoft 365 Copilot bietet 1 von 13 an, öffentliche Verwaltung und Produktion niemand in Köln. CEx hat für alle drei eigene Seiten und Erfahrung.</li>
+        <li><strong>Datenschutz und EU AI Act geregelt, nicht erwähnt.</strong> 6 von 13 nennen DSGVO oder AI Act im Nebensatz. CEx regelt Risikoklasse, Auftragsverarbeitung und Mitbestimmung in jedem Projekt.</li>
+        <li><strong>Nutzen vor Technik.</strong> Kein Tool-Verkauf: Anwendungsfall und Nutzenrechnung zuerst, dann die Entscheidung, ob vorhandene Systeme reichen.</li>
+      </ol>
+      <p class="cap">Nicht als Argument verwenden, solange nicht freigegeben: Referenzen, Kundenzahlen, Preise, BAFA-Listung.</p>
+    </section>
+
+    <section id="meta">
+      <div class="sec-head"><span class="num">8.1</span><h2>URL, Title, Meta Description</h2></div>
+      <div class="serp" aria-label="Vorschau des Suchergebnisses">
+        <div class="site"><span class="fav" aria-hidden="true">CEx</span><span>CEx<br><span class="url">https://cex.koeln › ki-beratung › koeln</span></span></div>
+        <div class="t">KI-Beratung Köln — KI einführen, Prozesse optimieren | CEx</div>
+        <div class="d">KI-Beratung Köln: Anwendungsfälle finden, KI einführen, Prozesse automatisieren und sicher betreiben. Vor Ort in Köln. Antwort werktags in 24 Stunden.</div>
+        <div class="m">Title 58 Zeichen · Description 150 Zeichen · Vorschau, kein Live-Snippet</div>
+      </div>
+      <div class="scroll"><table>
+        <thead><tr><th>Element</th><th>Wert</th><th>Länge / Hinweis</th></tr></thead>
+        <tbody>
+          <tr><td>URL</td><td><code>https://cex.koeln/ki-beratung/koeln/</code></td><td class="n">Muster wie /change-management-beratung/berlin/</td></tr>
+          <tr><td>Title</td><td><strong>KI-Beratung Köln — KI einführen, Prozesse optimieren | CEx</strong></td><td class="n">58 Zeichen</td></tr>
+          <tr><td>Title-Alternative</td><td>KI-Beratung Köln für Unternehmen — Strategie bis Betrieb | CEx</td><td class="n">62 Zeichen</td></tr>
+          <tr><td>Meta Description</td><td><strong>KI-Beratung Köln: Anwendungsfälle finden, KI einführen, Prozesse automatisieren und sicher betreiben. Vor Ort in Köln. Antwort werktags in 24 Stunden.</strong></td><td class="n">150 Zeichen</td></tr>
+          <tr><td>OG-Title / OG-Description</td><td>wie Title und Description</td><td class="n"></td></tr>
+          <tr><td>Canonical</td><td><code>https://cex.koeln/ki-beratung/koeln/</code></td><td class="n"></td></tr>
+          <tr><td>Breadcrumb</td><td>Home › KI-Beratung › Köln</td><td class="n"></td></tr>
+          <tr><td>Eyebrow über der H1</td><td>Köln · KI-Beratung für Unternehmen</td><td class="n">Hausmuster wie „Rheinland · Projektmanagement“</td></tr>
+        </tbody>
+      </table></div>
+      <p class="cap">Title und Description nennen, was der Kunde bekommt (einführen, automatisieren, betreiben), den Standort und die Reaktionszeit, im Hausmuster der CEx-Titles („Keyword — Versprechen | CEx“). Der Gedankenstrich im Title ist die Konvention der Website.</p>
+    </section>
+
+    <section id="h1">
+      <div class="sec-head"><span class="num">8.2</span><h2>H1, erster Absatz, Hero</h2></div>
+      <div class="copy"><div class="label">Eyebrow</div><div class="sub" style="margin:0">Köln · KI-Beratung für Unternehmen</div></div>
+      <div class="copy">
+        <div class="label">H1</div>
+        <div class="h1">KI-Beratung Köln — KI im Unternehmen einführen, Prozesse optimieren</div>
+        <p class="note">Alternative im Muster der Wettbewerber: „KI-Beratung in Köln für Unternehmen: von der Idee zur produktiven KI“.</p>
+      </div>
+      <div class="copy">
+        <div class="label">Erster Absatz (Hero-Lead)</div>
+        <p class="body">KI-Beratung in Köln für Unternehmen, die künstliche Intelligenz einführen oder bestehende Abläufe mit KI schneller, günstiger und verlässlicher machen wollen. CEx ist eine Unternehmensberatung mit Sitz in Köln: Wir finden mit Ihnen die Anwendungsfälle mit dem größten Nutzen, führen KI-Lösungen ein, automatisieren Prozesse, integrieren KI-Assistenten und Microsoft Copilot und bringen alles sicher in den Betrieb, DSGVO- und AI-Act-fest. Vor Ort in Köln, Bonn, Düsseldorf und Aachen.</p>
+        <p class="note">66 Wörter. Satz 1 sagt, für wen und wofür. Satz 2 nennt die Marke und fünf konkrete Leistungen. Satz 3 den Standort.</p>
+      </div>
+      <div class="copy">
+        <div class="label">Hero-CTAs und Formular</div>
+        <p class="body" style="margin:0">„Erstgespräch anfragen“ (primär) · „Leistungen ansehen“ (Anker) · Formular „Lassen Sie uns sprechen“ mit Name, E-Mail (optional), Telefon, Thema, Einwilligung. Zeile darunter: „Wir melden uns werktags innerhalb von 24 Stunden. Termin bei Ihnen in Köln nach Absprache.“</p>
+      </div>
+    </section>
+
+    <section id="antwort">
+      <div class="sec-head"><span class="num">8.3</span><h2>Antwortblock für KI-Suche und Snippet</h2></div>
+      <div class="copy"><div class="label">H2</div><div class="sub" style="margin:0;font-weight:600">Was KI-Beratung in Köln für Ihr Unternehmen leistet</div></div>
+      <div class="copy">
+        <div class="label">Text, zitierfähig</div>
+        <p class="body">KI-Beratung hilft Unternehmen, künstliche Intelligenz mit messbarem Nutzen einzuführen: Anwendungsfälle bewerten, Daten prüfen, Lösungen wie Prozessautomatisierung, KI-Assistenten oder Microsoft Copilot einführen und sicher betreiben. CEx berät Unternehmen in Köln und im Rheinland von der Potenzialanalyse bis zum laufenden Betrieb, vor Ort und nach DSGVO und EU AI Act.</p>
+        <p class="note">Rund 50 Wörter. Darunter die Verfasserzeile: Johannes Niklas Reusch und Hans-Helmut Scheel, Geschäftsführer, mit Foto und Link auf die Über-uns-Seite.</p>
+      </div>
+    </section>
+
+    <section id="struktur">
+      <div class="sec-head"><span class="num">8.4</span><h2>Seitenstruktur: Aufbau wie die Top 10, Blocknamen wie die CEx-Seiten</h2></div>
+      <p>Zwölf Blöcke, jeder mit seiner Aufgabe für die Kundengewinnung. Rechts die Wortzahl, Summe rund 2.100. Kein Block „Praxisbeispiele“, solange keine freigegebenen Fälle vorliegen; sobald es sie gibt, kommt er zwischen 06 und 07.</p>
+      <div class="stack">
+        <div class="blk"><div class="i">01</div><div class="c">Hero</div><div class="h">KI-Beratung Köln — KI im Unternehmen einführen, Prozesse optimieren <small>Eyebrow, H1, Lead mit fünf konkreten Leistungen, zwei CTAs, Formular.</small></div><div class="w">80</div></div>
+        <div class="blk"><div class="i">02</div><div class="c">Antwortblock</div><div class="h">Was KI-Beratung in Köln für Ihr Unternehmen leistet <small>Text aus 8.3, Verfasserzeile.</small></div><div class="w">55</div></div>
+        <div class="blk new"><div class="i">03</div><div class="c">Nutzen · neu</div><div class="h">Was Unternehmen in Köln davon haben <small>Vier Karten mit konkretem Ergebnis, ohne Zahlen, solange keine belegten vorliegen: weniger Handarbeit bei wiederkehrenden Vorgängen · schnellere Antworten für Kunden und Mitarbeitende · weniger Fehler und Nacharbeit · rechtssicher und im Betrieb verankert.</small></div><div class="w">150</div></div>
+        <div class="blk"><div class="i">04</div><div class="c">Problem</div><div class="h">Warum KI-Vorhaben in Kölner Unternehmen vor dem Betrieb stoppen <small>Drei Karten: Software vor Anwendungsfall · Daten verstreut · Pilot bleibt in der Entwicklung stehen. Je ein Satz, wie CEx das verhindert.</small></div><div class="w">140</div></div>
+        <div class="blk"><div class="i">05</div><div class="c">Leistungen</div><div class="h">Unsere KI-Beratung in Köln: Das führen wir für Sie ein <small>Sechs Karten, jede mit Nutzen-Satz und Link auf die Unterseite: KI-Strategie und Potenzialanalyse · KI-Einführung und Umsetzung · Prozesse mit KI automatisieren · KI-Assistenten und Chatbots · Microsoft 365 Copilot und generative KI · Befähigung, Datenschutz und EU AI Act.</small></div><div class="w">280</div></div>
+        <div class="blk new"><div class="i">06</div><div class="c">Anwendungsfälle und Köln · neu</div><div class="h">KI-Anwendungsfälle aus Köln und dem Rheinland <small>Je Branche ein bis zwei Fälle mit Ergebnis: Versicherer (Schadenmeldungen und Eingangspost erfassen und zuordnen) · Medien und Agenturen (Recherche und Archivsuche, Angebote und Berichte) · Handel (Service- und Retourenanfragen, Prognosen) · Industrie, Chemie, Maschinenbau (Qualitätsprüfung, Wartungsprognose) · Logistik (Disposition, Frachtpapiere) · Verwaltung (Antrags- und Aktenbearbeitung, Wissenssuche). Dann Arbeitsweise vor Ort mit Adresse und Teilregionen. Nur Fälle, die CEx so umsetzen kann.</small></div><div class="w">260</div></div>
+        <div class="blk"><div class="i">07</div><div class="c">Vorgehen</div><div class="h">So läuft die KI-Beratung in Köln ab <small>1 Erstgespräch (30 bis 45 Minuten, vor Ort oder per Video) · 2 Potenzial-Check · 3 Anwendungsfall und Erfolgskriterien · 4 Daten, Sicherheit und Risiko · 5 Pilot im echten Prozess · 6 Einführung, Betrieb, Übergabe.</small></div><div class="w">200</div></div>
+        <div class="blk"><div class="i">08</div><div class="c">Warum CEx</div><div class="h">Warum Unternehmen in Köln mit CEx arbeiten <small>Die sechs Verkaufsargumente aus Abschnitt 7 als Karten, Fotos beider Geschäftsführer.</small></div><div class="w">170</div></div>
+        <div class="blk new"><div class="i">09</div><div class="c">Förderung und Recht · neu</div><div class="h">Förderung, DSGVO und EU AI Act für Unternehmen in Köln <small>Drei Karten: Förderung (BAFA, Zukunftszentrum KI NRW, NRW.BANK, Antrag vor Projektbeginn) · DSGVO (Auftragsverarbeitung, Datenresidenz, Mitbestimmung) · EU AI Act (Risikoklassen, KI-Kompetenz). Keine Behauptung, dass CEx BAFA-gelistet ist.</small></div><div class="w">150</div></div>
+        <div class="blk"><div class="i">10</div><div class="c">FAQ</div><div class="h">Welche Fragen zur KI-Beratung in Köln hören wir häufiger? <small>Acht Fragen aus 8.5, FAQPage-Schema über Yoast.</small></div><div class="w">420</div></div>
+        <div class="blk"><div class="i">11</div><div class="c">Weitere Themen</div><div class="h">Weitere Themen zur KI-Beratung <small>Hub, Mittelstand, Generative KI, Chatbot, Copilot, Digitale Prozesse und KI, Daten und KI, Industrie, Projektmanagement Rheinland.</small></div><div class="w">60</div></div>
+        <div class="blk"><div class="i">12</div><div class="c">CTA und Vorab-Fragen</div><div class="h">Sagen Sie uns, wo Sie mit KI stehen. <small>Abschluss-CTA mit Formularverweis, dann „Welche Fragen klären wir vor Beginn der KI-Beratung in Köln?“ mit den vier Vorab-Fragen.</small></div><div class="w">120</div></div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="sec-head"><span class="num">8.5</span><h2>FAQ: acht Fragen aus 90 Wettbewerber-Fragen und den CEx-FAQs</h2></div>
+      <p>Zahl rechts: Häufigkeit des Themas im FAQPage-Schema der Wettbewerber. Antworten 2 bis 4 Sätze, faktisch zuerst, im Ton der bestehenden CEx-FAQs.</p>
+      <div class="faq">
+        <div class="qa"><div class="q">Was kostet KI-Beratung in Köln? <span class="cnt">11×</span></div><p class="a">Antwortlogik des Hubs: abhängig von Anwendungsfall, Datenlage und Umfang; Erstgespräch und Einordnung ohne Kosten; Angebot mit klaren Etappen und Stop-Punkten. Keine Zahl.</p></div>
+        <div class="qa"><div class="q">Wie läuft die KI-Beratung ab? <span class="cnt">8×</span></div><p class="a">Die sechs Schritte aus Block 07 in drei Sätzen.</p></div>
+        <div class="qa"><div class="q">Wie lange dauert es bis zum ersten Ergebnis? <span class="cnt">7×</span></div><p class="a">Potenzial-Check in Tagen, ein Pilot an echten Daten in Wochen, Betrieb je nach Integration. Konkrete Erwartung nach dem Potenzial-Check.</p></div>
+        <div class="qa"><div class="q">Sind Sie in Köln vor Ort? <span class="cnt">6×</span></div><p class="a">Ja, Sitz Stolberger Straße 90 a, Termine bei Ihnen in Köln, Bonn, Düsseldorf und Aachen, sonst per Video. Wer bei uns anfragt, spricht mit den Geschäftsführern.</p></div>
+        <div class="qa"><div class="q">Für welche Unternehmen in Köln lohnt sich KI-Beratung? <span class="cnt">6×</span></div><p class="a">Mittelstand und Konzernbereiche mit wiederkehrenden, dokumentenlastigen Abläufen: Versicherer, Medien, Handel, Industrie, Logistik, Verwaltung. Kleinere Organisationen ehrlich beantworten, wie in der Über-uns-FAQ.</p></div>
+        <div class="qa"><div class="q">Wie halten Sie DSGVO und EU AI Act ein? <span class="cnt">6×</span></div><p class="a">Auftragsverarbeitung, Datenresidenz, Risikoklasse je Anwendungsfall, Mensch in der Schleife, Dokumentation, Mitbestimmung. Link auf den Hub.</p></div>
+        <div class="qa"><div class="q">Gibt es Förderung für KI-Beratung in Köln? <span class="cnt">5×</span></div><p class="a">BAFA-Beratungsförderung, Zukunftszentrum KI NRW, NRW.BANK. Antrag vor Projektbeginn. Wir prüfen mit Ihnen, was passt.</p></div>
+        <div class="qa"><div class="q">Was unterscheidet KI-Beratung von einer KI-Agentur? <span class="cnt">3×</span></div><p class="a">Agenturen liefern Tools und Workshops, Beratung klärt Anwendungsfall, Daten, Verantwortung und Betrieb und begleitet die Einführung bis zur Übergabe. Fängt das Agentur-Lager ab.</p></div>
+      </div>
+    </section>
+
+    <section id="schema">
+      <div class="sec-head"><span class="num">8.6</span><h2>Strukturierte Daten der Seite</h2></div>
+      <p>Yoast liefert WebPage, WebSite, Organization mit PostalAddress, BreadcrumbList und FAQPage. Zusätzlich, wie auf der Rheinland-Seite:</p>
+      <ul>
+        <li><strong>Service:</strong> name „KI-Beratung Köln“, serviceType „KI-Beratung“, description gleich Meta Description, provider Organization, areaServed City „Köln“ plus AdministrativeArea „Rheinland“ und „Nordrhein-Westfalen“, hasOfferCatalog mit den sechs Leistungen aus Block 05.</li>
+        <li><strong>Organization</strong> um den Typ ProfessionalService ergänzen. Die Adresse steht im Impressum und in der Fußzeile, die Auszeichnung ist gedeckt.</li>
+        <li><strong>Person</strong> für beide Geschäftsführer mit jobTitle und worksFor, sichtbar in Verfasserzeile und Block 08.</li>
+        <li><strong>FAQPage</strong> mit den acht Fragen, Text gleich sichtbarem Text. <strong>HowTo</strong> optional für die sechs Schritte.</li>
+        <li><strong>Nicht:</strong> AggregateRating, erfundene Bewertungen.</li>
+      </ul>
+    </section>
+
+    <section id="checkliste">
+      <div class="sec-head"><span class="num">8.7</span><h2>Keyword-Platzierung vor Freigabe</h2></div>
+      <ul class="check">
+        <li><span class="box" aria-hidden="true"></span>URL <code>/ki-beratung/koeln/</code></li>
+        <li><span class="box" aria-hidden="true"></span>H1 enthält „KI-Beratung Köln“</li>
+        <li><span class="box" aria-hidden="true"></span>Title beginnt mit „KI-Beratung Köln“</li>
+        <li><span class="box" aria-hidden="true"></span>Meta Description beginnt mit „KI-Beratung Köln“</li>
+        <li><span class="box" aria-hidden="true"></span>Erster Absatz: Keyword in den ersten 15 Wörtern, Marke in Satz 2, fünf konkrete Leistungen</li>
+        <li><span class="box" aria-hidden="true"></span>Vier H2 mit „KI-Beratung in Köln“, die übrigen H2 ohne Keyword</li>
+        <li><span class="box" aria-hidden="true"></span>H3 ohne Keyword-Wiederholung</li>
+        <li><span class="box" aria-hidden="true"></span>Alt-Text des Hero-Bildes</li>
+        <li><span class="box" aria-hidden="true"></span>„KI-Beratung“ 14 bis 20 Mal, davon 6 bis 8 Mal mit Köln</li>
+        <li><span class="box" aria-hidden="true"></span>„Köln“ 14 bis 18 Mal, „Kölner“ 2 bis 3, „Rheinland“ 2 bis 3, „NRW“ 1 bis 2</li>
+        <li><span class="box" aria-hidden="true"></span>„Mittelstand“ 3 bis 4 Mal, „künstliche Intelligenz“ 2 bis 3 Mal ausgeschrieben</li>
+        <li><span class="box" aria-hidden="true"></span>Leistungsbegriffe je mindestens einmal: KI-Strategie, Potenzialanalyse, KI-Einführung, Prozessautomatisierung, KI-Assistent, Chatbot, Microsoft Copilot, generative KI, Befähigung</li>
+        <li><span class="box" aria-hidden="true"></span>Je einmal: KI-Agentur (FAQ), KI Berater, Anwendungsfall, Pilot, Betrieb</li>
+        <li><span class="box" aria-hidden="true"></span>Adresse Stolberger Straße 90 a im Text und in der Fußzeile</li>
+        <li><span class="box" aria-hidden="true"></span>Wortzahl 1.800 bis 2.200</li>
+        <li><span class="box" aria-hidden="true"></span>FAQPage-Text gleich sichtbarem Text</li>
+        <li><span class="box" aria-hidden="true"></span>Formular mit Einwilligung und Datenschutz-Link</li>
+      </ul>
+    </section>
+
+    <section id="links">
+      <div class="sec-head"><span class="num">8.8</span><h2>Interne Verlinkung</h2></div>
+      <ul>
+        <li>Vom Hub <code>/ki-beratung/</code> im Block „Vertiefen Sie Ihre KI-Beratung“: neuer Link „KI-Beratung Köln“.</li>
+        <li>Von der Startseite: Abschnitt „Was CEx als Unternehmensberatung in Köln ausmacht“ verlinkt auf die neue Seite.</li>
+        <li>Von der Rheinland-Seite und der Berlin-Seite: Querverweis „KI-Beratung in Köln“.</li>
+        <li>Aus der Seite heraus: jede Leistungskarte auf ihre Unterseite, dazu Über uns, Kontakt, Impressum. Sitemap-Seite ergänzen.</li>
+        <li>Später: <code>/ki-beratung/bonn/</code>, <code>/ki-beratung/duesseldorf/</code>, <code>/ki-beratung/nrw/</code>, untereinander verlinkt.</li>
+      </ul>
+    </section>
+
+    <section id="entscheidungen">
+      <div class="sec-head"><span class="num">8.9</span><h2>Offene Entscheidungen und Annahmen</h2></div>
+      <ol class="dec">
+        <li><span class="t">URL</span><code>/ki-beratung/koeln/</code> nach dem Berlin-Muster; Alternative <code>/ki-beratung/ki-beratung-koeln/</code>. Eine Konvention für alle künftigen Stadtseiten festlegen.</li>
+        <li><span class="t">Telefonnummer</span>CEx veröffentlicht keine, 10 von 13 Wettbewerber tun es. Empfehlung: eine Nummer auf dieser Seite und im Schema, mindestens der Rückruf-Weg prominent im Hero.</li>
+        <li><span class="t">Branchen und Anwendungsfälle</span>Block 06 beschreibt typische Kölner Fälle. Welche davon CEx umgesetzt hat oder umsetzen will, gibt CEx frei. Keine Referenz ohne Freigabe.</li>
+        <li><span class="t">Praxisbeispiele</span>Nur mit freigegebenen, anonymisierten Fällen. Sonst kein Block.</li>
+        <li><span class="t">Nutzen-Zahlen</span>Block 03 kommt ohne Prozentwerte aus. Belegte Zahlen aus CEx-Projekten würden ihn stärker machen.</li>
+        <li><span class="t">BAFA</span>Förderung wird als Fakt beschrieben. Ob CEx als Berater gelistet ist, klären, bevor die FAQ das nahelegt.</li>
+        <li><span class="t">Google-Unternehmensprofil</span>Für das erwartete Local Pack nötig, außerhalb der Seite. Status klären.</li>
+        <li><span class="t">Schulungen</span>Auf der Seite als „Befähigung“ enthalten; ein eigenes Workshop-Angebot nur, wenn CEx es hat.</li>
+        <li><span class="t">Umfang</span>1.800 bis 2.200 Wörter: die Themenseiten tragen die Tiefe, die Stadtseite den Standort und das Angebot.</li>
+        <li><span class="t">Volumen</span>Prioritäten beruhen auf Evidenz aus SERP und Autocomplete. Semrush-Volumen und KD nachziehen, bevor Bonn, Düsseldorf und NRW geplant werden.</li>
+      </ol>
+    </section>
+
+    <section id="next">
+      <div class="sec-head"><span class="num">9</span><h2>Nächster Schritt</h2></div>
+      <ol>
+        <li>Entscheidungen aus 8.9 mit CEx klären, vor allem Telefonnummer, Anwendungsfälle, Praxisbeispiele.</li>
+        <li>Copy schreiben: zwölf Blöcke nach 8.4 bis 8.7, im Ton der bestehenden CEx-Seiten, jede Leistung so konkret wie bei den Wettbewerbern.</li>
+        <li>Seite in WordPress anlegen (Yoast: Title, Description, Canonical, Breadcrumb), Service-Schema mit areaServed Köln, Organization um ProfessionalService ergänzen.</li>
+        <li>Interne Links setzen, Sitemap-Seite ergänzen, Google-Unternehmensprofil prüfen.</li>
+        <li>Vor Freigabe: Checkliste 8.7. Nach Livegang: Anfragen über die Seite monatlich auswerten.</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>Quellen: Google-Autocomplete (de/DE), Brave Search (DE), Roh-HTML der 22 Kandidatenseiten und zehn CEx-Seiten, 90 FAQ-Fragen aus FAQPage-Schema. Reihenfolge der Top 10 ist ein Konsens mehrerer Quellen, kein Live-Ranking von Google.de. Kein Suchvolumen in dieser Sitzung. Repo-Dateien: <code>docs/seo/cex-koeln/ki-beratung-koeln/page-blueprint.md</code>, <code>serp-analyse.md</code>, <code>keyword-varianten.csv</code>, <code>research/</code>. Branch <code>claude/seo-ki-beratung-koeln-viokby</code>.</p>
+    </footer>
+  </main>
+</div>
