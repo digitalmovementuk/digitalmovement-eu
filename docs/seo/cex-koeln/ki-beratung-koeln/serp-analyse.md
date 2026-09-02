@@ -1,6 +1,6 @@
 # SERP-Analyse: „KI Beratung Köln“
 
-**Stand:** 02.09.2026 · **Zweck:** Grundlage für `page-blueprint.md`
+**Stand:** 02.09.2026 · **Kunde:** CEx UG, cex.koeln · **Zweck:** Grundlage für `page-blueprint.md` (Intent-Scan der Top 10 steht dort in Abschnitt 2)
 **Quellen:** Brave Search (Land DE), vier Web-Suchen mit Varianten, Roh-HTML aller Kandidaten (curl, User-Agent Chrome, Accept-Language de-DE), Google-Autocomplete (hl=de, gl=de).
 **Grenze:** Google.de war nicht live abrufbar. Die Reihenfolge ist ein Konsens aus den genannten Quellen, keine Live-Position bei Google. Wortzahlen sind aus dem Roh-HTML ohne Skripte und Styles gezählt, also inklusive Navigation und Fußzeile.
 
@@ -221,7 +221,7 @@ Legende Keyword-Zählung (Roh-HTML, Kleinschreibung, Bindestrich-Varianten zusam
 
 - **Title (76):** Unsere 10 Besten Künstliche Intelligenz Agenturen in Köln - 2026 Bewertungen · **H1:** Top Künstliche Intelligenz Agenturen in Köln · FAQPage (5): Was macht eine KI-Agentur in Köln? · Worauf sollte ich bei der Auswahl achten? · Sollte ich lokal in Köln suchen oder remote vergleichen? · Was kostet eine KI-Agentur in Köln? · Welche Firma in Köln kann bei KI-Agenten helfen?
 
-**Weitere gesichtete Seiten:** Puetter Online (Title „KI Agentur in Köln“, H1 „Unsere neuen KI-Angebote“, Title und H1 passen nicht zusammen), KI-Experte Deutschland (H1 „KI-Experte aus Köln“, 530 Wörter), gewusst:KI (URL /beratung/ leitet auf /ki-transformation/ um, Du-Ansprache, Eifel und Rheinland), comito.de (Bot-Schutz, nicht lesbar).
+**Weitere gesichtete Seiten:** Pexon Consulting (pexon-consulting.de/ki-beratung-koeln, in einer Suche gelistet, Abruf lieferte nur 189 Bytes, nicht lesbar), Puetter Online (Title „KI Agentur in Köln“, H1 „Unsere neuen KI-Angebote“, Title und H1 passen nicht zusammen), KI-Experte Deutschland (H1 „KI-Experte aus Köln“, 530 Wörter), gewusst:KI (URL /beratung/ leitet auf /ki-transformation/ um, Du-Ansprache, Eifel und Rheinland), comito.de (Bot-Schutz, nicht lesbar).
 
 ---
 
