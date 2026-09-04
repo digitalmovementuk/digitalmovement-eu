@@ -1,4 +1,4 @@
-import { googleRating, testimonials } from "../content";
+import { testimonials } from "../content";
 
 export function Reviews() {
   return (
@@ -7,20 +7,6 @@ export function Reviews() {
         <div className="section-head">
           <p className="eyebrow">Google-Bewertungen</p>
           <h2 className="h2">Was Kunden über uns sagen</h2>
-          <a
-            href={googleRating.reviewsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-[17px] text-ink-soft hover:text-ink"
-          >
-            <span className="stars" aria-hidden>
-              ★★★★★
-            </span>
-            <span>
-              <b className="text-ink">{googleRating.rating.toFixed(1).replace(".", ",")}</b> · über{" "}
-              {googleRating.count} Bewertungen auf Google
-            </span>
-          </a>
         </div>
 
         <ul className="mt-8 grid gap-5 md:grid-cols-2">
