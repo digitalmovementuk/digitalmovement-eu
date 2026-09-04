@@ -129,8 +129,6 @@ export default defineConfig(({ isSsrBuild }) => ({
           ? undefined
           : {
               "react-core": ["react", "react-dom", "react-router-dom"],
-              motion: ["framer-motion"],
-              lenis: ["lenis"],
               icons: ["lucide-react"],
             },
       },

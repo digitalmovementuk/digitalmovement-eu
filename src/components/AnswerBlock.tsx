@@ -1,103 +1,41 @@
-import { Reveal } from "../lib/Reveal";
 import { answerBlock, byline } from "../content";
 
 const BASE = import.meta.env.BASE_URL;
 
-/**
- * Blueprint 3 + 4 — Byline und Antwortblock, in einem Abschnitt.
- *
- * Der Hausstandard („The Million-Dollar Landing Page“, übernommen am
- * 23.08.2026) führt beide als eigene Bausteine. Auf dieser Seite stehen
- * sie zusammen, und zwar aus einem gemessenen Grund: der Startbereich
- * endet bei zwei Dritteln des Bildschirms, das letzte Drittel gehört dem
- * nächsten Abschnitt. Zwei dünne Streifen hintereinander würden dieses
- * Drittel unter sich aufteilen und keiner von beiden wäre lesbar. Als ein
- * Abschnitt ragt stattdessen die Byline vollständig und der Anfang der
- * Antwort in den ersten Bildschirm.
- *
- * Der Antwortblock ist bewusst 52 Wörter lang und steht ohne Kontext:
- * er ist der Absatz, den eine KI zitiert, wenn sie diese Seite als Quelle
- * nimmt. Wer ihn kürzt, kürzt die Zitierfähigkeit weg.
- */
+/* Antwortblock: die Frage als Überschrift, die Antwort in einem Absatz,
+   darüber der Verfasser. Grauer Grund, damit er sich vom Startbereich
+   absetzt, ohne eine neue Farbwelt aufzumachen. */
 export function AnswerBlock() {
   return (
-    <section
-      id="antwort"
-      data-surface="light"
-      aria-labelledby="antwort-frage"
-      className="surface-light pt-12 sm:pt-14 md:pt-16 pb-14 sm:pb-16 md:pb-20"
-    >
+    <section id="answer" data-surface="light" className="surface-light-2 section-tight">
       <div className="container-v3">
-        {/* ---------- Byline: ein Mensch mit Namen und Gesicht ---------- */}
-        <Reveal>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-            {/* 52 Punkte groß dargestellt, doppelt aufgelöst für scharfe
-                Bildschirme — 5 KB statt der 78-KB-Quelle. Die Fassungen
-                stehen als eigene Felder im Inhalt, nicht als aus dem
-                Dateinamen geratene Pfade: ein anderes Foto ohne erzeugte
-                Fassungen würde sonst still ins Leere zeigen. */}
-            <picture className="contents">
-              <source type="image/webp" srcSet={`${BASE}${byline.photoWebp} 104w`} sizes="52px" />
+        <div className="mx-auto max-w-[820px]">
+          <div className="flex items-center gap-4">
+            <picture className="flex-none">
+              <source type="image/webp" srcSet={`${BASE}${byline.photoWebp}`} />
               <img
                 src={`${BASE}${byline.photoFallback}`}
-                srcSet={`${BASE}${byline.photoFallback} 104w`}
-                sizes="52px"
-                width={52}
-                height={52}
                 alt={`${byline.name}, ${byline.role}`}
+                width={56}
+                height={56}
+                className="h-14 w-14 flex-none rounded-full object-cover"
                 loading="lazy"
                 decoding="async"
-                className="h-[52px] w-[52px] shrink-0 rounded-full object-cover ring-1 ring-ink/10"
               />
             </picture>
-            <p className="text-[14.5px] leading-snug text-ink-soft">
-              {/* `byline-author` ist keine Gestaltungsklasse, sondern die
-                  maschinenlesbare Markierung der Verfasserzeile. Ohne sie ist
-                  der Name für eine Prüfung nur Fließtext — und ein loses Muster
-                  auf „von …" darf sie bewusst nicht als Verfasser zählen.
-                  Zweiter, tragender Beleg: der Person-Knoten im Schema. */}
-              <span className="byline-author font-bold text-ink">{byline.name}</span>
-              <span className="text-ink-muted"> · {byline.role}</span>
-              <span className="block text-[13px] text-ink-muted">{byline.meta}</span>
+            <p className="leading-snug">
+              <span className="block font-bold">{byline.name}</span>
+              <span className="small">
+                {byline.role} · {byline.meta}
+              </span>
             </p>
-            <a
-              href={byline.bioHref}
-              className="ml-auto text-[13.5px] font-semibold text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-ink"
-            >
+            <a href={byline.bioHref} className="link-arrow ml-auto hidden text-[15px] sm:inline-flex">
               {byline.bioLabel}
             </a>
           </div>
-        </Reveal>
-
-        {/* ---------- Antwortblock ---------- */}
-        <Reveal delay={0.06}>
-          {/* Antwort vor Frage — im Quelltext, nicht im Bild.
-              Der Blueprint verlangt den Antwortabsatz zwischen der
-              Seitenüberschrift und der ersten Zwischenüberschrift: Das ist
-              die Stelle, an der eine Suchmaschine oder eine KI die Antwort
-              erwartet. Im Bild bleibt die Reihenfolge Frage → Antwort,
-              dafür sorgen die order-Klassen.
-              Für Screenreader geht dabei nichts verloren: Der Abschnitt
-              trägt aria-labelledby="antwort-frage", wird also mit der Frage
-              als Namen angekündigt, bevor die Antwort gelesen wird. */}
-          <div className="mt-8 sm:mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-12 lg:items-start">
-            <p className="order-2 text-[16.5px] sm:text-[18px] leading-relaxed text-ink-soft max-w-[62ch]">
-              {answerBlock.answer}
-            </p>
-            <h2
-              id="antwort-frage"
-              className="order-1 balance text-ink"
-              style={{
-                fontSize: "clamp(24px, 2.2vw, 32px)",
-                lineHeight: "1.1",
-                letterSpacing: "-0.032em",
-                fontWeight: 700,
-              }}
-            >
-              {answerBlock.question}
-            </h2>
-          </div>
-        </Reveal>
+          <h2 className="h2 mt-8">{answerBlock.question}</h2>
+          <p className="lead mt-5">{answerBlock.answer}</p>
+        </div>
       </div>
     </section>
   );
