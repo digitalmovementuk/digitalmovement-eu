@@ -22,7 +22,7 @@ export function Contact() {
     <section id="contact" data-surface="light" className="surface-light-2 section">
       <div className="container-v3 grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
-          <div className="section-head">
+          <div className="section-head" data-reveal>
             <p className="eyebrow">{contact.eyebrow}</p>
             <h2 className="h2">
               {contact.headlinePre} <span className="text-accent">{contact.headlineSoft}</span>
@@ -30,7 +30,7 @@ export function Contact() {
             <p className="lead">{contact.intro}</p>
           </div>
 
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+          <ul className="mt-8 grid gap-4 sm:grid-cols-2" data-reveal-group>
             {contact.tiles.map((t) => {
               const Icon = ICONS[t.kicker as keyof typeof ICONS] ?? Mail;
               const inner = (
@@ -45,9 +45,9 @@ export function Contact() {
                   </span>
                 </>
               );
-              const cls = "card flex items-start gap-4 p-5 hover:border-ink";
+              const cls = "card card-lift flex items-start gap-4 p-5";
               return (
-                <li key={t.kicker}>
+                <li key={t.kicker} data-reveal>
                   {t.href.startsWith("/") ? (
                     <Link to={t.href} className={cls}>
                       {inner}
@@ -67,7 +67,7 @@ export function Contact() {
           </ul>
         </div>
 
-        <div className="relative">
+        <div className="relative" data-reveal>
           <LeadForm
             idPrefix="c"
             formId="contact-form"

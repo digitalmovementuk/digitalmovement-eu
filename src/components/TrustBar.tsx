@@ -18,7 +18,7 @@ export function TrustBar() {
     <section aria-label={trustBar.label} data-surface="light" className="surface-light border-b border-line">
       <div className="container-v3 py-8">
         <p className="small text-center font-semibold uppercase tracking-[0.06em] md:text-left">{trustBar.label}</p>
-        <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-5 md:justify-between">
+        <ul data-reveal className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-5 md:justify-between">
           {trustBar.clients.map((c) => {
             const logo = LOGOS[c.name];
             return (

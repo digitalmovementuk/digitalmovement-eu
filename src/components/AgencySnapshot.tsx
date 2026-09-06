@@ -14,14 +14,14 @@ export function AgencySnapshot() {
   return (
     <section id="snapshot" data-surface="light" className="surface-light-2 section">
       <div className="container-v3">
-        <div className="section-head">
+        <div className="section-head" data-reveal>
           <p className="eyebrow">{snapshot.eyebrow}</p>
           <h2 className="h2">{snapshot.title}</h2>
         </div>
 
-        <ol className="mt-8 grid gap-5 md:grid-cols-3">
+        <ol className="mt-8 grid gap-5 md:grid-cols-3" data-reveal-group>
           {snapshot.items.map((item) => (
-            <li key={item.index} className="card">
+            <li key={item.index} className="card" data-reveal>
               <p className="small font-bold tabular">
                 {item.index} · {item.label}
               </p>
@@ -48,14 +48,14 @@ export function AgencySnapshot() {
         </ol>
 
         <div id="metrics" className="mt-10 border-t border-line pt-8">
-          <div className="section-head">
+          <div className="section-head" data-reveal>
             <p className="eyebrow">{metrics.eyebrow}</p>
             <h3 className="h2">{metrics.headlineMain}</h3>
             <p className="lead">{metrics.intro}</p>
           </div>
-          <dl className="mt-8 grid gap-6 sm:grid-cols-3">
+          <dl className="mt-8 grid gap-6 sm:grid-cols-3" data-reveal-group>
             {metrics.items.map((m) => (
-              <div key={m.label} className="text-center md:text-left">
+              <div key={m.label} className="text-center md:text-left" data-reveal>
                 <dt className="small font-semibold">{captions[m.label] ?? ""}</dt>
                 <dd className="num mt-2 text-accent">
                   {m.value}

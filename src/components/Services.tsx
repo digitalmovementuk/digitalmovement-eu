@@ -6,15 +6,15 @@ export function Services() {
   return (
     <section id="services" data-surface="light" className="surface-light section">
       <div className="container-v3">
-        <div className="section-head">
+        <div className="section-head" data-reveal>
           <p className="eyebrow">{servicesIntro.eyebrow}</p>
           <h2 className="h2">{servicesIntro.headlineMain}</h2>
           <p className="lead">{servicesIntro.headlineSub}</p>
         </div>
 
-        <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4" data-reveal-group>
           {services.map((s) => (
-            <li key={s.key} className="card flex flex-col">
+            <li key={s.key} className="card flex flex-col" data-reveal>
               <h3 className="h3">{s.title}</h3>
               <p className="mt-2 text-[18px] font-bold leading-snug text-ink">{s.promise}</p>
               <p className="copy mt-3 text-[16px]">{s.detail}</p>

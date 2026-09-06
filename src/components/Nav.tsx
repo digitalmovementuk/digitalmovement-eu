@@ -10,6 +10,14 @@ const BASE = import.meta.env.BASE_URL;
    ein einfaches Feld auf. Seit dem Design-Audit vom 04.09.2026. */
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const { pathname } = useLocation();
   const onHome = pathname === "/" || pathname === "";
 
@@ -30,7 +38,7 @@ export function Nav() {
   }));
 
   return (
-    <div className="sticky top-0 z-50 border-b border-line bg-white">
+    <div className={`site-header sticky top-0 z-50 border-b border-line bg-white${scrolled ? " is-scrolled" : ""}`}>
       <nav className="container-v3 flex h-[72px] items-center justify-between gap-6" aria-label="Hauptnavigation">
         <Link to="/" className="flex items-center" aria-label={`${business.name} — Startseite`}>
           <img
@@ -46,7 +54,7 @@ export function Nav() {
         <ul className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
             <li key={l.label}>
-              <a href={l.href} className="text-[16px] font-semibold text-ink-soft hover:text-ink">
+              <a href={l.href} className="nav-link text-[16px] font-semibold text-ink-soft hover:text-ink">
                 {l.label}
               </a>
             </li>

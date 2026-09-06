@@ -173,7 +173,11 @@ function CaseHeroFrame({
 
 function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
   return (
-    <li className="card flex flex-col overflow-hidden p-0">
+    <li className="card card-lift flex flex-col overflow-hidden p-0" data-reveal>
+      <div className="frame-bar" aria-hidden>
+        <span /><span /><span />
+        <span className="frame-url">{study.url ? study.url.replace(/^https?:\/\//, "").replace(/\/$/, "") : study.client}</span>
+      </div>
       <div className="relative aspect-[16/10] w-full border-b border-line">
         <CaseHeroFrame slug={study.slug} variant="desktop" />
       </div>
@@ -212,7 +216,7 @@ export function ClientCases() {
   return (
     <section id="cases" data-surface="light" className="surface-light section">
       <div className="container-v3">
-        <div className="section-head">
+        <div className="section-head" data-reveal>
           <p className="eyebrow">{casesIntro.eyebrow}</p>
           <h2 className="h2">
             {casesIntro.headlineMain} <span className="text-accent">{casesIntro.headlineSub}</span>
@@ -220,7 +224,7 @@ export function ClientCases() {
           <p className="lead">{casesIntro.intro}</p>
         </div>
 
-        <ul className="cases-grid mt-10 grid gap-5 md:grid-cols-6">
+        <ul className="cases-grid mt-10 grid gap-5 md:grid-cols-6" data-reveal-group>
           {caseStudies.map((study, i) => (
             <CaseCard key={study.slug} study={study} index={i} />
           ))}

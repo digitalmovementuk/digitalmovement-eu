@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import { Head } from "vite-react-ssg";
+import manropeUrl from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import { useReveal } from "../lib/reveal";
 import { Nav } from "./Nav";
 import { Footer } from "./Footer";
 import { CookieBanner } from "./CookieBanner";
@@ -10,6 +13,7 @@ import { CookieBanner } from "./CookieBanner";
    Viertel des Bildschirms ab. */
 export function Layout() {
   const { pathname, hash } = useLocation();
+  useReveal(pathname);
 
   useEffect(() => {
     if (hash) {
@@ -25,6 +29,9 @@ export function Layout() {
 
   return (
     <>
+      <Head>
+        <link rel="preload" as="font" type="font/woff2" href={manropeUrl} crossOrigin="anonymous" />
+      </Head>
       <Nav />
       <main id="main">
         <Outlet />

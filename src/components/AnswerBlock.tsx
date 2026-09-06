@@ -9,7 +9,7 @@ export function AnswerBlock() {
   return (
     <section id="answer" data-surface="light" className="surface-light-2 section-tight">
       <div className="container-v3">
-        <div className="mx-auto max-w-[820px]">
+        <div className="mx-auto max-w-[820px]" data-reveal>
           <div className="flex items-center gap-4">
             <picture className="flex-none">
               <source type="image/webp" srcSet={`${BASE}${byline.photoWebp}`} />

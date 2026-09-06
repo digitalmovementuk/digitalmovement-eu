@@ -8,13 +8,13 @@ export function Comparison() {
   return (
     <section id="comparison" data-surface="light" className="surface-light section">
       <div className="container-v3">
-        <div className="section-head">
+        <div className="section-head" data-reveal>
           <p className="eyebrow">{comparison.eyebrow}</p>
           <h2 className="h2">{comparison.headlineMain}</h2>
           <p className="lead">{comparison.intro}</p>
         </div>
 
-        <div className="mt-10 overflow-x-auto">
+        <div className="mt-10 overflow-x-auto" data-reveal>
           <table className="cmp w-full border-collapse text-left">
             <thead>
               <tr>
