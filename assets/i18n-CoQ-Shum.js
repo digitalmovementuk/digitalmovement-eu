@@ -1,0 +1,1 @@
+import{g as e,h as s,i as o,k as n,l as r}from"./app-4SfuvjxD.js";const a={snapshot:r,comparison:n,founder:o,process:{eyebrow:s.eyebrow,headlineMain:s.headlineMain,headlineSub:"",intro:s.intro,steps:e}};function i(){return a}export{i as u};
