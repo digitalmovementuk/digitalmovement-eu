@@ -36,8 +36,10 @@ import { join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
-const DIST = join(ROOT, "dist");
-const REMOTE = "https://github.com/digitalmovementuk/digitalmovement-eu.git";
+/* Entwurf (new.digitalmovement.eu): scripts/publish-draft.mjs setzt diese
+   drei Werte um — anderer Ordner, anderes Repo, andere Prüfadresse. */
+const DIST = process.env.DM_PUBLISH_DIST || join(ROOT, "dist");
+const REMOTE = process.env.DM_PUBLISH_REMOTE || "https://github.com/digitalmovementuk/digitalmovement-eu.git";
 const BRANCH = "gh-pages";
 /* Adresse der Live-Prüfung. Über DM_PUBLISH_LIVE umstellbar — nur damit die
    Prüfung selbst gegen eine absichtlich kaputte Kopie getestet werden kann.

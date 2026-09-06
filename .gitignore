@@ -22,3 +22,4 @@ tsconfig.tsbuildinfo
 
 # Workflow folder is local only — deploy is done from a gh-pages branch
 .github/
+dist-draft/
