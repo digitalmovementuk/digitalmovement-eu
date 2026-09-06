@@ -1,0 +1,825 @@
+/* ==========================================================================
+   Startbereich — 1:1-Übernahme des Hero von digitalmovement.uk
+   Version 1.2 · Stand 24.08.2026
+
+   Änderungen 1.2 (24.08.2026): drei Eingriffe, alle an der Geometrie,
+   keiner an der Gestaltung.
+   • `--fs-h1` ist am oberen Ende von 4.15rem auf 3.2rem gedeckelt und die
+     Steigung von 4.9vw auf 3.7vw genommen. Grund: die vorgegebene
+     Überschrift ist mit 52 Zeichen deutlich länger als die der Vorlage
+     und brauchte vier Zeilen mit einem einzelnen Wort am Schluss. RMU
+     verlangt drei Zeilen.
+   • Die Textsäule wächst von 1.08fr auf 1.14fr (Formularsäule 0.92 → 0.86,
+     Mindestbreite 400 → 390px), damit die längste der drei Zeilen
+     hineinpasst, ohne den Schriftgrad noch weiter zu drücken.
+   • `.lede-line` ist wieder da, für die drei Vorspann-Zeilen.
+   Die beiden ersten Punkte hängen aneinander: wer die Säule zurückdreht,
+   muss den Schriftgrad weiter senken, und umgekehrt. Nachgemessen wird am
+   gerenderten Bild, nicht an dieser Rechnung.
+
+   Änderungen 1.1 (24.08.2026): Auf Weisung RMU ist die Fläche des
+   Anfrageformulars jetzt Flüssigglas — durchscheinend, mit Fase und
+   Schlagschatten — und die Eingabefelder sind weiß gefüllt. Damit weicht
+   das Formular bewusst von der englischen Vorlage ab; alles andere im
+   Startbereich bleibt deckungsgleich. Der Pfeil im Auswahlfeld wurde von
+   Hellblau auf Tintenblau gedreht, weil er sonst auf dem weißen Feld
+   nicht mehr zu sehen wäre. Dazu neu: `.lede-line` für die drei
+   Vorspann-Zeilen.
+
+   Änderungen 1.0 (24.08.2026): neu angelegt. Auf Weisung RMU wurde der
+   Startbereich der englischen Seite vollständig übernommen — Aufbau,
+   Abstände, Farben, Schriften, Verhalten. Übersetzt ist nur der Text.
+
+   Woher die Regeln kommen
+   -----------------------
+   Wortgetreu aus dem „Instrument"-Designsystem von digitalmovement.uk
+   (wp-content/themes/dmuk/assets/dm.css, abgerufen 24.08.2026). Wer hier
+   etwas „aufräumt", das dort anders steht, bricht genau die Gleichheit,
+   die bestellt wurde. Abweichungen sind unten einzeln begründet.
+
+   Warum alles unter .uk-hero hängt
+   --------------------------------
+   Die deutsche Seite läuft auf Tailwind und einem hellen Farbsatz
+   (--ink, --accent, surface-light). Das englische System bringt eigene
+   Marken für dieselben Begriffe mit (--ink-950, --orange, --paper). Beide
+   im :root nebeneinander hieße: zwei Systeme, ein Namensraum, und der
+   erste Konflikt fällt erst im Browser auf. Deshalb stehen die Marken auf
+   .uk-hero statt auf :root, und jede Regel ist ein Nachfahre davon. Der
+   Rest der Seite sieht nichts davon.
+
+   Die drei bewussten Abweichungen
+   -------------------------------
+   1. --header-h ist 88px/104px statt 72px. Die deutsche Kopfzeile ist
+      höher als die englische (Nav.tsx: h-[88px] md:h-[104px] im Ruhe-
+      zustand). 72px zu übernehmen hieße, den Text unter die Navigation zu
+      schieben. Übernommen ist der ABSTAND unter der Kopfzeile, nicht die
+      Zahl.
+   2. Die Schriftdateien liegen unter src/styles/fonts/ und nicht in
+      public/. Vite hängt ihnen dann einen Hash an und setzt den Basispfad
+      selbst ein — der interne Build läuft unter einem anderen Basispfad
+      als die Live-Seite, und ein fest verdrahtetes /brand/... wäre dort
+      ein 404 ohne Fehlermeldung, nur mit falscher Schrift.
+   3. Tailwind setzt in seinem Preflight p{margin:0} und h1{font-size:
+      inherit}. Das englische Blatt verlässt sich auf Browser-Vorgaben.
+      Die betroffenen Regeln stehen deshalb hier ausgeschrieben.
+   ========================================================================== */
+
+/* ---------- Schriften, selbst gehostet ----------
+   Wie auf der englischen Seite: nicht von fonts.googleapis.com. Sonst
+   ginge die IP jeder Besucherin an Google, bevor irgendjemand zugestimmt
+   hat — auf einer deutschen Seite ist das der Unterschied zwischen „keine
+   Einwilligung nötig" und „ohne Einwilligung rechtswidrig". Alle drei
+   Familien sind OFL-lizenziert. Variable Schriften, eine Datei je Familie. */
+@font-face {
+  font-family: "Inter Tight";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("./fonts/inter-tight.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 700 800;
+  font-display: swap;
+  src: url("./fonts/plus-jakarta-sans.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("./fonts/jetbrains-mono.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- Marken des englischen Systems, auf den Startbereich begrenzt ---------- */
+.uk-hero {
+  --ink-950: #050b15;
+  --ink-900: #0b1f3a;
+  --ink-800: #102a4c;
+  --ink-700: #17395f;
+
+  --paper: #fff7ef;
+  --paper-2: #ffffff;
+  --paper-edge: #ebdfd1;
+
+  --orange: #fb7900;
+  --orange-600: #de6a00;
+  --pink: #f13c64;
+  --amber: #f5c542;
+
+  --on-dark: #eaf1fa;
+  --on-dark-mute: #94aac7;
+
+  --grad: linear-gradient(90deg, #f5c542 0%, #fb7900 46%, #f13c64 100%);
+
+  --display: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --body: "Inter Tight", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Der Deckel bei 3.2rem (51.2px) ist die Bedingung dafür, dass
+     „WIR GARANTIEREN / ECHTE ERGEBNISSE FÜR / WENIGER KOSTEN.“ am
+     Schreibtisch in drei Zeilen steht: die längste Zeile hat 20 Zeichen,
+     die Schrift misst rund 0.584em je Zeichen, macht 598px in einer
+     629px breiten Säule. Die Vorlage steht bei 4.15rem — dort ist die
+     Überschrift aber auch kürzer.
+
+     Der untere Wert ist von 2.35rem auf 1.72rem herunter, ebenfalls
+     gemessen: bei 2.35rem stand auf 375px „WIR GARANTIEREN / ECHTE /
+     ERGEBNISSE FÜR / WENIGER KOSTEN.“ — vier Zeilen, davon eine mit einem
+     einzigen Wort (115px in einer 335px-Spalte). Ursache ist das
+     nowrap auf „Wir garantieren“, das die erste Zeile mit 328px fast
+     randvoll macht. Bei 1.72rem (27.5px) misst die längste der drei
+     Zeilen 321px und passt. */
+  --fs-h1: clamp(1.72rem, 3.7vw, 3.2rem);
+  --fs-lede: clamp(1.04rem, 1.45vw, 1.24rem);
+  --fs-body: 1.0625rem;
+  --fs-mono: 0.74rem;
+
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+
+  --r-sm: 8px;
+  --r: 14px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  --sh-dark: 0 24px 70px rgba(0, 0, 0, 0.5);
+
+  /* Keine eigene Innenbreite mehr: der Startbereich sitzt seit dem
+     24.08.2026 in demselben Container wie jeder andere Abschnitt der
+     Seite (--container-max / --gutter aus src/index.css). Vorher waren
+     es 1240 px ohne Innenabstand gegen 1280 px mit 56 px Innenabstand —
+     die Textkanten des Startbereichs lagen 72 px weiter außen als die
+     aller folgenden Abschnitte. */
+  /* Siehe Abweichung 1 oben. */
+  --header-h: 88px;
+
+  /* Fehlerfarben des englischen Formulars. --pink misst auf der Formular-
+     fläche nur 3.79:1 und fiele durch AA; diese beiden messen 6.06:1. */
+  --err: #ff8da6;
+  --ok: #ffb061;
+}
+@media (min-width: 768px) {
+  .uk-hero {
+    --header-h: 104px;
+  }
+}
+
+/* ---------- Grundlagen, die Tailwinds Preflight sonst wegnimmt ---------- */
+.uk-hero,
+.uk-hero button,
+.uk-hero input,
+.uk-hero select {
+  font-family: var(--body);
+  font-size: var(--fs-body);
+}
+.uk-hero {
+  line-height: 1.7;
+  color: var(--on-dark);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.uk-hero p {
+  margin: 0 0 1em;
+}
+.uk-hero img,
+.uk-hero svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.uk-hero a {
+  color: inherit;
+}
+.uk-hero h1,
+.uk-hero h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+}
+.uk-hero h1 {
+  font-size: var(--fs-h1);
+  letter-spacing: -0.035em;
+  line-height: 0.93;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+.uk-hero :focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 2px var(--ink-950),
+    0 0 0 9px var(--paper);
+}
+.uk-hero .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- Innenbreite ----------
+   Wortgleich mit .container-v3 aus src/index.css. Eine Seite mit zwei
+   Innenbreiten liest sich als zwei Seiten: die Textkante springt beim
+   Scrollen. Wer hier etwas ändert, ändert es dort mit. */
+.uk-hero .wrap {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Instrumenten-Etikett (die Signatur des Systems) ---------- */
+.uk-hero .ilabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: var(--s2);
+}
+.uk-hero .ilabel::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  background: var(--grad);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.uk-hero .lede {
+  font-size: var(--fs-lede);
+  line-height: 1.55;
+  color: var(--on-dark-mute);
+  margin: 0;
+}
+/* Jede der drei Vorspann-Zeilen ist ein eigener Block. `display:block` auf
+   einem <span> statt <br>: bricht eine Zeile auf einem schmalen Gerät um,
+   bleibt sie in ihrem eigenen Satz und rutscht nicht in den nächsten. */
+.uk-hero .lede-line {
+  display: block;
+}
+
+/* ---------- Knöpfe ---------- */
+.uk-hero .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.35;
+  padding: 12px 24px;
+  border-radius: var(--r-pill);
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+.uk-hero .btn svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.uk-hero .btn-primary {
+  background: var(--orange);
+  color: #2a1300;
+  box-shadow: 0 8px 24px rgba(251, 121, 0, 0.28);
+}
+.uk-hero .btn-primary:hover {
+  background: var(--orange-600);
+  color: #2a1300;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(251, 121, 0, 0.36);
+}
+.uk-hero .btn-primary[disabled] {
+  opacity: 0.72;
+  cursor: progress;
+  transform: none;
+}
+.uk-hero .btn-block {
+  width: 100%;
+}
+
+/* ---------- HERO — zwei Drittel des Bildschirms, zwei Säulen (Text | Formular) ----------
+   Die Untergrenze ist 62svh, nicht 100svh. Ein bildschirmfüllender
+   Startbereich zeigt der Besucherin eine vollständige Fläche und gibt ihr
+   keinen Grund zu glauben, dass darunter noch etwas kommt; bei zwei
+   Dritteln ist die Oberkante des nächsten Abschnitts sichtbar und die
+   Seite liest sich als fortlaufend. min-height ist ein Boden: ein
+   Startbereich, den sein Formular höher macht, wächst einfach — der
+   Inhalt gewinnt, nicht der Bildschirm. */
+.uk-hero {
+  position: relative;
+  min-height: 62svh;
+  display: flex;
+  align-items: center;
+  padding: calc(var(--header-h) + 14px) 0 28px;
+  background: var(--ink-950);
+  overflow: hidden;
+  isolation: isolate;
+}
+.uk-hero .hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+.uk-hero .hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  filter: saturate(0.8);
+}
+.uk-hero .hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(1100px 620px at 12% 18%, rgba(251, 121, 0, 0.16), transparent 62%),
+    radial-gradient(900px 560px at 88% 82%, rgba(241, 60, 100, 0.14), transparent 62%),
+    linear-gradient(180deg, rgba(5, 11, 21, 0.82) 0%, rgba(5, 11, 21, 0.9) 55%, var(--ink-950) 100%);
+}
+.uk-hero .hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s7);
+  align-items: center;
+}
+@media (min-width: 1040px) {
+  .uk-hero .hero-grid {
+    grid-template-columns: minmax(0, 1.14fr) minmax(390px, 0.86fr);
+    gap: var(--s8);
+  }
+}
+.uk-hero h1 {
+  margin-bottom: var(--s3);
+}
+.uk-hero .lede {
+  max-width: 54ch;
+  margin-bottom: 18px;
+}
+/* „Wir garantieren" bleibt als Einheit auf der ersten Zeile stehen.
+   Ohne das rutscht „echte" mit hoch, die erste Zeile wird zu lang und die
+   Überschrift braucht vier Zeilen statt der verlangten drei. */
+.uk-hero h1 .nb {
+  white-space: nowrap;
+}
+
+.uk-hero .underline-accent {
+  position: relative;
+  white-space: nowrap;
+}
+.uk-hero .underline-accent::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.08em;
+  height: 0.16em;
+  background: var(--grad);
+  border-radius: 3px;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+/* Zeile „Gefunden werden bei" */
+.uk-hero .findrow {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+.uk-hero .findrow .lab {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-dark-mute);
+}
+.uk-hero .applogos {
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  flex-wrap: wrap;
+}
+.uk-hero .app {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--on-dark);
+}
+.uk-hero .app img {
+  width: 19px;
+  height: 19px;
+}
+/* Die Marke von OpenAI kommt ohne Füllfarbe (rendert schwarz) — auf
+   dunklem Grund umkehren. */
+.uk-hero img[src*="openai"] {
+  filter: invert(1);
+}
+
+/* Beleg-Zeile unter dem Text */
+.uk-hero .hero-proof {
+  display: flex;
+  align-items: center;
+  gap: var(--s6);
+  flex-wrap: wrap;
+  padding-top: var(--s3);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.uk-hero .gwidget {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 7px 14px;
+  border-radius: var(--r-pill);
+  transition: background 0.2s;
+}
+.uk-hero .gwidget:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.uk-hero .gstars {
+  color: var(--amber);
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+.uk-hero .gtxt {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--on-dark-mute);
+}
+.uk-hero .gtxt b {
+  color: var(--on-dark);
+}
+.uk-hero .hstat b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.uk-hero .hstat span {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-dark-mute);
+}
+
+/* Nur am Schreibtisch. Sobald das Formular seine Spalte nimmt, ist die
+   Textsäule rund 635px breit; die Flex-Zeile brachte dann die Bewertungs-
+   Pille (408px) und die erste Kennzahl unter und schob die zweite allein
+   in eine eigene Zeile. Also Raster: die Pille bekommt die obere Zeile,
+   die beiden Kennzahlen teilen sich immer die darunter. 1040px ist der
+   Punkt, an dem .hero-grid zweispaltig wird; darunter ist die Säule voll
+   breit und die Flex-Zeile passt ohnehin. */
+@media (min-width: 1040px) {
+  .uk-hero .hero-proof {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    justify-content: start;
+    align-items: center;
+    column-gap: var(--s6);
+    row-gap: var(--s3);
+  }
+  .uk-hero .hero-proof > .gwidget {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}
+
+/* ---------- Anfrageformular ---------- */
+/* Flüssigglas statt flacher Fläche (RMU, 24.08.2026). Die Tiefe entsteht
+   aus vier Lagen, nicht aus einer Farbe:
+     1. `backdrop-filter` mit Sättigung — das Hero-Bild scheint durch und
+        wird dabei kräftiger, nicht nur unscharf. Das unterscheidet Glas
+        von Milchglas.
+     2. ein Verlauf von oben hell nach unten dunkel — das ist das Licht,
+        das auf der Scheibe liegt.
+     3. zwei `inset`-Schatten: eine helle Kante oben, eine dunkle unten.
+        Das ist die Fase, und sie macht den größten Teil der 3D-Wirkung.
+     4. ein weit gestreuter Schlagschatten darunter, damit die Scheibe
+        über dem Bild schwebt statt darauf zu kleben.
+   `isolation: isolate` hält das Glanzlicht in ::before unter dem Inhalt,
+   ohne dass ein negativer z-index es hinter die ganze Karte schiebt. */
+.uk-hero .lead-form {
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--r-lg);
+  padding: clamp(14px, 1.6vw, 19px);
+  background:
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.16) 0%,
+      rgba(255, 255, 255, 0.07) 42%,
+      rgba(255, 255, 255, 0.035) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(26px) saturate(165%);
+  -webkit-backdrop-filter: blur(26px) saturate(165%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(6, 14, 28, 0.35),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset -1px 0 0 rgba(255, 255, 255, 0.1),
+    0 30px 70px -28px rgba(3, 8, 18, 0.78),
+    0 2px 10px -4px rgba(3, 8, 18, 0.45);
+}
+/* Das Glanzlicht: ein schräger Streifen über der oberen Hälfte, wie er
+   entsteht, wenn Licht flach auf eine Scheibe fällt. Bewusst schwach —
+   ab etwa 0.2 Deckkraft sieht es nach Kunststoff aus, nicht nach Glas. */
+.uk-hero .lead-form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      120% 70% at 8% -8%,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.06) 38%,
+      rgba(255, 255, 255, 0) 62%
+    );
+  pointer-events: none;
+}
+/* Wer Bewegung reduziert haben will, bekommt trotzdem Glas — die Fläche
+   ist statisch. Für alte Browser ohne backdrop-filter greift der Rückfall
+   unten: dort wird aus dem Glas eine dunkle, aber deckende Fläche, sonst
+   stünde heller Text auf dem hellen Teil des Hero-Bildes. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .uk-hero .lead-form {
+    background: rgba(9, 18, 34, 0.82);
+  }
+}
+.uk-hero .lead-form h2,
+.uk-hero .lead-form .form-title {
+  font-size: 1.24rem;
+  margin-bottom: 4px;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+.uk-hero .lead-form .form-intro {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--on-dark-mute);
+  margin-bottom: var(--s3);
+}
+.uk-hero .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 520px) {
+  .uk-hero .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.uk-hero .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.uk-hero .form-wide {
+  grid-column: 1 / -1;
+}
+.uk-hero .form-field label {
+  font-family: var(--mono);
+  line-height: 1.3;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-dark-mute);
+}
+/* Weiße Füllfelder auf der Glasfläche (RMU, 24.08.2026). Sie sind das
+   einzige Deckende auf der ganzen Scheibe — dadurch liest sich sofort,
+   wo etwas einzutragen ist. `color-scheme: light` muss hier stehen, weil
+   index.css am :root `dark` setzt: sonst färbt der Browser Autofill,
+   Zahlenpfeile und Auswahlmarkierung dunkel auf Weiß.
+   Der zarte innere Schatten oben ist derselbe Trick wie bei der Karte:
+   er legt das Feld eine Spur tiefer als das Glas. */
+.uk-hero .form-field input,
+.uk-hero .form-field select {
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: var(--r-sm);
+  line-height: 1.4;
+  padding: 8px 13px;
+  font-size: 0.95rem;
+  color: #0b1f3a;
+  color-scheme: light;
+  box-shadow:
+    inset 0 1px 2px rgba(11, 31, 58, 0.14),
+    0 1px 0 rgba(255, 255, 255, 0.24);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+  width: 100%;
+}
+.uk-hero .form-field input::placeholder {
+  color: #6b7f99;
+}
+.uk-hero .form-field input:focus,
+.uk-hero .form-field select:focus {
+  border-color: var(--orange);
+  box-shadow:
+    inset 0 1px 2px rgba(11, 31, 58, 0.1),
+    0 0 0 3px rgba(251, 121, 0, 0.28);
+}
+.uk-hero .form-field input:focus:not(:focus-visible),
+.uk-hero .form-field select:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+.uk-hero .form-field select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B1F3A' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 38px;
+}
+/* Das aufgeklappte Menü erbt nicht die Formularfläche, sondern die des
+   Betriebssystems — ohne diese Zeile steht auf der dunklen Seite weißer
+   Text auf Weiß. Steht so nicht im englischen Blatt: dort greift dieselbe
+   Regel über die globale Farbvorgabe des Dokuments, die es hier nicht gibt. */
+.uk-hero .form-field select option {
+  color: #0b1f3a;
+  background: #ffffff;
+}
+.uk-hero .consent {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin: 10px 0 14px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--on-dark-mute);
+}
+.uk-hero .consent input {
+  margin-top: 3px;
+  width: 17px;
+  height: 17px;
+  accent-color: var(--orange);
+  /* index.css setzt am :root `color-scheme: dark`. Ein Kontrollkästchen
+     erbt das und wird dann dunkelgrau auf dunkelgrauem Grund — auf der
+     englischen Seite ist es weiß und deutlich als leeres Kästchen
+     erkennbar. Genau dieses Kästchen ist die Stelle, an der ein Absenden
+     ohne Häkchen scheitert; es muss sichtbar sein, dass es leer ist. */
+  color-scheme: light;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.uk-hero .consent a {
+  color: var(--orange);
+  /* Tailwinds Preflight vererbt text-decoration an <a>; ohne diese Zeile
+     ist der Link zur Datenschutzerklärung nur farbig, nicht
+     unterstrichen — auf der englischen Seite ist er beides. */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.uk-hero .form-note {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--on-dark-mute);
+  margin: var(--s2) 0 0;
+  text-align: center;
+}
+
+/* ---------- Formularzustände — Fehler, Rückmeldung ---------- */
+.uk-hero .form-error {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--err);
+}
+.uk-hero .form-status {
+  margin: var(--s4) 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--on-dark);
+}
+/* Nicht display:none — ein Live-Bereich muss gerendert bleiben, sonst
+   wird er nicht vorgelesen. */
+.uk-hero .form-status:empty {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.uk-hero .form-status a {
+  color: var(--ok);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Telefon: mittig, so will es die Hausregel ---------- */
+@media (max-width: 760px) {
+  /* Zwei Drittel auch auf dem Telefon. Hier stapeln sich die Säulen, also
+     sitzt der Boden auf der Textsäule statt auf dem Abschnitt: sie hält
+     Überschrift, Fließtext und Belege auf etwa 60svh, womit die Oberkante
+     des Formulars knapp unter der Falz liegt. Der erste Wisch landet auf
+     dem Formular — genau dort, wo er landen soll. */
+  .uk-hero {
+    text-align: center;
+    min-height: 62svh;
+    padding-top: calc(var(--header-h) + 20px);
+  }
+  /* Kein Boden mehr auf der Textsäule: 60svh war als Mindesthöhe gedacht,
+     der Inhalt war aber immer höher (gemessen 667px auf 375×812). Die
+     Zeile hat also nie etwas gehalten und stand nur im Weg. Was den
+     Ausschnitt jetzt herstellt, ist der kleinere Abstand zwischen den
+     Säulen darunter — dadurch beginnt das Formular noch über der Falz. */
+  .uk-hero .hero-grid {
+    gap: var(--s5);
+  }
+  .uk-hero .lede {
+    margin-inline: auto;
+    /* Die drei Sätze brechen auf 375px in fünf Zeilen um. Bei 1.55
+       Zeilenabstand sind das 129px allein für den Vorspann; 1.45 nimmt
+       neun davon weg, ohne dass der Block gedrängt wirkt. */
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+  .uk-hero .ilabel,
+  .uk-hero .findrow,
+  .uk-hero .hero-proof,
+  .uk-hero .applogos {
+    justify-content: center;
+  }
+  .uk-hero .findrow {
+    flex-direction: column;
+    gap: var(--s2);
+  }
+  .uk-hero .applogos {
+    gap: 10px;
+    row-gap: var(--s2);
+  }
+  .uk-hero .hero-proof {
+    justify-content: center;
+    gap: var(--s3);
+    padding-top: 10px;
+  }
+  .uk-hero .gwidget {
+    padding: 6px 12px;
+  }
+  .uk-hero .gtxt {
+    font-size: 0.76rem;
+  }
+  .uk-hero .hstat {
+    text-align: center;
+  }
+  .uk-hero .ilabel {
+    justify-content: center;
+  }
+  .uk-hero .lead-form {
+    text-align: left;
+  }
+  .uk-hero .lead-form h2,
+  .uk-hero .lead-form .form-title,
+  .uk-hero .lead-form .form-intro {
+    text-align: center;
+  }
+}

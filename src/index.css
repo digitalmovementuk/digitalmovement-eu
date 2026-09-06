@@ -2,28 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Digital Movement DE — Design-System v2 (Audit 04.09.2026)
-   Eine Schrift (Manrope), ein Weiß, ein Grau, ein Dunkel, ein Akzent.
-   Keine Verläufe, keine Glas-Effekte, keine Bewegung. */
+/* v3_apple — original design system for Digital Movement UK.
+   Two surfaces alternate down the page:
+     light: #fbfbfd
+     dark:  #1B0E2E (DM plum) */
 
 @layer base {
   :root {
-    --bg: #ffffff;
-    --bg-2: #f5f5f7;
-    --ink: #1b0e2e;
-    --ink-soft: #4b4059;
-    --ink-muted: #6f6579;
-    --line: rgba(27, 14, 46, 0.12);
-    --line-strong: rgba(27, 14, 46, 0.22);
-    --accent: #ec178d;
-    --accent-hover: #d0117b;
-    --star: #f5a623;
+    --surface-light: #fbfbfd;
+    --surface-light-2: #f5f5f7;
+    --surface-dark: #1b0e2e;
+    --surface-deep: #100620;
 
-    --container-max: 1200px;
-    --gutter: clamp(20px, 4vw, 48px);
-    --nav-h: 72px;
-    --radius: 16px;
-    --radius-sm: 12px;
+    --ink: #1b0e2e;
+    --ink-soft: #3f3450;
+    --ink-muted: #6e6478;
+    --ink-faint: #a39cb2;
+
+    --accent: #ec178d;
+    --grad-brand: linear-gradient(
+      135deg,
+      #ffb23d 14%,
+      #f05f22 33%,
+      #ec178d 59%,
+      #d332ff 78%,
+      #9a2fc6 100%
+    );
+    --grad-cta: linear-gradient(90deg, #f13c64 0%, #e6359b 50%, #dc2ec9 100%);
+
+    --container-max: 1280px;
+    --gutter: clamp(20px, 4vw, 56px);
   }
 
   html {
@@ -31,18 +39,20 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: auto;
-    background: var(--bg);
-    color-scheme: light;
+    /* Match the dark hero so the very first paint doesn't flash white before
+       React mounts. Sections explicitly opt into surface-light below. */
+    background: var(--surface-dark);
+    color-scheme: dark;
   }
 
   body {
     margin: 0;
-    font-family: "Manrope Variable", "Manrope", system-ui, -apple-system, sans-serif;
-    font-size: 18px;
-    line-height: 1.6;
-    background: var(--bg);
+    font-family: "SF Pro Display", "SF Pro Text", "Manrope", -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    background: var(--surface-dark);
     color: var(--ink);
     overflow-x: hidden;
+    letter-spacing: -0.003em;
   }
 
   /* ---------- Silbentrennung, deutsche Seite ----------
@@ -76,17 +86,12 @@
     hyphens: manual;
   }
 
-  h1, h2, h3, h4 { text-wrap: balance; }
-
   ::selection {
-    background: rgba(236, 23, 141, 0.2);
+    background: rgba(236, 23, 141, 0.20);
     color: var(--ink);
   }
 
   input, textarea, select, button { font: inherit; }
-
-  /* Sprungziele landen unter der festen Leiste, nicht dahinter. */
-  [id] { scroll-margin-top: calc(var(--nav-h) + 12px); }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -98,10 +103,10 @@
 }
 
 @layer components {
-  /* Flächen */
-  .surface-light   { background: var(--bg);   color: var(--ink); }
-  .surface-light-2 { background: var(--bg-2); color: var(--ink); }
-  .surface-dark    { background: var(--ink);  color: #fff; }
+  .surface-light  { background: var(--surface-light);   color: var(--ink); }
+  .surface-light-2 { background: var(--surface-light-2); color: var(--ink); }
+  .surface-dark  { background: var(--surface-dark);    color: #fff; }
+  .surface-deep  { background: var(--surface-deep);    color: rgba(255,255,255,0.85); }
 
   .container-v3 {
     width: 100%;
@@ -109,173 +114,125 @@
     margin-inline: auto;
     padding-inline: var(--gutter);
   }
+  .container-narrow {
+    width: 100%;
+    max-width: 980px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
 
-  .section       { padding-block: clamp(56px, 5.5vw, 72px); }
-  .section-tight { padding-block: clamp(40px, 5vw, 64px); }
+  .section-y       { padding-block: clamp(72px, 11vw, 160px); }
+  .section-y-tight { padding-block: clamp(56px, 8vw, 112px); }
 
-  /* Typografie */
-  .h1 {
-    font-size: clamp(40px, 4.6vw, 60px);
-    line-height: 1.1;
-    font-weight: 800;
-    letter-spacing: -0.025em;
-  }
-  .h2 {
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.15;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .h3 {
-    font-size: clamp(20px, 1.7vw, 23px);
-    line-height: 1.3;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-  .lead {
-    font-size: clamp(18px, 1.5vw, 21px);
-    line-height: 1.55;
-    color: var(--ink-soft);
-  }
-  .copy  { font-size: 18px; line-height: 1.6; color: var(--ink-soft); }
-  .small { font-size: 15px; line-height: 1.5; color: var(--ink-muted); }
   .eyebrow {
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--accent);
-  }
-  .num {
-    font-size: clamp(36px, 3.6vw, 52px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
     line-height: 1;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
   }
+  .balance { text-wrap: balance; }
+  .pretty  { text-wrap: pretty; }
 
-  /* Abschnittskopf: links auf dem Desktop, mittig auf dem Telefon */
-  .section-head { max-width: 760px; }
-  .section-head > * + * { margin-top: 16px; }
-
-  /* Karten */
-  .card {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: clamp(22px, 2.4vw, 32px);
-  }
-
-  /* Knöpfe — ein Stil, eine Farbe */
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    min-height: 52px;
-    padding: 0 26px;
+    gap: 8px;
+    padding: 14px 26px;
     border-radius: 999px;
-    font-size: 17px;
-    font-weight: 700;
-    line-height: 1;
-    text-decoration: none;
-    border: 1px solid transparent;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: transform .25s cubic-bezier(.22,1,.36,1), background-color .25s, color .25s, box-shadow .25s, border-color .25s;
+    will-change: transform;
     cursor: pointer;
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: var(--accent-hover); }
-  .btn-primary:disabled { opacity: 0.6; cursor: default; }
-  .btn-secondary { background: transparent; color: var(--ink); border-color: var(--line-strong); }
-  .btn-secondary:hover { border-color: var(--ink); }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-primary { background: var(--ink); color: #fff; }
+  .btn-primary:hover { background: #2a1a44; transform: translateY(-1px); }
+
   .btn-on-dark { background: #fff; color: var(--ink); }
-  .btn-on-dark:hover { background: #f0edf5; }
-  .btn-block { width: 100%; }
+  .btn-on-dark:hover { background: rgba(255,255,255,0.92); transform: translateY(-1px); }
+
+  .btn-ghost-on-dark {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.40);
+  }
+  .btn-ghost-on-dark:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.65);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid rgba(27,14,46,0.30);
+  }
+  .btn-ghost:hover {
+    background: rgba(27,14,46,0.04);
+    border-color: rgba(27,14,46,0.55);
+  }
 
   .link-arrow {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    color: var(--ink);
-    text-decoration: underline;
-    text-decoration-color: var(--line-strong);
-    text-underline-offset: 5px;
-  }
-  .link-arrow:hover { color: var(--accent); text-decoration-color: var(--accent); }
-
-  /* Formular — ein Stil für Hero und Kontakt */
-  .field { display: flex; flex-direction: column; gap: 6px; }
-  .field > label {
-    font-size: 15px;
+    gap: 6px;
     font-weight: 600;
-    line-height: 1.4;
-    color: var(--ink);
+    color: var(--accent);
+    transition: gap .25s cubic-bezier(.22,1,.36,1);
   }
-  .input {
-    width: 100%;
-    min-height: 52px;
-    padding: 0 16px;
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-sm);
-    background: #fff;
-    color: var(--ink);
-    font-size: 17px;
-    line-height: 1.3;
-    outline: none;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-  .input::placeholder { color: var(--ink-muted); opacity: 1; }
-  .input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(236, 23, 141, 0.18); }
-  .input[aria-invalid="true"] { border-color: #b3261e; }
-  select.input {
-    appearance: none;
-    padding-right: 44px;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231b0e2e' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-  }
-  .form-error { font-size: 15px; line-height: 1.4; color: #b3261e; }
-
-  .check {
-    width: 20px;
-    height: 20px;
-    flex: none;
-    margin-top: 3px;
-    accent-color: var(--accent);
-    color-scheme: light;
+  .link-arrow:hover { gap: 10px; }
+  .link-arrow-on-dark {
+    color: #fff;
   }
 
-  /* Google-Sterne */
-  .stars { color: var(--star); letter-spacing: 0.04em; font-size: 16px; line-height: 1; }
-
-  .tabular { font-variant-numeric: tabular-nums; }
-
-  /* Vergleichstabelle */
-  .cmp th, .cmp td {
-    padding: 18px 16px;
-    border-bottom: 1px solid var(--line);
-    vertical-align: top;
-    font-size: 17px;
-    line-height: 1.45;
+  /* Sticky nav backdrops — translucent + blur. Two flavours that swap by
+     scroll position so the bar is always legible against whatever is
+     behind it. */
+  .nav-glass-light {
+    background: rgba(251,251,253,0.72);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    border-bottom: 1px solid rgba(27,14,46,0.06);
   }
-  .cmp thead th {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--ink-muted);
-    padding-top: 0;
+  .nav-glass-dark {
+    background: rgba(27,14,46,0.52);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  .cmp tbody th { font-weight: 700; width: 20%; }
-  .cmp td { color: var(--ink-soft); }
-  .cmp .cmp-neo { color: var(--ink); font-weight: 600; background: rgba(236, 23, 141, 0.04); }
-  .cmp-cell { display: flex; align-items: flex-start; gap: 10px; }
-  .cmp-icon { flex: none; margin-top: 3px; }
 
-  /* Erfolgsgeschichten: 2 + 3, damit die letzte Reihe voll ist */
-  .cases-grid > li { grid-column: span 6; }
-  @media (min-width: 768px) {
-    .cases-grid > li:nth-child(1), .cases-grid > li:nth-child(2) { grid-column: span 3; }
-    .cases-grid > li:nth-child(n + 3) { grid-column: span 2; }
+  /* Horizontal snap-scroll carousels. */
+  .snap-x {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .snap-x::-webkit-scrollbar { display: none; }
+  .snap-card {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .text-grad-brand {
+    background: var(--grad-brand);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Subtle film grain — used sparingly on large flat fills to add tooth. */
+  .grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 160px 160px;
+    mix-blend-mode: overlay;
+    opacity: 0.55;
   }
 }
 
@@ -293,26 +250,3 @@
   transition: transform 0.2s ease;
 }
 .skip-link:focus { transform: translateY(0); }
-
-/* ---------- Mobil (bizee-Stil) — bleibt der LETZTE Block ---------- */
-@media (max-width: 767px) {
-  .h1 { font-size: 40px; line-height: 1.15; }
-  .h2 { font-size: 28px; line-height: 1.2; }
-  .h3 { font-size: 20px; }
-  .num { font-size: 40px; }
-  .lead { font-size: 18px; }
-  .btn { width: 100%; min-height: 52px; }
-  .btn-inline { width: auto; }
-  .card { border-radius: 14px; padding: 22px; }
-  .section-head { text-align: center; margin-inline: auto; }
-  .section-head .btn { margin-inline: auto; }
-  .cmp thead { display: none; }
-  .cmp, .cmp tbody, .cmp tr, .cmp th, .cmp td { display: block; width: auto; }
-  .cmp tr { border: 1px solid var(--line); border-radius: 14px; margin-bottom: 14px; overflow: hidden; background: #fff; }
-  .cmp th, .cmp td { border: 0; padding: 12px 16px; font-size: 16px; }
-  .cmp tbody th { background: var(--bg-2); font-size: 17px; }
-  .cmp td + td { padding-top: 0; }
-  .cmp td::before { content: attr(data-label) ": "; font-size: 15px; font-weight: 700; color: var(--ink-muted); }
-  .cmp-cell { display: inline; }
-  .cmp-icon { display: inline-block; vertical-align: -3px; margin-right: 4px; }
-}

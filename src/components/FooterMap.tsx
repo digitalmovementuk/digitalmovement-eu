@@ -67,13 +67,17 @@ export function FooterMap() {
   }
 
   return (
-    <section aria-labelledby="footer-map-heading" className="mt-12">
-      <div className="grid overflow-hidden rounded-card border border-white/15 bg-white text-ink lg:grid-cols-[280px_minmax(0,1fr)]">
-        <div className="flex flex-col justify-center gap-3 p-6 text-center lg:text-left">
-          <p id="footer-map-heading" className="small font-semibold">
+    <section aria-labelledby="footer-map-heading" className="mt-14 sm:mt-16">
+      <div className="grid overflow-hidden rounded-card-lg border border-ink/10 bg-white shadow-card lg:grid-cols-[300px_minmax(0,1fr)]">
+        {/* Anschrift */}
+        <div className="flex flex-col justify-center gap-4 p-7 text-center sm:p-8 lg:text-left">
+          <p
+            id="footer-map-heading"
+            className="text-[10.5px] font-bold uppercase tracking-[0.20em] text-ink-muted"
+          >
             So finden Sie uns
           </p>
-          <p className="text-[18px] font-bold leading-snug">
+          <p className="text-[17px] font-bold leading-snug text-ink">
             {business.address.line1}
             <br />
             {business.address.line2}
@@ -82,13 +86,14 @@ export function FooterMap() {
             href={ROUTE_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="link-arrow justify-center text-[16px] lg:justify-start"
+            className="inline-flex items-center justify-center gap-2 text-[12px] font-bold uppercase tracking-[0.18em] text-ink transition-colors hover:text-ink-soft lg:justify-start"
           >
-            Route planen <ArrowUpRight size={16} aria-hidden />
+            Route planen <ArrowUpRight size={14} />
           </a>
         </div>
 
-        <div className="relative min-h-[220px] bg-surface-2 sm:min-h-[260px]">
+        {/* Karte */}
+        <div className="relative min-h-[260px] bg-surface-2 sm:min-h-[300px] lg:min-h-[340px]">
           {live ? (
             <iframe
               src={EMBED_SRC}
@@ -99,6 +104,9 @@ export function FooterMap() {
             />
           ) : (
             <>
+              {/* Auf dem Telefon reichen 800 Bildpunkte: 63 KB statt 218 KB.
+                  Die Kartenspalte ist am Schreibtisch rund 900 Punkte breit
+                  (Raster `300px + Rest`), darum diese Angabe in `sizes`. */}
               <picture className="contents">
                 <source
                   type="image/webp"
@@ -118,21 +126,34 @@ export function FooterMap() {
                 />
               </picture>
 
+              {/* Der Standort selbst — die Mitte des Bildes ist die Anschrift. */}
               <span
                 aria-hidden="true"
-                className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full bg-accent text-white ring-4 ring-white"
+                className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-full items-center justify-center rounded-full bg-dm-hot-magenta text-white shadow-[0_8px_20px_-6px_rgba(27,14,46,0.55)] ring-4 ring-white/85"
               >
                 <MapPin size={17} strokeWidth={2.4} />
               </span>
 
-              <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 bg-white/90 p-4 text-center sm:flex-row sm:justify-between sm:text-left">
-                <p className="small max-w-[46ch]">
-                  Erst dann wird eine Verbindung zu Google hergestellt und Ihre IP-Adresse übertragen.
-                  <span className="block text-[14px]">Kartenausschnitt © OpenStreetMap-Mitwirkende</span>
-                </p>
-                <button type="button" onClick={loadMap} className="btn btn-secondary btn-inline min-h-[44px] px-4 text-[15px]">
+              {/* Nur unten abdunkeln: Die Karte selbst soll hell und lesbar
+                  bleiben — sie ist das, was gezeigt werden soll. Der Verlauf
+                  trägt lediglich Knopf und Hinweis. */}
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-plum-2/90 via-plum-2/55 to-transparent" />
+
+              <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 px-5 pb-4 pt-8 text-center">
+                <button
+                  type="button"
+                  onClick={loadMap}
+                  className="rounded-pill bg-white px-6 py-3 text-[12px] font-bold uppercase tracking-[0.18em] text-ink shadow-card transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
                   Google Maps laden
                 </button>
+                <p className="max-w-[42ch] text-[11.5px] leading-relaxed text-white/85">
+                  Erst dann wird eine Verbindung zu Google hergestellt und Ihre IP-Adresse
+                  übertragen.
+                </p>
+                <p className="text-[9.5px] text-white/60">
+                  Kartenausschnitt © OpenStreetMap-Mitwirkende
+                </p>
               </div>
             </>
           )}

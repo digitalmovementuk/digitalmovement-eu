@@ -1,52 +1,42 @@
+import { Reveal } from "../lib/Reveal";
 import { trustBar } from "../content";
 
-const BASE = import.meta.env.BASE_URL;
-
-/* Kundenlogos, einfarbig in Tinte, alle auf eine Höhe gebracht. Freigabe
-   aller fünf Kunden am 04.09.2026 (Entscheidung E-6 im Design-Audit).
-   ADDRESSBALI führt kein Bildlogo — die Marke ist auf der eigenen Website
-   ein reines Schrift-Wortzeichen, deshalb steht sie hier auch so. */
-const LOGOS: Record<string, { file: string; w: number; h: number }> = {
-  "CEx": { file: "cex", w: 315, h: 128 },
-  "Azura Living Bali": { file: "azura-living-bali", w: 581, h: 128 },
-  "Cunos": { file: "cunos", w: 400, h: 128 },
-  "Fantastic Finish": { file: "fantastic-finish", w: 323, h: 128 },
-};
-
+/**
+ * Blueprint 5 — die Vertrauensleiste, direkt unter dem Startbereich.
+ *
+ * Der Hausstandard verlangt Kundenlogos mit einem Etikett, das sagt, was
+ * sie sind. Logodateien mit Freigabe haben wir nicht — deshalb stehen
+ * hier die Namen. Das ist keine Notlösung, sondern die ehrlichere Fassung:
+ * jeder dieser Namen taucht weiter unten mit Projekt, Zahlen und Website
+ * wieder auf und ist damit nachprüfbar. Ein Logo, das wir nicht verwenden
+ * dürfen, wäre ein Rechtsrisiko; ein Platzhalter-Logo wäre eine Lüge.
+ */
 export function TrustBar() {
   return (
-    <section aria-label={trustBar.label} data-surface="light" className="surface-light border-b border-line">
-      <div className="container-v3 py-8">
-        <p className="small text-center font-semibold uppercase tracking-[0.06em] md:text-left">{trustBar.label}</p>
-        <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-10 gap-y-5 md:justify-between">
-          {trustBar.clients.map((c) => {
-            const logo = LOGOS[c.name];
-            return (
-              <li key={c.name} className="flex h-8 items-center">
-                {logo ? (
-                  <picture>
-                    <source type="image/webp" srcSet={`${BASE}brand/clients/${logo.file}.webp`} />
-                    <img
-                      src={`${BASE}brand/clients/${logo.file}.png`}
-                      alt={c.name}
-                      width={logo.w}
-                      height={logo.h}
-                      className={logo.file === "fantastic-finish" ? "h-8 w-auto md:h-9" : "h-7 w-auto md:h-8"}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </picture>
-                ) : (
-                  <span className="text-[22px] font-extrabold tracking-[0.08em]">
+    <section
+      data-surface="light"
+      aria-label={trustBar.label}
+      className="surface-light-2 border-y border-ink/[0.07] py-8 sm:py-10"
+    >
+      <div className="container-v3">
+        <Reveal>
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:gap-10">
+            <p className="eyebrow shrink-0 text-ink-muted">{trustBar.label}</p>
+            <ul className="flex flex-wrap items-center gap-x-7 gap-y-3 sm:gap-x-9">
+              {trustBar.clients.map((c) => (
+                <li key={c.name} className="leading-tight">
+                  <span className="block text-[17px] sm:text-[19px] font-extrabold tracking-[-0.02em] text-ink">
                     {c.name}
-                    <span className="align-top text-[11px]">®</span>
                   </span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-        <p className="small mt-5 text-center md:text-left">{trustBar.note}</p>
+                  <span className="block text-[12px] text-ink-muted">{c.place}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <p className="mt-5 text-[13px] text-ink-muted">{trustBar.note}</p>
+        </Reveal>
       </div>
     </section>
   );
