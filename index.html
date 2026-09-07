@@ -25,11 +25,15 @@
          das Problem, gegen das das Vorrendern eingebaut wurde. Unten gehört
          nur hin, was für die ganze Seite gilt. -->
 
-    <!-- Das SVG-Favicon wiegt ~6 KB statt 252 KB als Rastergrafik. Moderne
-         Browser nehmen SVG, ältere fallen auf die .png zurück. -->
-    <link rel="icon" type="image/svg+xml" href="/brand/logo-mono-negative.svg" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/brand/motif-positive.png" />
-    <link rel="apple-touch-icon" href="/brand/motif-positive.png" />
+    <!-- Favicon: das helle DM-Icon (weisses Motiv auf der Markenkachel).
+         favicon.svg ist aus den Motivpfaden von brand/logo-mono-negative.svg
+         geschnitten (2,7 KB); die PNG-Stufen sind aus brand/motif-negative.png
+         verkleinert und fangen Browser ohne SVG-Favicon, Android und iOS ab. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Digital Movement" />
     <meta name="application-name" content="Digital Movement" />
 
