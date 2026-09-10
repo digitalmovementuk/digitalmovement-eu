@@ -1,0 +1,1 @@
+import{g as e,h as s,i as o,j as n}from"./app-aYv9iSC7.js";const r={snapshot:n,comparison:o,process:{eyebrow:s.eyebrow,headlineMain:s.headlineMain,headlineSub:"",intro:s.intro,steps:e}};function t(){return r}export{t as u};

@@ -1,0 +1,44 @@
+# digitalmovement.eu
+#
+# Everything is open. The explicit rules below exist because a generic
+# "block the AI bots" toggle is the most common way a site accidentally removes
+# itself from ChatGPT and Perplexity answers, and the crawler names are not
+# self-explanatory. Spelling them out means the next person to edit this file
+# can see which is which before reaching for a Disallow.
+
+User-agent: *
+Allow: /
+
+# --- Retrieval crawlers -----------------------------------------------------
+# These fetch a page because a user asked a question right now, and they are
+# what makes the site quotable in an assistant's answer. Blocking any of them
+# removes us from that surface entirely. QA gate items AI2.1-AI2.5.
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# --- Training crawlers ------------------------------------------------------
+# GPTBot and ClaudeBot collect training data; they are NOT the retrieval bots
+# above. Allowed deliberately: a new domain with no authority gains more from
+# being in the corpus than it loses. Change these two if that calculus changes
+# — do not touch the retrieval block above when you do.
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: https://digitalmovement.eu/sitemap.xml
