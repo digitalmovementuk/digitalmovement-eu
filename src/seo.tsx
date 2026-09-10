@@ -12,7 +12,7 @@ import { Head } from "vite-react-ssg";
  */
 
 export const SITE_URL = "https://digitalmovement.eu";
-export const OG_IMAGE = `${SITE_URL}/brand/digital-movement-johannes-raoul-20260911.jpg`;
+export const OG_IMAGE = `${SITE_URL}/brand/digital-movement-johannes-raoul-20260911-v2.jpg`;
 const OG_IMAGE_ALT = "Digital Movement — Mehr Anfragen. Echte Ergebnisse. Weniger Kosten. Mit Johannes Kaluc und Raoul Müller.";
 
 export function absoluteUrl(path: string): string {
