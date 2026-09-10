@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useCountUp } from "../lib/useCountUp";
 import { Reveal } from "../lib/Reveal";
 import { metrics } from "../content";
@@ -95,14 +95,16 @@ function FeaturedStat({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const inView = useInView(cardRef, { amount: 0.35, once: true });
-  const { ref: numRef, value: counted } = useCountUp(value);
+  const reduceMotion = useReducedMotion();
+  const counted = useCountUp(value, inView);
 
   return (
     <motion.div
       ref={cardRef}
+      data-metric="enquiries"
       initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      animate={inView || reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="mt-10 sm:mt-12 md:mt-14 relative bg-white rounded-[24px] sm:rounded-[32px] border border-ink/8 overflow-hidden p-5 sm:p-8 md:p-10 lg:p-12"
     >
       <div className="grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-6 md:gap-10 items-center text-center">
@@ -114,8 +116,7 @@ function FeaturedStat({
           </div>
 
           <span
-            ref={numRef as never}
-            className="mt-3 block text-ink"
+            className="metric-value mt-3 block text-ink"
             style={{
               fontSize: "clamp(64px, 10vw, 140px)",
               lineHeight: "0.88",
@@ -123,7 +124,7 @@ function FeaturedStat({
               fontWeight: 700,
             }}
           >
-            {inView ? counted : 0}
+            {counted}
             <span className="text-ink/55">{suffix}</span>
           </span>
 
@@ -136,62 +137,50 @@ function FeaturedStat({
           </p>
         </div>
 
-        <BarChartVisual inView={inView} />
+        <BarChartVisual />
       </div>
     </motion.div>
   );
 }
 
-function BarChartVisual({ inView }: { inView: boolean }) {
+function BarChartVisual() {
+  const ref = useRef<HTMLDivElement>(null);
+  // On phones the chart sits below the number. Start when the plot itself
+  // is visible, so its animation is not over before the visitor reaches it.
+  const inView = useInView(ref, { amount: 0.25, once: true });
+  const reduceMotion = useReducedMotion();
   const bars = [
     { label: "Vorher", value: 1, display: "1×", mute: true },
     { label: "Digital Movement", value: 8, display: "8×", mute: false },
   ];
-  const maxValue = 8;
   return (
-    <div className="relative w-full max-w-[460px] justify-self-center md:justify-self-end">
-      <div className="flex items-end gap-6 sm:gap-10 h-[160px] sm:h-[220px] md:h-[260px]">
-        {bars.map((b) => {
-          const heightPct = (b.value / maxValue) * 100;
-          return (
-            <div key={b.label} className="flex-1 flex flex-col items-center gap-3">
-              <div className="relative w-full flex items-end" style={{ height: "100%" }}>
-                <motion.div
-                  initial={{ height: "0%" }}
-                  animate={inView ? { height: `${heightPct}%` } : { height: "0%" }}
-                  transition={{
-                    duration: 1.2,
-                    delay: b.mute ? 0.1 : 0.35,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className={`w-full rounded-t-[12px] ${b.mute ? "bg-ink/12" : ""}`}
-                  style={
-                    b.mute
-                      ? undefined
-                      : { background: "linear-gradient(180deg, #EC178D 0%, #9A2FC6 100%)" }
-                  }
-                />
-              </div>
-              <p
-                className={`text-[10.5px] font-bold uppercase tracking-[0.16em] ${
-                  b.mute ? "text-ink-faint" : "text-ink"
-                }`}
-              >
-                {b.label}
-              </p>
-              <p
-                className={`text-[18px] sm:text-[20px] font-bold ${
-                  b.mute ? "text-ink-muted" : "text-ink"
-                } -mt-1`}
-                style={{ letterSpacing: "-0.025em" }}
-              >
-                {b.display}
-              </p>
+    <div ref={ref} className="metric-chart relative w-full max-w-[460px] justify-self-center md:justify-self-end" role="img" aria-label="Anfragen im Vergleich: vorher 1-fach, mit Digital Movement 8-fach.">
+      <div className="grid grid-cols-2 gap-6 sm:gap-10" aria-hidden="true">
+        {bars.map((bar) => (
+          <div key={bar.label} className="min-w-0 flex flex-col items-center gap-3">
+            <div className="metric-bar-track relative w-full h-[160px] sm:h-[220px] md:h-[260px] flex items-end">
+              <motion.div
+                className="metric-bar w-full rounded-t-[12px]"
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: inView || reduceMotion ? 1 : 0 }}
+                transition={{ duration: reduceMotion ? 0 : 1.2, delay: reduceMotion ? 0 : bar.mute ? 0.1 : 0.35, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  height: `${bar.value / 8 * 100}%`,
+                  transformOrigin: "center bottom",
+                  background: bar.mute ? "#dcd6e4" : "linear-gradient(180deg, #EC178D 0%, #9A2FC6 100%)",
+                }}
+              />
             </div>
-          );
-        })}
+            <p className={`text-[10.5px] font-bold uppercase tracking-[0.16em] ${bar.mute ? "text-ink-faint" : "text-ink"}`}>
+              {bar.label}
+            </p>
+            <p className={`text-[18px] sm:text-[20px] font-bold ${bar.mute ? "text-ink-muted" : "text-ink"} -mt-1`} style={{ letterSpacing: "-0.025em" }}>
+              {bar.display}
+            </p>
+          </div>
+        ))}
       </div>
-      <div className="mt-2 h-px bg-ink/12" />
+      <div className="mt-2 h-px bg-ink/10" />
     </div>
   );
 }
@@ -203,13 +192,15 @@ function BarChartVisual({ inView }: { inView: boolean }) {
 function DaysStat({ value, label }: { value: number; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4, once: true });
-  const { ref: numRef, value: counted } = useCountUp(value);
+  const reduceMotion = useReducedMotion();
+  const counted = useCountUp(value, inView);
   return (
     <motion.div
       ref={ref}
+      data-metric="days"
       initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      animate={inView || reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
       className="relative bg-white rounded-[28px] sm:rounded-[36px] border border-ink/8 overflow-hidden p-6 sm:p-8 flex flex-col justify-between min-h-[240px] sm:min-h-[300px] text-center"
     >
       <div className="inline-flex self-center items-center gap-2 text-[10.5px] font-bold uppercase tracking-[0.18em] text-ink-muted">
@@ -220,8 +211,7 @@ function DaysStat({ value, label }: { value: number; label: string }) {
 
       <div className="my-6">
         <span
-          ref={numRef as never}
-          className="block text-ink"
+          className="metric-value block text-ink"
           style={{
             fontSize: "clamp(48px, 8vw, 96px)",
             lineHeight: "0.9",
@@ -229,7 +219,7 @@ function DaysStat({ value, label }: { value: number; label: string }) {
             fontWeight: 700,
           }}
         >
-          {(inView ? counted : 0).toLocaleString("de-DE")}
+          {counted.toLocaleString("de-DE")}
         </span>
       </div>
 
@@ -237,11 +227,11 @@ function DaysStat({ value, label }: { value: number; label: string }) {
       <div className="mb-6">
         <div className="relative h-1.5 rounded-full bg-ink/10 overflow-hidden">
           <motion.div
-            initial={{ width: "0%" }}
-            animate={inView ? { width: "100%" } : { width: "0%" }}
-            transition={{ duration: 1.4, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-y-0 left-0 rounded-full"
-            style={{ background: "linear-gradient(90deg, #F05F22 0%, #EC178D 100%)" }}
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: inView || reduceMotion ? 1 : 0 }}
+            transition={{ duration: reduceMotion ? 0 : 1.4, delay: reduceMotion ? 0 : 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="metric-progress absolute inset-0 rounded-full"
+            style={{ background: "linear-gradient(90deg, #F05F22 0%, #EC178D 100%)", transformOrigin: "left center" }}
           />
         </div>
         <div className="mt-2 flex justify-between text-[10.5px] font-bold uppercase tracking-[0.16em] text-ink-faint">
@@ -265,7 +255,8 @@ function DaysStat({ value, label }: { value: number; label: string }) {
 function ProjectsStat({ value, label }: { value: number; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4, once: true });
-  const { ref: numRef, value: counted } = useCountUp(value);
+  const reduceMotion = useReducedMotion();
+  const counted = useCountUp(value, inView);
   /* 30 Punkte, einer je zehn Projekte. Eine Sternenreihe stand hier
      vorher — Sterne sind eine Bewertung, keine Projektzahl. */
   const dots = Array.from({ length: 30 });
@@ -273,9 +264,10 @@ function ProjectsStat({ value, label }: { value: number; label: string }) {
   return (
     <motion.div
       ref={ref}
+      data-metric="projects"
       initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+      animate={inView || reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+      transition={{ duration: reduceMotion ? 0 : 0.7, delay: reduceMotion ? 0 : 0.06, ease: [0.22, 1, 0.36, 1] }}
       className="relative bg-white rounded-[28px] sm:rounded-[36px] border border-ink/8 overflow-hidden p-6 sm:p-8 flex flex-col justify-between min-h-[240px] sm:min-h-[300px] text-center"
     >
       <div className="inline-flex self-center items-center gap-2 text-[10.5px] font-bold uppercase tracking-[0.18em] text-ink-muted">
@@ -286,8 +278,7 @@ function ProjectsStat({ value, label }: { value: number; label: string }) {
 
       <div className="my-6">
         <span
-          ref={numRef as never}
-          className="block text-ink"
+          className="metric-value block text-ink"
           style={{
             fontSize: "clamp(48px, 8vw, 96px)",
             lineHeight: "0.9",
@@ -295,7 +286,7 @@ function ProjectsStat({ value, label }: { value: number; label: string }) {
             fontWeight: 700,
           }}
         >
-          {(inView ? counted : 0).toLocaleString("de-DE")}
+          {counted.toLocaleString("de-DE")}
         </span>
       </div>
 
@@ -304,9 +295,9 @@ function ProjectsStat({ value, label }: { value: number; label: string }) {
           <motion.span
             key={i}
             initial={{ opacity: 0, scale: 0.5 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.3, delay: 0.2 + i * 0.02, ease: [0.22, 1, 0.36, 1] }}
-            className="block h-2 w-2 rounded-full"
+            animate={inView || reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
+            transition={{ duration: reduceMotion ? 0 : 0.3, delay: reduceMotion ? 0 : 0.2 + i * 0.02, ease: [0.22, 1, 0.36, 1] }}
+            className="metric-project-dot block h-2 w-2 rounded-full"
             style={{ background: "linear-gradient(135deg, #EC178D 0%, #9A2FC6 100%)" }}
           />
         ))}

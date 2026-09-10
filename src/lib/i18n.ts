@@ -1,4 +1,4 @@
-import { comparison, founder, processIntro, processSteps, snapshot } from "../content";
+import { comparison, processIntro, processSteps, snapshot } from "../content";
 
 /**
  * Die Seite ist einsprachig deutsch. Es gibt keine Umschaltung, keinen
@@ -17,7 +17,6 @@ import { comparison, founder, processIntro, processSteps, snapshot } from "../co
 const t = {
   snapshot,
   comparison,
-  founder,
   process: {
     eyebrow: processIntro.eyebrow,
     headlineMain: processIntro.headlineMain,

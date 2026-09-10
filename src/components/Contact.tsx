@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Check, Phone, MessageCircle, Mail, MapPin, Clock } from "lucide-react";
+import { ArrowRight, Check, Phone, Mail, MapPin, Clock } from "lucide-react";
 import { business, contact, hero } from "../content";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 import { Reveal } from "../lib/Reveal";
 import { submitLead, trackLead } from "../lib/submitLead";
 import { LEAD_FIELD_ORDER, websiteMessage, validateLead } from "../lib/leadForm";
@@ -416,14 +417,14 @@ export function Contact() {
 
 const ICONS: Record<string, React.ReactNode> = {
   Telefon: <Phone size={18} />,
-  WhatsApp: <MessageCircle size={18} />,
+  WhatsApp: <WhatsAppIcon width="18" height="18" />,
   "E-Mail": <Mail size={18} />,
   Adresse: <MapPin size={18} />,
 };
 
 const CAPTIONS: Record<string, string> = {
-  Telefon: "Werktags, direkt beim Gründer",
-  WhatsApp: "Kurze Frage? Einfach schreiben",
+  Telefon: "Direkt mit Johannes sprechen",
+  WhatsApp: "Johannes eine Nachricht schreiben",
   "E-Mail": "Antwort innerhalb 2 Stunden",
   Adresse: "Berlin-Schöneberg",
 };

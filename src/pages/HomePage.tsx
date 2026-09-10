@@ -1,7 +1,6 @@
 import { lazy, Suspense, type ComponentType } from "react";
 import { Hero } from "../components/Hero";
 import { AnswerBlock } from "../components/AnswerBlock";
-import { TrustBar } from "../components/TrustBar";
 import { Seo, faqSchema } from "../seo";
 import { faqs } from "../content";
 
@@ -13,7 +12,7 @@ import { faqs } from "../content";
  *
  *   1+2+3  Überschrift, Unterzeile, Absender ...... Hero (unverändert)
  *   3+4    Absenderzeile + Antwortblock ........... AnswerBlock
- *   5      Vertrauensleiste ....................... TrustBar
+ *   5      Kundenleiste auf Wunsch entfernt (11.09.2026)
  *   6      Problem ................................ Problem
  *   7      Lösung mit EINEM nächsten Schritt ...... Snapshot → Leistungen
  *                                                   → Prozess → NextStep
@@ -35,7 +34,7 @@ import { faqs } from "../content";
  *    gebauten Blöcke tragen Frageüberschriften.
  *
  * Alles unterhalb des ersten Bildschirms wird nachgeladen. Der erste
- * Aufbau braucht nur Hero, Antwortblock und Vertrauensleiste; der Rest
+ * Aufbau braucht nur Hero und Antwortblock; der Rest
  * kommt in einem zweiten Paket, damit er auf dem Handy nicht den ersten
  * sichtbaren Inhalt blockiert.
  */
@@ -100,16 +99,10 @@ export function HomePage() {
            sich aus derselben Konstante, damit Auszeichnung und sichtbarer
            Text nicht auseinanderlaufen können. */
         schema={[faqSchema(faqs)]}
-        /* Die Startseite trägt eine sichtbare Verfasserzeile im
-           Antwortblock — Name, Bild, Rolle, Link auf die Notiz des
-           Gründers. `author` zeichnet genau diese Person aus. Impressum
-           und Datenschutz tragen sie nicht und bekommen sie deshalb
-           auch nicht. */
-        author
+
       />
       <Hero />
       <AnswerBlock />
-      <TrustBar />
       {defer(Problem)}
       {defer(AgencySnapshot)}
       {defer(Services)}

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, Phone } from "lucide-react";
 import { business } from "../content";
+import { WhatsAppIcon } from "./WhatsAppIcon";
+import "../styles/team.css";
 
 type Surface = "dark" | "light";
 
@@ -77,7 +79,7 @@ export function Nav() {
     : "border-ink/15 bg-white/70 text-ink";
 
   const barHeightCls = compact ? "h-[48px] md:h-[56px]" : "h-[88px] md:h-[104px]";
-  const logoHeightCls = compact ? "h-6 sm:h-7" : "h-11 sm:h-14";
+  const logoHeightCls = compact ? "h-6 sm:h-7" : "h-8 sm:h-11 lg:h-14";
   const linkSizeCls = compact ? "text-[13px]" : "text-[17px]";
   const linkGapCls = compact ? "gap-5 lg:gap-7" : "gap-7 lg:gap-9";
 
@@ -102,7 +104,7 @@ export function Nav() {
             />
           </Link>
 
-          <nav className={`hidden md:flex items-center transition-all duration-300 ${linkGapCls}`}>
+          <nav className={`hidden lg:flex items-center transition-all duration-300 ${linkGapCls}`}>
             {subpageLinks.map((l) => (
               <Link
                 key={l.to}
@@ -114,13 +116,15 @@ export function Nav() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <Link to="/#contact" className={`hidden md:inline-flex ${ctaCls}`}>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <a className={`dm-nav-contact ${linkCls}`} href={business.phoneHref} aria-label={`Johannes Kaluc anrufen: ${business.phone}`} title={`Johannes anrufen: ${business.phone}`}><Phone size={19} aria-hidden="true" /></a>
+            <a className={`dm-nav-contact ${linkCls}`} href={business.whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="Johannes Kaluc per WhatsApp schreiben (neuer Tab)" title="Johannes per WhatsApp"><WhatsAppIcon /></a>
+            <Link to="/#contact" className={`hidden lg:inline-flex ${ctaCls}`}>
               Erstgespräch <ArrowRight size={13} />
             </Link>
 
             <button
-              className={`md:hidden grid h-10 w-10 place-items-center rounded-pill border backdrop-blur transition-colors ${hamburgerCls}`}
+              className={`lg:hidden grid h-11 w-11 place-items-center rounded-pill border backdrop-blur transition-colors ${hamburgerCls}`}
               onClick={() => setOpen(true)}
               aria-label="Menü öffnen"
             >
@@ -196,8 +200,10 @@ export function Nav() {
               </Link>
 
               <div className="mt-10 text-[13px] text-white/65 space-y-1.5">
-                <p>{business.phone}</p>
-                <p>{business.email}</p>
+                <p className="text-white">Johannes Kaluc</p>
+                <a className="block py-3" href={business.phoneHref}>{business.phone}</a>
+                <a className="flex items-center gap-2 py-3" href={business.whatsappHref} target="_blank" rel="noopener noreferrer"><WhatsAppIcon />Johannes per WhatsApp</a>
+                <a className="block py-3" href={business.emailHref}>{business.email}</a>
               </div>
             </motion.aside>
           </>

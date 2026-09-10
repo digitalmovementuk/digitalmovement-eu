@@ -6,6 +6,7 @@ import { LEAD_FIELD_ORDER, websiteMessage, validateLead } from "../lib/leadForm"
 import type { LeadFieldErrors } from "../lib/leadForm";
 import { CONSENT_TEXT } from "../lib/consentText";
 import "../styles/hero-uk.css";
+import { HeroTeam } from "./HeroTeam";
 
 /**
  * Startbereich — die Übernahme des Hero von digitalmovement.uk.
@@ -208,6 +209,7 @@ export function Hero() {
                 <span>{s.label}</span>
               </div>
             ))}
+            <HeroTeam />
           </div>
         </div>
 

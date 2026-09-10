@@ -1,3 +1,5 @@
+import { team } from "./team";
+
 /**
  * Sämtliche echte, markenspezifische Copy der Startseite.
  *
@@ -105,12 +107,12 @@ export const business = {
   name: "Digital Movement",
   legalName: "Digital Movement Germany",
   tagline: "Jede Woche neue Verkaufschancen.",
-  email: "office@digitalmovement.eu",
+  email: team[0].email,
   emailHref: "mailto:office@digitalmovement.eu",
-  phone: "+49 176 23296439",
-  phoneHref: "tel:+4917623296439",
-  whatsapp: "+49 176 82360647",
-  whatsappHref: "https://wa.me/4917682360647",
+  phone: team[0].phone,
+  phoneHref: team[0].phoneHref,
+  whatsapp: team[0].phone,
+  whatsappHref: team[0].whatsappHref,
   /* Als Objekt, weil Impressum und Datenschutzerklärung die Zeilen
      einzeln setzen müssen. `addressLine` ist dieselbe Anschrift für
      Fließtext und strukturierte Daten. */
@@ -124,13 +126,11 @@ export const business = {
 /**
  * Die Kontaktwege, die die Seite anbietet.
  *
- * Zwei getrennte Nummern, kein Tippfehler: die eine wird als Telefon
- * beantwortet, die andere ist der WhatsApp-Account. Ein gemeinsamer Wert
- * hätte WhatsApp-Nachrichten an eine Nummer ohne WhatsApp geschickt.
+ * Johannes ist der Hauptkontakt für Telefon und WhatsApp (11.09.2026).
  */
 export const contactChannels = {
-  phoneE164: "+4917623296439" as string | null,
-  whatsappE164: "+4917682360647" as string | null,
+  phoneE164: "+491605774845" as string | null,
+  whatsappE164: "+491605774845" as string | null,
   /** Wohin „Rückruf“ scrollt. */
   formTarget: "#contact",
 };
@@ -445,7 +445,7 @@ export const processSteps = [
     eta: "Tag 1",
     title: "Audit & Kickoff",
     body:
-      "Diagnose Ihrer aktuellen SEO-Performance. Wettbewerbs-Analyse. Chancen für Umsatzwachstum mit einer neuen SEO-optimierten Webseite. 30 Minuten Screen-Share mit einem der Gründer.",
+      "Diagnose Ihrer aktuellen SEO-Performance. Wettbewerbs-Analyse. Chancen für Umsatzwachstum mit einer neuen SEO-optimierten Webseite. 30 Minuten Screen-Share mit Johannes Kaluc.",
   },
   {
     n: "02",
@@ -670,7 +670,7 @@ export const comparison = {
     {
       topic: "Ansprechpartner",
       other: "Account-Manager, der Excel vorliest",
-      neo: "Der Gründer, am Telefon",
+      neo: "Johannes und Raoul, direkt erreichbar",
     },
     {
       topic: "Preisgestaltung",
@@ -753,19 +753,6 @@ export const snapshot = {
    GRÜNDER-NOTIZ
    ============================================================ */
 
-export const founder = {
-  eyebrow: "Eine Notiz vom Gründer",
-  headlinePre: "Sie reden mit der Person,",
-  headlineSoft: "die auch liefert.",
-  paragraphs: [
-    "Ich habe Digital Movement gegründet, weil ich es leid war. Gute Firmen zahlen Tausende pro Monat. Bekommen Eitelkeitsmetriken. Keine Anfragen im Posteingang. Das ändert sich hier.",
-    "Bei Digital Movement: kein Account-Manager mit Excel. Sie kriegen mich am Hörer. Festpreis. Kein Lock-in. Ein 90-Tage-Sprint mit meinem Namen drauf.",
-    "Klingt nach Ihrer Art? Schreiben Sie unten. Werktags antworte ich innerhalb 2 Stunden. Persönlich.",
-  ],
-  signature: "Raoul",
-  signatureBlock: "Raoul Müller · Gründer, Digital Movement",
-  photo: "brand/raoul-founder.png",
-};
 
 /* ============================================================
    KONTAKT
@@ -775,18 +762,18 @@ export const contact = {
   eyebrow: "Schreiben Sie uns",
   headlinePre: "Lassen Sie uns",
   headlineSoft: "starten.",
-  intro: "Kostenloses Erstgespräch. Werktags antworte ich innerhalb 2 Stunden. Persönlich.",
+  intro: "Johannes ist Ihr Ansprechpartner für das erste Gespräch. Sie erreichen ihn telefonisch, per WhatsApp oder per E-Mail.",
   /* Kein eigener Formulartext mehr. Das Formular in diesem Abschnitt ist
      Feld für Feld dasselbe wie im Startbereich und holt Beschriftungen,
      Platzhalter, Auswahlliste, Knopfbeschriftung, Hinweiszeile und
      Fehlertexte aus `hero` weiter oben. Der Text steht damit an einer
      Stelle und kann nicht mehr auseinanderlaufen. */
   tiles: [
-    { kicker: "Telefon", value: "+49 176 23296439", href: "tel:+4917623296439" },
+    { kicker: "Telefon", value: business.phone, href: business.phoneHref },
     {
       kicker: "WhatsApp",
-      value: "+49 176 82360647",
-      href: "https://wa.me/4917682360647",
+      value: business.whatsapp,
+      href: business.whatsappHref,
       external: true,
     },
     { kicker: "E-Mail", value: "office@digitalmovement.eu", href: "mailto:office@digitalmovement.eu" },
@@ -847,8 +834,8 @@ export const footer = {
     {
       title: "Kontakt",
       links: [
-        { label: "Telefon: +49 176 23296439", href: "tel:+4917623296439" },
-        { label: "WhatsApp: +49 176 82360647", href: "https://wa.me/4917682360647" },
+        { label: `Telefon: ${business.phone}`, href: business.phoneHref },
+        { label: `WhatsApp: ${business.whatsapp}`, href: business.whatsappHref },
         { label: "E-Mail: office@digitalmovement.eu", href: "mailto:office@digitalmovement.eu" },
         { label: "Adresse: Kolonnenstraße 8, 10827 Berlin", href: "/impressum" },
       ],
@@ -916,29 +903,6 @@ export const faqs = [
        eigener Konfliktabschnitt stellt aber freigegebenen Text darüber.
        Nur die hier neu gebauten Blöcke tragen Frageüberschriften.
    ============================================================ */
-
-/**
- * Blueprint 3 — die Byline.
- *
- * Ein Mensch mit Namen, Gesicht und nachprüfbarer Rolle steht sichtbar
- * hinter der Seite. Erfunden ist hier nichts: das Foto ist das echte
- * Gründerfoto, die Rolle ist die tatsächliche, und der Link führt auf den
- * Abschnitt, in dem Raoul selbst schreibt. Eine eigene Biografieseite
- * gibt es (noch) nicht; auf eine Seite zu verlinken, die es nicht gibt,
- * wäre schlechter als der Sprung zum Abschnitt.
- */
-export const byline = {
-  name: "Raoul Müller",
-  role: "Gründer, Digital Movement",
-  meta: "Berlin · verantwortet diese Seite",
-  photo: "brand/raoul-founder.png",
-  /* Zugeschnittene Fassungen für die 52-Punkte-Verfasserzeile. Erzeugt aus
-     `photo`, aber ausdrücklich benannt — siehe Kommentar in AnswerBlock. */
-  photoWebp: "brand/raoul-founder-104.webp",
-  photoFallback: "brand/raoul-founder-104.png",
-  bioHref: "#founder",
-  bioLabel: "Notiz vom Gründer lesen",
-};
 
 /**
  * Blueprint 4 — der Antwortblock.
@@ -1037,7 +1001,7 @@ export const faqIntro = {
  * einzige Quelle für beide. Wer die Seite ändert, ändert diese Zeile mit.
  */
 export const lastUpdated = {
-  iso: "2026-08-25",
-  label: "Zuletzt aktualisiert am 25. August 2026",
+  iso: "2026-09-11",
+  label: "Zuletzt aktualisiert am 11. September 2026",
   note: "Diese Seite wird laufend geprüft. Die genannten Zahlen stammen aus laufenden und abgeschlossenen Kundenprojekten.",
 };

@@ -1,7 +1,6 @@
 import { Reveal } from "../lib/Reveal";
-import { answerBlock, byline } from "../content";
+import { answerBlock } from "../content";
 
-const BASE = import.meta.env.BASE_URL;
 
 /**
  * Blueprint 3 + 4 — Byline und Antwortblock, in einem Abschnitt.
@@ -28,47 +27,6 @@ export function AnswerBlock() {
       className="surface-light pt-12 sm:pt-14 md:pt-16 pb-14 sm:pb-16 md:pb-20"
     >
       <div className="container-v3">
-        {/* ---------- Byline: ein Mensch mit Namen und Gesicht ---------- */}
-        <Reveal>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-            {/* 52 Punkte groß dargestellt, doppelt aufgelöst für scharfe
-                Bildschirme — 5 KB statt der 78-KB-Quelle. Die Fassungen
-                stehen als eigene Felder im Inhalt, nicht als aus dem
-                Dateinamen geratene Pfade: ein anderes Foto ohne erzeugte
-                Fassungen würde sonst still ins Leere zeigen. */}
-            <picture className="contents">
-              <source type="image/webp" srcSet={`${BASE}${byline.photoWebp} 104w`} sizes="52px" />
-              <img
-                src={`${BASE}${byline.photoFallback}`}
-                srcSet={`${BASE}${byline.photoFallback} 104w`}
-                sizes="52px"
-                width={52}
-                height={52}
-                alt={`${byline.name}, ${byline.role}`}
-                loading="lazy"
-                decoding="async"
-                className="h-[52px] w-[52px] shrink-0 rounded-full object-cover ring-1 ring-ink/10"
-              />
-            </picture>
-            <p className="text-[14.5px] leading-snug text-ink-soft">
-              {/* `byline-author` ist keine Gestaltungsklasse, sondern die
-                  maschinenlesbare Markierung der Verfasserzeile. Ohne sie ist
-                  der Name für eine Prüfung nur Fließtext — und ein loses Muster
-                  auf „von …" darf sie bewusst nicht als Verfasser zählen.
-                  Zweiter, tragender Beleg: der Person-Knoten im Schema. */}
-              <span className="byline-author font-bold text-ink">{byline.name}</span>
-              <span className="text-ink-muted"> · {byline.role}</span>
-              <span className="block text-[13px] text-ink-muted">{byline.meta}</span>
-            </p>
-            <a
-              href={byline.bioHref}
-              className="ml-auto text-[13.5px] font-semibold text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-ink"
-            >
-              {byline.bioLabel}
-            </a>
-          </div>
-        </Reveal>
-
         {/* ---------- Antwortblock ---------- */}
         <Reveal delay={0.06}>
           {/* Antwort vor Frage — im Quelltext, nicht im Bild.
@@ -80,7 +38,7 @@ export function AnswerBlock() {
               Für Screenreader geht dabei nichts verloren: Der Abschnitt
               trägt aria-labelledby="antwort-frage", wird also mit der Frage
               als Namen angekündigt, bevor die Antwort gelesen wird. */}
-          <div className="mt-8 sm:mt-10 grid gap-5 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-12 lg:items-start">
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-12 lg:items-start">
             <p className="order-2 text-[16.5px] sm:text-[18px] leading-relaxed text-ink-soft max-w-[62ch]">
               {answerBlock.answer}
             </p>

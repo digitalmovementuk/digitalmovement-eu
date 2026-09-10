@@ -1,4 +1,5 @@
-import { Mail, Phone, MessageCircle, ArrowUpRight } from "lucide-react";
+import { WhatsAppIcon } from "./WhatsAppIcon";
+import { Mail, Phone, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { openConsentDialog } from "./CookieBanner";
 import { business, footer } from "../content";
@@ -95,7 +96,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className={`${linkCls} inline-flex items-center gap-2`}
                 >
-                  <MessageCircle size={13} strokeWidth={2.2} className="text-ink-faint" />
+                  <WhatsAppIcon width="15" height="15" />
                   {business.whatsapp}
                 </a>
               </li>

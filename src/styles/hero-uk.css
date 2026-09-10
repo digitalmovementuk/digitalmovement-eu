@@ -823,3 +823,23 @@
     text-align: center;
   }
 }
+
+/* The desktop hero keeps the original 62svh minimum so the next section
+   is visible. Content can grow naturally on shorter screens. */
+@media(max-width:760px){
+  .uk-hero{min-height:100svh}
+  .uk-hero .form-field label,.uk-hero .form-note{text-align:center}
+  .uk-hero .hero-proof>.dm-hero-team{margin-top:12px}
+}
+@media(min-width:1040px){
+  .uk-hero .hero-proof{
+    grid-template-columns:max-content max-content minmax(0,1fr);
+    column-gap:20px;
+  }
+  .uk-hero .hero-proof>.dm-hero-team{
+    justify-self:end;margin-top:0;padding:10px 12px;gap:10px;
+  }
+  .uk-hero .dm-hero-team .dm-team-portrait{width:48px;height:48px}
+  .uk-hero .dm-hero-team-caption strong{font-size:13px}
+  .uk-hero .dm-hero-team-caption{font-size:12px}
+}

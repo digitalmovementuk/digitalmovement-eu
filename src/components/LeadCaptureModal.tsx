@@ -83,6 +83,8 @@ export function LeadCaptureModal() {
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting || hasShownRef.current) return;
+        // A deliberate jump to the team must not open a form on the way.
+        if (["#founder", "#johannes", "#raoul"].includes(window.location.hash)) return;
         /* Solange die Einwilligungsleiste noch auf eine Antwort wartet,
            bleibt das Fenster zu. Sonst legt es sich über die Leiste und
            deckt „Zustimmen" zu — im Test war der Knopf nicht mehr
@@ -106,6 +108,10 @@ export function LeadCaptureModal() {
   useEffect(() => {
     const onDecided = () => {
       if (!wartetRef.current || hasShownRef.current) return;
+      if (["#founder", "#johannes", "#raoul"].includes(window.location.hash)) {
+        wartetRef.current = false;
+        return;
+      }
       hasShownRef.current = true;
       wartetRef.current = false;
       setOpen(true);

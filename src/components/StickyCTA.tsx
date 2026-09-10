@@ -32,7 +32,10 @@ export function StickyCTA() {
       const contactApproaching = contact
         ? contact.getBoundingClientRect().top < vh * 0.65
         : false;
-      setShow(pastMetricsThreshold && !contactApproaching);
+      // The team cards already offer direct contact; keep their links clear.
+      const teamRect = document.getElementById("founder")?.getBoundingClientRect();
+      const teamVisible = !!teamRect && teamRect.top < vh && teamRect.bottom > 0;
+      setShow(pastMetricsThreshold && !contactApproaching && !teamVisible);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

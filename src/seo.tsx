@@ -1,3 +1,4 @@
+import { team } from "./team";
 import { Head } from "vite-react-ssg";
 
 /**
@@ -11,7 +12,8 @@ import { Head } from "vite-react-ssg";
  */
 
 export const SITE_URL = "https://digitalmovement.eu";
-export const OG_IMAGE = `${SITE_URL}/brand/og-cover.jpg`;
+export const OG_IMAGE = `${SITE_URL}/brand/digital-movement-johannes-raoul-20260911.jpg`;
+const OG_IMAGE_ALT = "Digital Movement — Mehr Anfragen. Echte Ergebnisse. Weniger Kosten. Mit Johannes Kaluc und Raoul Müller.";
 
 export function absoluteUrl(path: string): string {
   return path === "/" ? `${SITE_URL}/` : `${SITE_URL}${path}`;
@@ -32,7 +34,7 @@ export function absoluteUrl(path: string): string {
  * ------------------------------------------------------------------ */
 
 /** Leer lassen, solange keine echte Nummer existiert — leer heißt: nicht im Schema. */
-export const TELEPHONE = "+4917623296439";
+export const TELEPHONE = team[0].phoneHref.slice(4);
 
 /**
  * Kein Handelsregister-Eintrag: Digital Movement Germany ist ein
@@ -173,9 +175,9 @@ export const AUTHOR = {
   "@type": "Person",
   "@id": `${SITE_URL}/#raoul-mueller`,
   name: "Raoul Müller",
-  jobTitle: "Gründer",
+  jobTitle: "Head of Customer Care",
   url: `${SITE_URL}/#founder`,
-  image: `${SITE_URL}/brand/raoul-founder.png`,
+  image: `${SITE_URL}/brand/team/raoul-mueller.jpg`,
   worksFor: { "@id": `${SITE_URL}/#organization` },
 };
 
@@ -345,12 +347,13 @@ export function Seo({ title, description, path, noindex, metaRefresh, schema, au
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={OG_IMAGE} />
-      <meta property="og:image:alt" content="Digital Movement — SEO, GEO und High-End Websites" />
+      <meta property="og:image:alt" content={OG_IMAGE_ALT} />
 
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={OG_IMAGE} />
+      <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
 
       <script type="application/ld+json">{graph}</script>
     </Head>
