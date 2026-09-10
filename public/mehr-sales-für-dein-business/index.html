@@ -183,7 +183,7 @@
 
     /* Einwilligungsbanner */
     .consent-bar{position:fixed;inset:auto 0 0;z-index:200;display:flex;justify-content:center;padding:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom));pointer-events:none}
-    .consent-card{pointer-events:auto;width:min(720px,100%);padding:22px;border:1px solid var(--line);border-radius:var(--r);background:var(--white);color:var(--ink);box-shadow:0 26px 64px -24px rgba(16,6,32,.5);animation:consent-in .38s cubic-bezier(.22,1,.36,1) both}
+    .consent-bar[hidden]{display:none}.consent-card{max-height:85svh;overflow-y:auto;pointer-events:auto;width:min(720px,100%);padding:22px;border:1px solid var(--line);border-radius:var(--r);background:var(--white);color:var(--ink);box-shadow:0 26px 64px -24px rgba(16,6,32,.5);animation:consent-in .38s cubic-bezier(.22,1,.36,1) both}
     @keyframes consent-in{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
     .consent-card h2{margin:0;font-size:18px;font-weight:750;letter-spacing:-.02em}
     .consent-card p{margin:9px 0 0;font-size:14px;line-height:1.5;color:var(--soft)}
@@ -192,7 +192,7 @@
     .consent-actions .button.ghost{background:var(--white);color:var(--ink);border:1px solid rgba(27,14,46,.25)}
     .consent-actions .button.ghost:hover{background:rgba(27,14,46,.05)}
     .consent-more{margin-top:12px;font-size:12.5px;color:var(--muted)}
-    .consent-more a{text-decoration:underline;text-underline-offset:2px}
+    .consent-more summary{cursor:pointer;text-decoration:underline}.consent-actions button:focus-visible{outline:2px solid #0071e3;outline-offset:3px}.consent-more a{text-decoration:underline;text-underline-offset:2px}
     /* Solange gefragt wird, ist die Frage das Einzige unten am Rand. Der
        Sticky-Knopf läge sonst darunter und wäre nicht mehr erreichbar. */
     body.consent-open .sticky{display:none!important}
@@ -214,6 +214,7 @@
        Seitenende und die Begründung dort.
        ================================================================ -->
   <script>window.DM_MESSUNG={ga4:"G-H2NP3R3KJT",ads:"",lead_label:"",ruf_label:""};</script>
+<script src="/analytics-consent.js" data-measurement-id="G-H2NP3R3KJT"></script>
 </head>
 <body>
   <a class="skip" href="#content">Zum Inhalt springen</a>
@@ -268,212 +269,57 @@
     <section class="final" id="contact"><div class="container final-grid"><div class="final-copy reveal"><p class="eyebrow">Kostenlos und konkret</p><h2>20 Minuten. Drei SEO-Chancen. Ein klarer nächster Schritt.</h2><p>Keine allgemeine „Ersteinschätzung“. Wir sprechen über Ihre Website, Ihren Markt und die drei Maßnahmen, die zuerst geprüft werden sollten.</p><div class="contact-pills"><a class="contact-pill" href="tel:+4917623296439">+49 176 23296439</a><span class="contact-pill">Persönliches Treffen in Berlin möglich</span><span class="contact-pill">ab 579 € netto · keine Mindestlaufzeit</span></div></div><div class="form-card reveal" id="footer-form"><form class="lead-form" data-location="footer" novalidate><h2>20-Minuten-Chancencheck</h2><p class="form-intro">Name und Telefonnummer genügen. Rückruf werktags 9&ndash;18&nbsp;Uhr, in der Regel innerhalb von zwei Stunden.</p><label class="field"><span class="field-label">Ihr Name</span><input name="name" autocomplete="name" required minlength="2" aria-describedby="footer-name-error"><span class="field-error" id="footer-name-error"></span></label><label class="field"><span class="field-label">Ihre Handy-Nummer</span><input type="tel" name="phone" autocomplete="tel" inputmode="tel" required minlength="6" aria-describedby="footer-phone-error"><span class="field-error" id="footer-phone-error"></span></label><label class="field slot-field"><span class="field-label">Wann passt Ihnen ein Anruf?</span><select name="slot"><option value="">Egal &mdash; melden Sie sich einfach</option><option>Vormittags (9&ndash;12 Uhr)</option><option>Nachmittags (12&ndash;17 Uhr)</option><option>Abends (17&ndash;19 Uhr)</option></select></label><label class="hp" aria-hidden="true">Bitte leer lassen<input name="company_website" tabindex="-1" autocomplete="off"></label><label class="consent"><input type="checkbox" name="consent" required><span>Ich stimme zu, dass Digital Movement meine Angaben ausschließlich zur Bearbeitung dieser Anfrage nutzt. Widerruf jederzeit möglich. <a href="https://digitalmovement.eu/datenschutz" target="_blank" rel="noopener">Datenschutz</a></span></label><button class="button" type="submit">20-Minuten-Chancencheck anfragen <span class="arrow">→</span></button><div class="form-status" role="status" aria-live="polite"></div><a class="direct-call" href="tel:+4917623296439">Lieber direkt sprechen? <strong>Jetzt anrufen</strong></a><p class="form-note">Kein Newsletter. Keine Weitergabe zu Werbezwecken.</p></form></div></div></section>
   </main>
   <footer><div class="container footer-in"><div><img class="footer-logo" src="assets/logo-negative.svg" alt="Digital Movement" width="420" height="99"><div>Digital Movement Deutschland · Raoul Müller<br>Kolonnenstraße 8 · 10827 Berlin</div></div><nav class="legal" aria-label="Rechtliches"><a href="https://digitalmovement.eu/impressum" target="_blank" rel="noopener">Impressum</a><a href="https://digitalmovement.eu/datenschutz">Datenschutz</a><a href="tel:+4917623296439">+49 176 23296439</a><a href="#" data-consent-open>Cookie-Einstellungen</a><span class="legal-date">Stand: 31. August 2026</span></nav></div></footer><div class="sticky" id="sticky" hidden><a class="button" href="#footer-form">20-Minuten-Chancencheck <span class="arrow">→</span></a></div>
-  <script>(()=>{const nav=document.getElementById('nav'),sticky=document.getElementById('sticky'),heroForm=document.getElementById('hero-form'),footerForm=document.getElementById('footer-form'),endpoint='https://leads.digitalmovement.uk/';const onScroll=()=>{nav.classList.toggle('scrolled',scrollY>18);if(sticky&&heroForm&&footerForm){const ffr=footerForm.getBoundingClientRect();sticky.hidden=heroForm.getBoundingClientRect().bottom>140||(ffr.top<innerHeight*0.6&&ffr.bottom>60)}};onScroll();addEventListener('scroll',onScroll,{passive:true});if(sticky){const stickyLink=sticky.querySelector('a');stickyLink.addEventListener('click',e=>{const near=Math.abs(heroForm.getBoundingClientRect().top)<Math.abs(footerForm.getBoundingClientRect().top)?heroForm:footerForm;e.preventDefault();near.scrollIntoView({behavior:'smooth',block:'center'});const first=near.querySelector('input[name=name]');if(first)setTimeout(()=>first.focus({preventScroll:true}),650)})}document.querySelectorAll('.lead-form').forEach(f=>{const card=f.closest('.form-card');if(!card)return;let nudged=false;const mark=()=>{if(!(f.elements.name.value.trim()||f.elements.phone.value.trim()))return;if(card.classList.contains('engaged'))return;card.classList.add('engaged');if(nudged)return;nudged=true;setTimeout(()=>{const b=f.querySelector('button[type=submit]').getBoundingClientRect(),over=b.bottom-innerHeight+14;if(over>0&&over<240)scrollBy({top:over,behavior:'smooth'})},340)};f.addEventListener('input',mark,{passive:true});f.addEventListener('focusin',mark,{passive:true})});const io='IntersectionObserver'in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -35px'}):null;document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('visible'));document.querySelectorAll('[data-rival]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-rival]').forEach(b=>b.setAttribute('aria-selected','false'));btn.setAttribute('aria-selected','true');document.getElementById('rival-name').textContent=btn.dataset.rival;document.getElementById('rival-price').textContent=btn.dataset.price;document.getElementById('rival-pages').textContent=btn.dataset.pages;document.getElementById('rival-term').textContent=btn.dataset.term}));const status=(form,text,type)=>{const el=form.querySelector('.form-status');el.textContent=text;el.className=`form-status show ${type}`};const validate=form=>{let ok=true;form.querySelectorAll('input[name=name],input[name=phone]').forEach(input=>{const bad=!input.value.trim()||(input.name==='name'?input.value.trim().length<2:input.value.replace(/\D/g,'').length<7);input.setAttribute('aria-invalid',bad?'true':'false');input.parentElement.querySelector('.field-error').textContent=bad?(input.name==='name'?'Bitte geben Sie Ihren vollständigen Namen ein.':'Bitte geben Sie eine gültige Telefonnummer ein.'):'';if(bad)ok=false});const c=form.querySelector('input[name=consent]');c.setCustomValidity(c.checked?'':'Bitte stimmen Sie der Verarbeitung Ihrer Anfrage zu.');if(!c.checked)ok=false;if(!ok)form.reportValidity();return ok};document.querySelectorAll('.lead-form').forEach(form=>{form.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{i.removeAttribute('aria-invalid');if(i.name==='consent')i.setCustomValidity('')}));form.addEventListener('submit',async e=>{e.preventDefault();if(form.elements.company_website.value||!validate(form))return;const button=form.querySelector('button[type=submit]'),original=button.innerHTML,submittedAt=new Date().toISOString();button.disabled=true;button.textContent='Wird gesendet …';const payload={name:form.elements.name.value.trim(),phone:form.elements.phone.value.trim(),email:'',service:'SEO Berlin',message:'20-Minuten-Chancencheck über SEO-Berlin Google-Ads-Seite'+(form.elements.slot&&form.elements.slot.value?' · Wunschzeit: '+form.elements.slot.value:''),company_website:'',consent:'yes',consent_text:'Ich stimme zu, dass Digital Movement meine Angaben ausschließlich zur Bearbeitung dieser Anfrage nutzt.',consent_timestamp:submittedAt,page_url:location.href,form_id:`seo-berlin-ads-${form.dataset.location}`};try{const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}),data=await response.json().catch(()=>null);if(!response.ok||!data||data.ok!==true)throw new Error('rejected');status(form,'Danke. Ihre Anfrage ist angekommen. Wir melden uns telefonisch.','success');form.reset();window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'generate_lead',lead_type:'seo_opportunity_call',form_location:form.dataset.location});window.DM_TRACK&&window.DM_TRACK.lead(form.dataset.location)}catch(err){status(form,'Senden nicht möglich. Bitte rufen Sie +49 176 23296439 an oder schreiben Sie per WhatsApp.','error')}finally{button.disabled=false;button.innerHTML=original}})})})();</script>
+  <script>(()=>{const nav=document.getElementById('nav'),sticky=document.getElementById('sticky'),heroForm=document.getElementById('hero-form'),footerForm=document.getElementById('footer-form'),endpoint='https://leads.digitalmovement.uk/';const onScroll=()=>{nav.classList.toggle('scrolled',scrollY>18);if(sticky&&heroForm&&footerForm){const ffr=footerForm.getBoundingClientRect();sticky.hidden=heroForm.getBoundingClientRect().bottom>140||(ffr.top<innerHeight*0.6&&ffr.bottom>60)}};onScroll();addEventListener('scroll',onScroll,{passive:true});if(sticky){const stickyLink=sticky.querySelector('a');stickyLink.addEventListener('click',e=>{const near=Math.abs(heroForm.getBoundingClientRect().top)<Math.abs(footerForm.getBoundingClientRect().top)?heroForm:footerForm;e.preventDefault();near.scrollIntoView({behavior:'smooth',block:'center'});const first=near.querySelector('input[name=name]');if(first)setTimeout(()=>first.focus({preventScroll:true}),650)})}document.querySelectorAll('.lead-form').forEach(f=>{const card=f.closest('.form-card');if(!card)return;let nudged=false;const mark=()=>{if(!(f.elements.name.value.trim()||f.elements.phone.value.trim()))return;if(card.classList.contains('engaged'))return;card.classList.add('engaged');if(nudged)return;nudged=true;setTimeout(()=>{const b=f.querySelector('button[type=submit]').getBoundingClientRect(),over=b.bottom-innerHeight+14;if(over>0&&over<240)scrollBy({top:over,behavior:'smooth'})},340)};f.addEventListener('input',mark,{passive:true});f.addEventListener('focusin',mark,{passive:true})});const io='IntersectionObserver'in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.1,rootMargin:'0px 0px -35px'}):null;document.querySelectorAll('.reveal').forEach(el=>io?io.observe(el):el.classList.add('visible'));document.querySelectorAll('[data-rival]').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('[data-rival]').forEach(b=>b.setAttribute('aria-selected','false'));btn.setAttribute('aria-selected','true');document.getElementById('rival-name').textContent=btn.dataset.rival;document.getElementById('rival-price').textContent=btn.dataset.price;document.getElementById('rival-pages').textContent=btn.dataset.pages;document.getElementById('rival-term').textContent=btn.dataset.term}));const status=(form,text,type)=>{const el=form.querySelector('.form-status');el.textContent=text;el.className=`form-status show ${type}`};const validate=form=>{let ok=true;form.querySelectorAll('input[name=name],input[name=phone]').forEach(input=>{const bad=!input.value.trim()||(input.name==='name'?input.value.trim().length<2:input.value.replace(/\D/g,'').length<7);input.setAttribute('aria-invalid',bad?'true':'false');input.parentElement.querySelector('.field-error').textContent=bad?(input.name==='name'?'Bitte geben Sie Ihren vollständigen Namen ein.':'Bitte geben Sie eine gültige Telefonnummer ein.'):'';if(bad)ok=false});const c=form.querySelector('input[name=consent]');c.setCustomValidity(c.checked?'':'Bitte stimmen Sie der Verarbeitung Ihrer Anfrage zu.');if(!c.checked)ok=false;if(!ok)form.reportValidity();return ok};document.querySelectorAll('.lead-form').forEach(form=>{form.querySelectorAll('input').forEach(i=>i.addEventListener('input',()=>{i.removeAttribute('aria-invalid');if(i.name==='consent')i.setCustomValidity('')}));form.addEventListener('submit',async e=>{e.preventDefault();if(form.elements.company_website.value||!validate(form))return;const button=form.querySelector('button[type=submit]'),original=button.innerHTML,submittedAt=new Date().toISOString();button.disabled=true;button.textContent='Wird gesendet …';const payload={name:form.elements.name.value.trim(),phone:form.elements.phone.value.trim(),email:'',service:'SEO Berlin',message:'20-Minuten-Chancencheck über SEO-Berlin Google-Ads-Seite'+(form.elements.slot&&form.elements.slot.value?' · Wunschzeit: '+form.elements.slot.value:''),company_website:'',consent:'yes',consent_text:'Ich stimme zu, dass Digital Movement meine Angaben ausschließlich zur Bearbeitung dieser Anfrage nutzt.',consent_timestamp:submittedAt,page_url:location.href,form_id:`seo-berlin-ads-${form.dataset.location}`};try{const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}),data=await response.json().catch(()=>null);if(!response.ok||!data||data.ok!==true)throw new Error('rejected');status(form,'Danke. Ihre Anfrage ist angekommen. Wir melden uns telefonisch.','success');form.reset();window.DM_TRACK&&window.DM_TRACK.lead(form.dataset.location)}catch(err){status(form,'Senden nicht möglich. Bitte rufen Sie +49 176 23296439 an oder schreiben Sie per WhatsApp.','error')}finally{button.disabled=false;button.innerHTML=original}})})})();</script>
 
 <script>
-/* ======================================================================
-   Messung und Einwilligung.
-
-   Reihenfolge, und warum sie so ist:
-
-   Vor der Zustimmung wird KEIN Skript geladen. Nicht gtag.js mit
-   Consent Mode auf "denied", sondern gar nichts. Zwei Gründe. § 25 TDDDG
-   knüpft die Einwilligung an das Speichern und Auslesen auf dem Endgerät,
-   und selbst ein cookieloser Treffer überträgt die IP-Adresse an Google --
-   eine Verarbeitung, die eine eigene Rechtsgrundlage bräuchte. Die
-   deutschen Aufsichtsbehörden halten Google Analytics ohne Einwilligung
-   für unzulässig. Dieselbe Entscheidung trägt die Hauptseite
-   (site/src/lib/analytics.ts); zwei Rechtsauffassungen auf einer Domain
-   wären in jedem Fall die falsche Antwort.
-
-   Der Preis ist bekannt und gewollt: wer ablehnt, wird nicht gezählt.
-   Für eine Anzeigen-Seite heißt das, dass die gemeldeten Conversions
-   niedriger liegen als die tatsächlichen. Lieber eine kleinere, richtige
-   Zahl als eine vollständige, die abgemahnt wird.
-
-   Der eigene Schlüssel: die Hauptseite fragt nur nach Analyse, diese Seite
-   zusätzlich nach der Erfolgsmessung von Google Ads. Das ist ein weiterer
-   Zweck, also eine eigene Einwilligung und ein eigener Eintrag. Wer auf der
-   Hauptseite zugestimmt hat, wird hier noch einmal gefragt -- richtig so,
-   er stimmt hier mehr zu.
-
-   Die Entscheidung liegt im localStorage, nicht in einem Cookie: sie geht
-   nie an einen Server, also braucht sie auch keinen. Das Ablegen der
-   eigenen Entscheidung ist nach § 25 Abs. 2 Nr. 2 TDDDG unbedingt
-   erforderlich und damit selbst nicht einwilligungspflichtig.
-   ====================================================================== */
+/* Same consent, cookie lifetime and withdrawal behavior as the main site. */
 (()=>{
-  const SCHLUESSEL='dm-eu-ads-consent-v1';
-  const K=window.DM_MESSUNG||{};
-  let geladen=false, offen=false, warGranted=false;
-
-  /* ---------------------------------------------------- Entscheidung lesen */
-  const lesen=()=>{
-    try{
-      const roh=localStorage.getItem(SCHLUESSEL);
-      if(!roh)return null;
-      const v=JSON.parse(roh);
-      return typeof v.analytics==='boolean'?v:null;
-    }catch(e){
-      /* Privater Modus oder gesperrter Speicher: gilt als "keine
-         Entscheidung". Das Banner fragt erneut, es wird nichts geladen,
-         nichts stürzt ab. */
-      return null;
-    }
-  };
-  const schreiben=ja=>{
-    try{localStorage.setItem(SCHLUESSEL,JSON.stringify({analytics:ja,ts:new Date().toISOString()}));}catch(e){}
-  };
-
-  /* --------------------------------------------------------- Ereignisse */
-  /* Was vor der Zustimmung passiert, wartet im Speicher. Stimmt jemand zu,
-     wird es nachgemeldet; stimmt niemand zu, verlässt es das Gerät nie. */
-  const warteschlange=[];
-  const senden=(name,werte)=>{
-    if(geladen&&window.gtag){window.gtag('event',name,werte||{});return;}
-    warteschlange.push([name,werte||{}]);
-  };
-  const nachmelden=()=>{while(warteschlange.length){const e=warteschlange.shift();window.gtag('event',e[0],e[1]);}};
-
-  const conversion=(label,werte)=>{
-    if(!K.ads||!label)return;
-    const w=Object.assign({send_to:K.ads+'/'+label},werte||{});
-    senden('conversion',w);
-  };
-
+  const engine=window.DMAnalyticsConsent;
+  if(!engine)return;
+  let bar=null,returnFocus=null;
   window.DM_TRACK={
-    lead:ort=>{
-      senden('generate_lead',{lead_type:'seo_opportunity_call',form_location:ort||'unbekannt',value:750,currency:'EUR'});
-      conversion(K.lead_label,{value:750,currency:'EUR'});
-    },
-    anruf:ort=>{
-      senden('phone_click',{form_location:ort||'unbekannt'});
-      conversion(K.ruf_label);
-    },
-    ereignis:senden
+    lead:place=>engine.track('generate_lead',{lead_type:'seo_opportunity_call',form_source:'seo-berlin-ads-'+(place||'unbekannt'),form_location:place||'unbekannt',value:750,currency:'EUR'}),
+    anruf:place=>engine.track('phone_click',{form_location:place||'unbekannt'}),
+    ereignis:(name,values)=>engine.track(name,values)
   };
-
-  /* ------------------------------------------------------------- gtag laden */
-  function laden(){
-    if(geladen||!K.ga4)return;
-    geladen=true;
-    window.dataLayer=window.dataLayer||[];
-    window.gtag=function(){window.dataLayer.push(arguments);};
-    /* Consent Mode v2. Analyse und Anzeigen-Messung sind erlaubt -- diese
-       Zeilen laufen ja nur, weil beidem zugestimmt wurde. Personalisierte
-       Werbung bleibt aus: die Seite baut keine Remarketing-Listen, und
-       Conversion-Messung braucht ad_personalization nicht. Wer das ändert,
-       muss den Banner-Text erweitern, nicht diese Zeile. */
-    window.gtag('consent','default',{
-      ad_storage:'granted', ad_user_data:'granted',
-      ad_personalization:'denied', analytics_storage:'granted'
-    });
-    window.gtag('js',new Date());
-    window.gtag('config',K.ga4,{anonymize_ip:true});
-    if(K.ads)window.gtag('config',K.ads);
-    const s=document.createElement('script');
-    s.async=true;
-    s.src='https://www.googletagmanager.com/gtag/js?id='+K.ga4;
-    document.head.appendChild(s);
-    nachmelden();
-  }
-
-  /* Widerruf. Ein geladenes gtag.js lässt sich nicht zurücknehmen, also wird
-     neu geladen -- sonst wäre der Widerruf nur behauptet. Die bis dahin
-     gesetzten _ga- und _gcl-Cookies werden gelöscht. */
-  function abschalten(){
-    try{
-      document.cookie.split(';').forEach(c=>{
-        const name=c.split('=')[0].trim();
-        if(!name||!/^(_ga|_gcl)/.test(name))return;
-        const host=location.hostname;
-        [host,'.'+host,'.'+host.split('.').slice(-2).join('.')].forEach(d=>{
-          document.cookie=name+'=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain='+d;
-        });
-        document.cookie=name+'=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
-      });
-    }catch(e){}
-    location.reload();
-  }
-
-  /* ----------------------------------------------------------- das Banner */
-  /* Vier Dinge müssen stimmen, damit das Banner nicht selbst zum Risiko wird:
-     nichts läuft vorher; Ablehnen ist genauso leicht wie Zustimmen (gleiche
-     Größe, gleiche Schrift, ein Klick); nichts ist vorangekreuzt -- es gibt
-     gar keine Kästchen; und der Widerruf steht dauerhaft in der Fußzeile.
-     Kein Wegklick-Kreuz: ein X wäre weder Zustimmung noch Ablehnung, das
-     Banner käme bei jedem Aufruf wieder. */
-  let leiste=null;
-  function bauen(){
-    if(leiste)return leiste;
-    leiste=document.createElement('div');
-    leiste.className='consent-bar';
-    leiste.innerHTML=
-      '<div class="consent-card" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text">'+
-        '<h2 id="consent-title">Dürfen wir mitzählen?</h2>'+
-        '<p id="consent-text">Wir möchten wissen, wie viele Menschen diese Seite besuchen und wie viele davon eine Anfrage stellen. Dafür nutzen wir Google Analytics und die Erfolgsmessung von Google Ads. Beides legt eine Kennung auf Ihrem Gerät ab. Sagen Sie nein, messen wir nichts — die Seite und das Formular funktionieren genauso.</p>'+
-        '<div class="consent-actions">'+
-          '<button type="button" class="button ghost" data-consent="nein">Ablehnen</button>'+
-          '<button type="button" class="button" data-consent="ja">Zustimmen</button>'+
-        '</div>'+
-        '<p class="consent-more">Mehr dazu in der <a href="https://digitalmovement.eu/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> und im <a href="https://digitalmovement.eu/impressum" target="_blank" rel="noopener">Impressum</a>.</p>'+
-      '</div>';
-    leiste.querySelector('[data-consent="ja"]').addEventListener('click',()=>{
-      schreiben(true); laden(); schliessen();
-    });
-    leiste.querySelector('[data-consent="nein"]').addEventListener('click',()=>{
-      const widerruf=warGranted||lesen()&&lesen().analytics===true;
-      schreiben(false); schliessen();
-      if(widerruf)abschalten();
-    });
-    document.body.appendChild(leiste);
-    return leiste;
-  }
-  function oeffnen(){
-    warGranted=!!(lesen()&&lesen().analytics);
-    bauen(); offen=true;
-    leiste.hidden=false;
-    document.body.classList.add('consent-open');
-    const ersterKnopf=leiste.querySelector('button');
-    if(ersterKnopf)setTimeout(()=>ersterKnopf.focus({preventScroll:true}),420);
-  }
-  function schliessen(){
-    offen=false;
-    if(leiste)leiste.hidden=true;
+  function close(){
+    if(bar)bar.hidden=true;
     document.body.classList.remove('consent-open');
+    returnFocus?.focus({preventScroll:true});
   }
-
+  function build(){
+    if(bar)return;
+    bar=document.createElement('div');bar.className='consent-bar';
+    bar.innerHTML=`<div class="consent-card" role="dialog" aria-modal="false" aria-labelledby="consent-title" aria-describedby="consent-text">
+      <h2 id="consent-title" tabindex="-1">Dürfen wir mitzählen?</h2>
+      <p id="consent-text">Wir nutzen Google Analytics von Google Ireland Limited, um Besuche, Zugriffe über Anzeigen und abgesendete Anfragen auszuwerten. Erst mit Ihrer Zustimmung setzt Google Analyse-Cookies und erhält Nutzungsdaten. Dabei können Daten in die USA gelangen. Ohne Zustimmung bleibt die Messung aus. Die Website und ihre Formulare funktionieren trotzdem.</p>
+      <div class="consent-actions"><button type="button" class="button ghost" data-consent="nein">Ablehnen</button><button type="button" class="button ghost" data-consent="ja">Zustimmen</button></div>
+      <p class="consent-more">Ihre Wahl gilt 180 Tage. Über „Cookie-Einstellungen“ unten auf jeder Seite können Sie sie jederzeit ändern oder widerrufen.</p>
+      <details class="consent-more"><summary>Welche Daten werden gespeichert?</summary><p>Google erhält Seitenaufrufe, Anzeigenkennzeichnungen, Geräteinformationen und Ereignisse wie eine erfolgreich gesendete Anfrage. Namen, Telefonnummern und E-Mail-Adressen aus Formularen senden wir nicht an Google Analytics. Analyse-Cookies (_ga, _ga_…) bleiben höchstens 180 Tage gespeichert. Ihre Auswahl speichern wir ohne Besucherkennung im Browser. Google Signals und personalisierte Werbung bleiben ausgeschaltet.</p></details>
+      <p class="consent-more">Mehr dazu in der <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> und im <a href="/impressum" target="_blank" rel="noopener">Impressum</a>.</p>
+    </div>`;
+    bar.querySelector('[data-consent="ja"]').addEventListener('click',()=>{engine.choose(true);close()});
+    bar.querySelector('[data-consent="nein"]').addEventListener('click',()=>{engine.choose(false);close()});
+    document.body.appendChild(bar);
+  }
+  function open(){
+    returnFocus=document.activeElement instanceof HTMLElement?document.activeElement:null;
+    build();bar.hidden=false;document.body.classList.add('consent-open');
+    bar.querySelector('#consent-title').focus({preventScroll:true});
+  }
+  document.addEventListener('click',e=>{if(e.target.closest('[data-consent-open]')){e.preventDefault();open()}});
+  window.addEventListener('dm:consent-decided',()=>{if(engine.read())close();else open()});
   document.addEventListener('click',e=>{
-    const a=e.target.closest('[data-consent-open]');
-    if(a){e.preventDefault();oeffnen();}
+    const a=e.target.closest('a[href^="tel:"]');if(!a)return;
+    const place=a.closest('.sticky')?'sticky':a.closest('footer')?'footer':a.closest('.lead-form')?'formular':'seite';
+    window.DM_TRACK.anruf(place);
   });
-
-  /* -------------------------------------------- Ereignisse der Seite messen */
-  /* Telefonklicks. Auf dieser Seite steht die Nummer an fünf Stellen; eine
-     Delegation am Dokument fasst alle, auch die im Sticky-Knopf, der erst
-     beim Scrollen erscheint. */
-  document.addEventListener('click',e=>{
-    const a=e.target.closest('a[href^="tel:"]');
-    if(!a)return;
-    const ort=a.closest('.sticky')?'sticky':a.closest('footer')?'footer':a.closest('.lead-form')?'formular':'seite';
-    window.DM_TRACK.anruf(ort);
-  });
-
-  /* Erste Eingabe in ein Formular. Trennt "niemand fängt an" von "alle brechen
-     ab" -- ohne diese Zahl ist bei null Anfragen nicht zu sagen, ob die
-     Besucher oder das Formular das Problem sind. */
-  document.querySelectorAll('.lead-form').forEach(f=>{
-    let gemeldet=false;
-    f.addEventListener('input',()=>{
-      if(gemeldet)return; gemeldet=true;
-      window.DM_TRACK.ereignis('form_start',{form_location:f.dataset.location});
+  document.querySelectorAll('.lead-form').forEach(form=>{
+    let sent=false;form.addEventListener('input',()=>{
+      if(!sent)sent=engine.track('form_start',{form_location:form.dataset.location});
     },{passive:true});
   });
-
-  /* ------------------------------------------------------------------ Start */
-  const entscheidung=lesen();
-  if(entscheidung&&entscheidung.analytics)laden();
-  else if(!entscheidung)oeffnen();
+  if(!engine.read())open();
 })();
 </script>
 </body>

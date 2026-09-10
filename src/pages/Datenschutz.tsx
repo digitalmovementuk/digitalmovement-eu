@@ -233,72 +233,81 @@ export function Datenschutz() {
 
           <Block title="9. Reichweitenmessung mit Google Analytics 4">
             <p>
-              Wir möchten wissen, wie viele Menschen diese Website besuchen und
-              welche Abschnitte gelesen werden. Dafür nutzen wir Google
-              Analytics 4 (Property „Digital Movement Germany“, Mess-ID
-              G-H2NP3R3KJT). Anbieter ist Google Ireland Limited, Gordon House,
-              Barrow Street, Dublin 4, Irland.
+              Wir nutzen Google Analytics 4, um Besuche, die Herkunft über Anzeigen
+              und erfolgreich gesendete Anfragen auszuwerten. Anbieter ist Google
+              Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland.
+              Verantwortlich ist die in Abschnitt 1 genannte Stelle.
             </p>
             <p>
-              <strong className="font-semibold text-ink">
-                Ohne Ihre Zustimmung wird nichts geladen.
-              </strong>{" "}
-              Solange Sie im Banner nicht zugestimmt haben, ruft diese Seite
-              keine Datei von Google ab, setzt keine Cookies und überträgt
-              nichts an Google — auch keine IP-Adresse. Erst Ihr Klick auf
-              „Zustimmen“ lädt das Messskript nach.
+              <strong className="font-semibold text-ink">Die Messung beginnt erst mit Ihrer Zustimmung.</strong>{" "}
+              Vorher werden weder das Google-Analytics-Skript noch Analyse-Cookies
+              geladen. Auch nach „Ablehnen“ bleiben sie aus. Die Zustimmung zur
+              Bearbeitung einer Anfrage ist davon getrennt: Sie können unsere
+              Formulare nutzen, ohne Google Analytics zu erlauben.
             </p>
             <p>
-              Stimmen Sie zu, speichert Google Analytics Cookies auf Ihrem
-              Gerät (unter anderem „_ga“ und „_ga_…“, Laufzeit bis zu zwei
-              Jahre) und erhebt: aufgerufene Seiten und Verweildauer, die
-              Seite, von der Sie kamen, Gerätetyp, Browser und Bildschirmgröße,
-              den ungefähren Ort auf Stadtebene sowie das Ereignis
-              „generate_lead“, wenn eine Anfrage über eines unserer Formulare
-              tatsächlich versendet wurde. Ihre IP-Adresse wird gekürzt
-              verarbeitet („anonymize_ip“) und nicht gespeichert. Wir erhalten
-              ausschließlich zusammengefasste Auswertungen und können Sie
-              darüber nicht persönlich identifizieren.
+              Nach Ihrer Zustimmung erfasst Google Seitenaufrufe, Nutzungsdauer,
+              verweisende Seiten und Anzeigenkennzeichnungen in der Adresse,
+              Geräte- und Browserinformationen sowie erfolgreiche Anfragen. Die
+              dabei übertragene Formularposition enthält keine eingegebenen
+              Namen, Telefonnummern, E-Mail-Adressen oder Nachrichtentexte.
+              Google erklärt, dass IP-Adressen aus der EU nur zur Ableitung des
+              ungefähren Orts verwendet und anschließend verworfen, nicht
+              protokolliert oder gespeichert werden.
             </p>
             <p>
-              Rechtsgrundlage für das Speichern und Auslesen auf Ihrem Gerät
-              ist Ihre Einwilligung nach § 25 Abs. 1 TDDDG, für die
-              anschließende Verarbeitung Art. 6 Abs. 1 lit. a DSGVO. Eine
-              Übermittlung in die USA an Google LLC ist nicht ausgeschlossen;
-              dort besteht kein dem europäischen entsprechendes
-              Datenschutzniveau, insbesondere ist ein Zugriff durch
-              US-Behörden möglich. Mit Ihrer Einwilligung willigen Sie auch in
-              diese Übermittlung ein (Art. 49 Abs. 1 lit. a DSGVO). Die Daten
-              werden nach 14 Monaten gelöscht.
+              Die Analyse-Cookies „_ga“ und „_ga_…“ haben hier eine Laufzeit von
+              höchstens 180 Tagen; weitere Besuche verlängern sie nicht automatisch.
+              Ihre Entscheidung speichern wir mit Zeitpunkt und Textversion unter
+              „dm-eu-consent-v2“ im lokalen Browserspeicher, ohne zusätzliche
+              Besucherkennung und ohne Übertragung dieses Eintrags an einen Server.
+              Nach 180 Tagen oder einer Änderung der Einwilligungsinformationen
+              fragen wir erneut. Ist der Browserspeicher gesperrt, gilt Ihre
+              Entscheidung nur auf der gerade geöffneten Seite.
             </p>
             <p>
-              <strong className="font-semibold text-ink">
-                Sie können jederzeit widerrufen.
-              </strong>{" "}
-              Unten in der Fußzeile öffnet „Cookie-Einstellungen“ dasselbe
-              Fenster wie beim ersten Besuch; ein Klick auf „Ablehnen“ beendet
-              die Messung sofort und löscht die gesetzten Cookies. Der Widerruf
-              wirkt für die Zukunft, die Rechtmäßigkeit der Verarbeitung bis
-              dahin bleibt unberührt.
+              Rechtsgrundlage für Analyse-Cookies und Zugriffe auf Ihr Gerät ist
+              § 25 Abs. 1 TDDDG; die anschließende Analyse beruht auf Art. 6 Abs. 1
+              lit. a DSGVO. Die Speicherung Ihrer Auswahl ist erforderlich, um
+              sie umzusetzen (§ 25 Abs. 2 Nr. 2 TDDDG). Google verarbeitet die
+              Analysedaten für uns auf Grundlage seiner Auftragsverarbeitungsbedingungen.
             </p>
             <p>
-              Ihre Entscheidung selbst merkt sich Ihr Browser lokal unter
-              „dm-eu-consent-v1“. Dieser Eintrag ist erforderlich, um Ihre Wahl
-              umzusetzen, wird an niemanden übertragen und lässt sich über die
-              Browsereinstellungen löschen. Darüber hinaus setzt diese Website
-              keine Werbe-Pixel und keine Social-Media-Plugins ein.
+              Daten können auch an Google LLC in den USA übermittelt werden.
+              Google beschreibt dafür seine Zertifizierung unter dem EU-US Data
+              Privacy Framework. Für Übermittlungen an die davon erfassten
+              Empfänger gilt der Angemessenheitsbeschluss nach Art. 45 DSGVO.
+              Soweit Google andere Übermittlungen auf Standardvertragsklauseln
+              stützt, gelten die in seinen Bedingungen beschriebenen Garantien
+              nach Art. 46 DSGVO. Weitere Informationen finden Sie in Googles{" "}
+              <a href="https://business.safety.google/intl/de/adsdatatransfers/" target="_blank" rel="noopener noreferrer" className={linkCls}>
+                Angaben zu internationalen Datenübermittlungen
+              </a>.
             </p>
             <p>
-              Mehr dazu in der{" "}
-              <a
-                href="https://policies.google.com/privacy?hl=de"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linkCls}
-              >
-                Datenschutzerklärung von Google
-              </a>
-              .
+              Nutzer- und ereignisbezogene Daten werden in unserer GA4-Property
+              nach 14 Monaten gelöscht. Neue Aktivitäten setzen diese Frist
+              nicht zurück. Zusammengefasste Standardberichte unterliegen dieser
+              Frist nicht. Google Signals, Werbepersonalisierung und die Nutzung
+              dieser Analysedaten für Remarketing sind ausgeschaltet. Auf der
+              Website laden wir keinen Meta-Pixel. Ein Facebook-Sofortformular
+              liegt bei Meta; seine Absendung wird nicht als Website-Anfrage
+              an Google Analytics übertragen.
+            </p>
+            <p>
+              <strong className="font-semibold text-ink">Widerruf jederzeit:</strong>{" "}
+              Über „Cookie-Einstellungen“ in der Fußzeile öffnen Sie die Auswahl
+              erneut. „Ablehnen“ beendet die Messung, entfernt die Analyse-Cookies
+              und gilt auch in anderen geöffneten Tabs dieser Website. Der
+              Widerruf wirkt für die Zukunft; bis dahin rechtmäßig erfolgte
+              Verarbeitungen bleiben davon unberührt. Sie können Ihre lokalen
+              Browserdaten zusätzlich in den Browsereinstellungen löschen.
+            </p>
+            <p>
+              Weitere Informationen: Googles{" "}
+              <a href="https://support.google.com/analytics/answer/12017362?hl=de" target="_blank" rel="noopener noreferrer" className={linkCls}>Angaben zur Verarbeitung europäischer Daten</a>{" "}
+              und die{" "}
+              <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer" className={linkCls}>Datenschutzerklärung von Google</a>.
             </p>
           </Block>
 
@@ -312,7 +321,7 @@ export function Datenschutz() {
           </Block>
 
           <Block title="11. Stand dieser Erklärung">
-            <p>Stand: 24. August 2026.</p>
+            <p>Stand: 11. September 2026.</p>
           </Block>
         </div>
       </div>

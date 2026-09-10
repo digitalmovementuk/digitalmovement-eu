@@ -202,22 +202,28 @@ async function main() {
       console.log("postbuild: lead destination present in the bundle");
     }
 
-    // Ohne Mess-ID im Bündel misst die Seite gar nichts, und man sieht es
+    // Ohne Mess-ID in der ausgelieferten Seite misst sie gar nichts, und man sieht es
     // ihr nicht an: sie lädt, das Banner erscheint, „Zustimmen" tut etwas —
     // nur kommt nirgends ein Treffer an. Genau in diesem Zustand lief
     // digitalmovement.eu bis zum 24.08.2026, weil hier nur eine Warnung
     // stand und Warnungen im Bau-Protokoll untergehen. Seit dem 25.08.2026
     // bricht der Bau ab. Wer bewusst ohne Messung bauen will (z. B. ein
     // Vorschau-Bau ohne .env), setzt ALLOW_NO_GA4=1.
-    if (/G-[A-Z0-9]{6,}/.test(bundle)) {
-      console.log("postbuild: GA4 measurement ID present in the bundle");
+    const consentTag = homeHtml.match(/<script\b[^>]*src="\/analytics-consent\.js"[^>]*data-measurement-id="(G-[A-Z0-9]{6,})"[^>]*>/);
+    const consentEngineExists = existsSync(join(DIST, "analytics-consent.js"));
+    if (consentTag && consentEngineExists) {
+      const campaignHtml = await readFile(join(DIST, "mehr-sales-für-dein-business", "index.html"), "utf8");
+      if (!campaignHtml.includes(`data-measurement-id="${consentTag[1]}"`)) {
+        fail("the campaign page and homepage must use the same GA4 measurement ID.");
+      }
+      console.log("postbuild: shared consent engine and matching GA4 measurement IDs present");
     } else if (process.env.ALLOW_NO_GA4 === "1") {
       console.warn(
-        "postbuild: WARNING — no GA4 measurement ID in the bundle. Building anyway because ALLOW_NO_GA4=1.",
+        "postbuild: WARNING — no shared consent engine or GA4 measurement ID. Building anyway because ALLOW_NO_GA4=1.",
       );
     } else {
       fail(
-        "no GA4 measurement ID reached the bundle — VITE_GA4_ID is unset (see .env.example; the German property is G-H2NP3R3KJT). Set it, or set ALLOW_NO_GA4=1 to build without measurement deliberately.",
+        "the shared consent engine or GA4 measurement ID is missing — check public/analytics-consent.js and VITE_GA4_ID (the German property is G-H2NP3R3KJT). Set ALLOW_NO_GA4=1 only to build without measurement deliberately.",
       );
     }
   }

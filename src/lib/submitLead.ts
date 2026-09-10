@@ -1,3 +1,4 @@
+import { trackAnalytics } from "./analytics";
 import { business } from "../content";
 import { CONSENT_TEXT } from "./consentText";
 
@@ -272,7 +273,5 @@ async function post(url: string, body: Record<string, unknown>): Promise<LeadRes
  * the property would sit at zero key events looking perfectly healthy.
  */
 export function trackLead(source: string) {
-  const w = window as unknown as { gtag?: (...args: unknown[]) => void };
-  if (typeof w.gtag !== "function") return;
-  w.gtag("event", "generate_lead", { form_source: source });
+  trackAnalytics("generate_lead", { form_source: source });
 }
