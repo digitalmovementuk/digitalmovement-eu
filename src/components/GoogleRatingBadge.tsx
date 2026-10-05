@@ -81,7 +81,7 @@ export function GoogleRatingCard() {
       <GoogleGIcon />
       <div className="leading-tight">
         <p className="text-[12px] font-semibold text-ink">Google-Bewertungen</p>
-        <p className="mt-0.5 text-[11px] text-ink-muted">Digital Movement Australia</p>
+        <p className="mt-0.5 text-[11px] text-ink-muted">Digital Movement · international</p>
       </div>
     </a>
   );

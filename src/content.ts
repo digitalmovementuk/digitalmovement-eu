@@ -238,7 +238,7 @@ export const hero = {
   /* Belegzeile: Bewertungs-Pille + zwei Kennzahlen. */
   reviewsHref: googleRating.reviewsUrl,
   reviewsRating: "Google",
-  reviewsText: "· Bewertungen aus Australien",
+  reviewsText: "· internationale Bewertungen",
   stats: [
     { value: "Berlin", label: "Standort" },
     { value: "Deutschland", label: "Betreuung" },
