@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { business, hero } from "../content";
 import { submitLead, trackLead } from "../lib/submitLead";
@@ -182,6 +183,10 @@ export function Hero() {
             ))}
           </p>
 
+          <a className="mobile-hero-cta" href="#contact">
+            {hero.formCta}<ArrowRight size={18} aria-hidden="true" />
+          </a>
+
           <div className="findrow">
             <span className="lab">{hero.findLabel}</span>
             <div className="applogos">
@@ -196,9 +201,6 @@ export function Hero() {
 
           <div className="hero-proof">
             <a className="gwidget" href={hero.reviewsHref} target="_blank" rel="noopener noreferrer">
-              <span className="gstars" aria-hidden>
-                ★★★★★
-              </span>
               <span className="gtxt">
                 <b>{hero.reviewsRating}</b> {hero.reviewsText}
               </span>

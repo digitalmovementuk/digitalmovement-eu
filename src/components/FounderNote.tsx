@@ -16,9 +16,10 @@ export function FounderNote() {
           <TeamPortrait person={person} /><h3>{person.name}</h3><p className="dm-team-role">{person.role}</p>
           <p className="dm-team-description">{person.description}</p>
           <div className="dm-team-contact">
-            <a href={person.phoneHref} aria-label={`${person.name} anrufen: ${person.phone}`}><Phone size={17} aria-hidden="true" />{person.phone}</a>
+            {person.key === "johannes" && <a href={person.phoneHref} aria-label={`${person.name} anrufen: ${person.phone}`}><Phone size={17} aria-hidden="true" />{person.phone}</a>}
             <a href={`mailto:${person.email}`} aria-label={`E-Mail an ${person.name}: ${person.email}`}><Mail size={17} aria-hidden="true" />{person.email}</a>
-            {person.whatsappHref && <a href={person.whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="Johannes Kaluc per WhatsApp schreiben (neuer Tab)"><WhatsAppIcon width="17" height="17" />Johannes per WhatsApp</a>}
+            {person.whatsappHref && <a href={person.whatsappHref} target="_blank" rel="noopener noreferrer" aria-label={`${person.key === "johannes" ? "Johannes" : "Raoul"} per WhatsApp schreiben (neuer Tab)`}><WhatsAppIcon width="17" height="17" />{person.key === "johannes" ? "Johannes" : "Raoul"} per WhatsApp</a>}
+            {person.key === "raoul" && <a href="https://www.linkedin.com/in/raoulmueller" target="_blank" rel="noopener noreferrer">Raouls Profil auf LinkedIn</a>}
           </div>
         </article>
       </Reveal>)}</div>

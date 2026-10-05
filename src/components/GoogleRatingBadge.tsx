@@ -80,29 +80,8 @@ export function GoogleRatingCard() {
     >
       <GoogleGIcon />
       <div className="leading-tight">
-        <p className="text-[11px] sm:text-[12px] font-semibold text-ink/80">
-          Google-Bewertung
-        </p>
-        <div className="mt-0.5 flex items-center gap-1.5">
-          <span className="text-[16px] sm:text-[17px] font-bold text-ink tracking-tight tabular-nums">
-            5,0
-          </span>
-          <div className="flex gap-[2px] text-[#F5A623]">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <StarFilled key={i} />
-            ))}
-          </div>
-        </div>
-        {/* Die Bewertungen wurden von Digital Movement erarbeitet, nicht von
-            der deutschen Einheit. Deshalb steht hier die Marke und nicht
-            "unsere Kunden" — eine Bewertung ohne Zuordnung liest sich als
-            Bewertung genau dieses Unternehmens, und was man nicht belegen
-            kann, ist nach § 5 UWG eine irreführende Angabe, auch wenn es so
-            nicht gemeint war. Aus demselben Grund gibt es dazu kein
-            aggregateRating im Markup (siehe src/seo.tsx). Nicht kürzen. */}
-        <p className="mt-0.5 text-[10px] sm:text-[10.5px] text-ink-muted">
-          über 100 Bewertungen von Digital Movement
-        </p>
+        <p className="text-[12px] font-semibold text-ink">Google-Bewertungen</p>
+        <p className="mt-0.5 text-[11px] text-ink-muted">Digital Movement Australia</p>
       </div>
     </a>
   );

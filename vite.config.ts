@@ -99,6 +99,10 @@ function internalOverview(): Plugin {
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), inlineCss(), internalOverview()],
   base: BASE,
+  ssgOptions: {
+    // Let the browser select the fonts actually used on each page.
+    beastiesOptions: { preloadFonts: false },
+  },
   define: {
     /**
      * Build date, baked in at compile time and emitted as `dateModified` in

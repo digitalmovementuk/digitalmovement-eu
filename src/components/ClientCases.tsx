@@ -512,7 +512,7 @@ function CaseRow({
 }) {
   return (
     <motion.li
-      initial={{ opacity: 0, y: 32 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       viewport={{ once: true, amount: 0.25 }}
@@ -616,7 +616,7 @@ function CaseRow({
           <div className="flex flex-1 flex-col justify-between gap-6 p-7 sm:p-10 md:p-12 lg:p-14">
             <div className="flex items-start justify-between gap-4">
               <span className="text-[10.5px] font-bold uppercase tracking-[0.18em] text-white/85">
-                Ergebnis
+                Projekt
               </span>
               <span className="rounded-full bg-white/15 text-white text-[10.5px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 border border-white/20">
                 {String(index + 1).padStart(2, "0")} / {String(caseStudies.length).padStart(2, "0")}
@@ -627,7 +627,7 @@ function CaseRow({
               <p
                 className="text-white"
                 style={{
-                  fontSize: "clamp(40px, 5vw, 76px)",
+                  fontSize: "clamp(28px, 3.2vw, 48px)",
                   lineHeight: "0.9",
                   letterSpacing: "-0.045em",
                   fontWeight: 700,

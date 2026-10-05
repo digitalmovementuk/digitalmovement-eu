@@ -100,7 +100,7 @@ export function Services() {
               Wortlaut unverändert, nur der Knoten ist ein anderer. */}
           <Reveal delay={0.1}>
             <p
-              className="mt-2 balance text-ink/55"
+              className="mt-2 balance text-ink-muted"
               style={{ fontSize: "clamp(15px, 1.6vw, 23.5px)", lineHeight: 1.25, fontWeight: 700, letterSpacing: "-0.02em" }}
             >
               {servicesIntro.headlineSub}

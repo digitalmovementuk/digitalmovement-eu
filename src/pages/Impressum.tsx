@@ -1,5 +1,5 @@
 import { business } from "../content";
-import { Seo, breadcrumbs } from "../seo";
+import { Seo, breadcrumbs, IHK_MEMBERSHIP_NUMBER } from "../seo";
 
 /**
  * Pflichtangaben nach § 5 DDG und § 18 Abs. 2 MStV.
@@ -68,6 +68,10 @@ export function Impressum() {
 
           <Block title="Umsatzsteuer">
             <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG: wird nachgetragen.</p>
+          </Block>
+
+          <Block title="IHK-Mitgliedschaft">
+            <p>IHK Berlin · Mitgliedsnummer {IHK_MEMBERSHIP_NUMBER}</p>
           </Block>
 
           <Block title="Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV">

@@ -164,7 +164,7 @@ function ProcessStep({
 
   return (
     <motion.li
-      style={{ opacity, y }}
+      style={{ y }}
       transition={{ ease: EASE_OUT }}
       className="relative pl-10 md:pl-0 md:text-center"
     >

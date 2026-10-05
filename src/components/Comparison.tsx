@@ -155,7 +155,7 @@ export function Comparison() {
                        umgesetzt — der Effekt wäre denselben Aufwand nicht
                        wert, das Risiko einer verrutschten Zeile schon gar
                        nicht. */
-                    initial={{ opacity: 0 }}
+                    initial={false}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.3 }}
                     transition={{ duration: 0.45, delay: 0.06 * i, ease: EASE_OUT }}

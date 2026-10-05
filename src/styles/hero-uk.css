@@ -824,12 +824,23 @@
   }
 }
 
-/* The desktop hero keeps the original 62svh minimum so the next section
-   is visible. Content can grow naturally on shorter screens. */
+.uk-hero .mobile-hero-cta{display:none}
+
+/* Mobile offers one clear action to the full contact form below. */
 @media(max-width:760px){
-  .uk-hero{min-height:100svh}
+  .uk-hero{min-height:calc(var(--header-h) + (100svh - var(--header-h))*0.66);padding-top:calc(var(--header-h) + 12px);padding-bottom:24px}
+  .uk-hero .lead-form{display:none}
+  .uk-hero .lede{font-size:16px;line-height:1.45;margin-bottom:14px}
+  .uk-hero .mobile-hero-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:999px;background:var(--orange);color:var(--ink-950);font-weight:700;font-size:15px;line-height:1.4;margin-bottom:14px}
+  .uk-hero .hero-proof{display:flex;flex-direction:column;gap:0;margin-top:14px;padding-top:12px}
+  .uk-hero .hero-proof>.gwidget,.uk-hero .hero-proof>.hstat{display:none}
   .uk-hero .form-field label,.uk-hero .form-note{text-align:center}
-  .uk-hero .hero-proof>.dm-hero-team{margin-top:12px}
+  .uk-hero .hero-proof>.dm-hero-team{margin-top:0;padding:10px 14px;gap:12px}
+  .uk-hero .dm-hero-team .dm-team-portrait{width:44px;height:44px}
+}
+@media(max-width:380px){
+  .uk-hero .applogos{gap:8px}
+  .uk-hero .app{font-size:13px;gap:5px}
 }
 @media(min-width:1040px){
   .uk-hero .hero-proof{

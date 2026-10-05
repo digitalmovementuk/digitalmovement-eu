@@ -56,20 +56,20 @@ export function Problem() {
           </Reveal>
         </div>
 
-        <ul className="mt-12 sm:mt-14 grid gap-4 sm:gap-5 md:grid-cols-2">
+        <div className="mt-12 sm:mt-14 grid gap-4 sm:gap-5 md:grid-cols-2">
           {problem.points.map((p, i) => (
             <Reveal key={p.quote} delay={0.06 + i * 0.05}>
-              <li className="h-full rounded-[20px] border border-white/10 bg-white/[0.045] p-6 sm:p-7">
+              <article className="h-full rounded-[20px] border border-white/10 bg-white/[0.045] p-6 sm:p-7">
                 <p className="text-[17px] sm:text-[18.5px] font-bold leading-snug text-white">
                   „{p.quote}“
                 </p>
                 <p className="mt-3 text-[14.5px] sm:text-[15.5px] leading-relaxed text-white/65">
                   {p.body}
                 </p>
-              </li>
+              </article>
             </Reveal>
           ))}
-        </ul>
+        </div>
 
         <Reveal delay={0.3}>
           <div className="mt-10 sm:mt-12 rounded-[20px] border border-white/10 bg-white/[0.03] p-6 sm:p-8">

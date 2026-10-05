@@ -126,7 +126,7 @@ export function AgencySnapshot() {
                   <span aria-hidden className="h-px flex-1 bg-ink/[0.07]" />
                   <span
                     aria-hidden
-                    className="ml-4 select-none font-semibold italic leading-none text-ink/[0.09]"
+                    className="ml-4 select-none font-semibold italic leading-none text-ink-muted"
                     style={{ fontSize: "clamp(40px, 3.4vw, 52px)", marginBottom: "-0.12em" }}
                   >
                     {item.index}

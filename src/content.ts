@@ -1,3 +1,4 @@
+import contentRevisions from "./content-revisions.json";
 import { team } from "./team";
 
 /**
@@ -111,8 +112,8 @@ export const business = {
   emailHref: "mailto:office@digitalmovement.eu",
   phone: team[0].phone,
   phoneHref: team[0].phoneHref,
-  whatsapp: team[0].phone,
-  whatsappHref: team[0].whatsappHref,
+  whatsapp: "+49 176 82360647",
+  whatsappHref: "https://wa.me/4917682360647",
   /* Als Objekt, weil Impressum und Datenschutzerklärung die Zeilen
      einzeln setzen müssen. `addressLine` ist dieselbe Anschrift für
      Fließtext und strukturierte Daten. */
@@ -129,8 +130,8 @@ export const business = {
  * Johannes ist der Hauptkontakt für Telefon und WhatsApp (11.09.2026).
  */
 export const contactChannels = {
-  phoneE164: "+491605774845" as string | null,
-  whatsappE164: "+491605774845" as string | null,
+  phoneE164: "+4916096897003" as string | null,
+  whatsappE164: "+4917682360647" as string | null,
   /** Wohin „Rückruf“ scrollt. */
   formTarget: "#contact",
 };
@@ -192,7 +193,7 @@ export const hero = {
      ------------------------------------------------------------------ */
 
   /* Überzeile mit dem Strich davor („ilabel“ im englischen System). */
-  label: "SEO-Agentur",
+  label: "SEO-Agentur in Berlin",
 
   /* Die Überschrift ist dreiteilig, weil der letzte Teil den
      Farbverlaufs-Strich untergelegt bekommt. Der hervorgehobene Teil trägt
@@ -208,18 +209,18 @@ export const hero = {
 
      `headlineNoBreak` bekommt white-space:nowrap, damit „Wir garantieren“
      als Einheit stehen bleibt. */
-  headlineNoBreak: "Wir garantieren",
-  headlineRest: " echte Ergebnisse für ",
-  headlineAccent: "weniger Kosten.",
+  headlineNoBreak: "SEO-Agentur",
+  headlineRest: " Berlin. ",
+  headlineAccent: "Anfragen gewinnen.",
 
   /* Der Vorspann sind drei kurze Sätze, jeder auf einer eigenen Zeile —
      so von RMU vorgegeben. Sie laufen deshalb nicht als Fließtext, sondern
      als drei Blöcke innerhalb desselben `.lede`-Absatzes; Schriftgrad,
      Farbe und Zeilenabstand bleiben die der Vorlage. */
   ledeLines: [
-    "Wir generieren Anfragen für Ihren Betrieb.",
-    "Wir sind Deutschlands beste Value-for-Money-Agentur.",
-    "Bis zu 10x mehr Marketing-Wert als Wettbewerber.",
+    "Wir sind Ihre SEO-Agentur in Berlin.",
+    "Wir verbinden SEO und KI-Suche.",
+    "Starten Sie mit einer kostenlosen Website-Analyse.",
   ],
 
   /* Zeile „Wir generieren Anfragen über“ mit den vier Marken. Die Dateinamen sind
@@ -236,14 +237,11 @@ export const hero = {
 
   /* Belegzeile: Bewertungs-Pille + zwei Kennzahlen. */
   reviewsHref: googleRating.reviewsUrl,
-  reviewsRating: "5,0",
-  reviewsText: "· über 100 Bewertungen · Digital Movement",
+  reviewsRating: "Google",
+  reviewsText: "· Bewertungen aus Australien",
   stats: [
-    { value: "300+", label: "Kunden" },
-    /* Schmales Leerzeichen vor dem Prozentzeichen (U+202F): deutsche
-       Rechtschreibung verlangt hier ein Leerzeichen, ein normales würde
-       am Zeilenende umbrechen. */
-    { value: "92 %", label: "Kundenbindung" },
+    { value: "Berlin", label: "Standort" },
+    { value: "Deutschland", label: "Betreuung" },
   ],
 
   /* ---------- Anfrageformular ---------- */
@@ -433,48 +431,43 @@ export const results = [
    ============================================================ */
 
 export const processIntro = {
-  eyebrow: "Ihre ersten 90 Tage mit uns",
+  eyebrow: "Ihr Projekt mit uns",
   headlineMain: "Wie läuft Ihr Projekt ab?",
   intro:
-    "Fünf Meilensteine. Verbindlich, mit professionellem Projektmanagement von Senior-Beratern.",
+    "Vom ersten Gespräch bis zum monatlichen Bericht.",
 };
 
 export const processSteps = [
   {
-    n: "01",
-    eta: "Tag 1",
-    title: "Audit & Kickoff",
-    body:
-      "Diagnose Ihrer aktuellen SEO-Performance. Wettbewerbs-Analyse. Chancen für Umsatzwachstum mit einer neuen SEO-optimierten Webseite. 30 Minuten Screen-Share mit Johannes Kaluc.",
+    "n": "01",
+    "eta": "Phase 01",
+    "title": "Website prüfen, Ziele klären",
+    "body": "Wir analysieren Ihre bestehende Website kostenlos und besprechen, welche Leistungen und Anfragen für Ihr Unternehmen zählen."
   },
   {
-    n: "02",
-    eta: "Tag 1–30",
-    title: "Development",
-    body:
-      "Tiefenanalyse der relevanten Suchbegriffe Ihrer Zielgruppe. Erstellung der neuen Seiten für jeden der Suchbegriffe. Website-Design. Hochladen bei Google und Beginn des Rankings.",
+    "n": "02",
+    "eta": "Phase 02",
+    "title": "Die nächsten Schritte festlegen",
+    "body": "Wir ordnen die Aufgaben nach Priorität und planen, welche technischen Verbesserungen und Inhalte Ihre Website braucht."
   },
   {
-    n: "03",
-    eta: "Tag 30",
-    title: "Launch",
-    body:
-      "Tracking live. Neue Zielseiten online. Die ersten Seiten fangen an, im Google-Ranking zu steigen.",
+    "n": "03",
+    "eta": "Phase 03",
+    "title": "Verbesserungen umsetzen",
+    "body": "Wir setzen die vereinbarten Maßnahmen um – an der Technik, den Inhalten und der Gestaltung Ihrer Website."
   },
   {
-    n: "04",
-    eta: "Tag 60",
-    title: "Erste Seite-1-Platzierungen",
-    body:
-      "Erste kommerzielle Suchanfragen erreichen Seite 1. Pipeline füllt sich. Monatlicher Performance-Report.",
+    "n": "04",
+    "eta": "Phase 04",
+    "title": "Monatlich berichten",
+    "body": "Sie erhalten jeden Monat einen Bericht über die erledigten Arbeiten und die Entwicklung Ihrer Anfragen."
   },
   {
-    n: "05",
-    eta: "Tag 90",
-    title: "8× Pipeline",
-    body:
-      "Gemessene Steigerung qualifizierter Anfragen. Ab hier monatliche Optimierung.",
-  },
+    "n": "05",
+    "eta": "Phase 05",
+    "title": "Prüfen und weiter verbessern",
+    "body": "Wir werten die Ergebnisse aus und passen die nächsten Schritte daran an. So bleibt klar, woran wir arbeiten und warum."
+  }
 ];
 
 /* ============================================================
@@ -503,9 +496,9 @@ export type CaseStudy = {
 
 export const casesIntro = {
   eyebrow: "Erfolgsgeschichten",
-  headlineMain: "8x Umsatzwachstum unserer Kunden",
-  headlineSub: "und mehr.",
-  intro: "Eine Auswahl von Kunden aus dem Jahr 2026.",
+  headlineMain: "Kundenwebsites aus unserer Arbeit",
+  headlineSub: "",
+  intro: "Von Beratung und Gebäudereinigung bis zur Villenvermietung: Sehen Sie sich die Websites an und erfahren Sie, welche Leistungen wir für die jeweiligen Projekte übernommen haben.",
   visitLabel: "Website ansehen",
 };
 
@@ -518,14 +511,9 @@ export const caseStudies: CaseStudy[] = [
     location: "Köln",
     services: ["SEO", "Webdesign", "Content"],
     timeline: "2026",
-    headline: "SEO-Architektur trägt das B2B-Pipeline-Wachstum",
-    body:
-      "Customer-Excellence-Plattform. Sunset-Hero plus Service-Karten. Die SEO-Architektur trägt das B2B-Pipeline-Wachstum.",
-    metrics: [
-      { value: "19", label: "Standortseiten" },
-      { value: "Seite 1", label: "Google-Ranking" },
-      { value: "2026", label: "Relaunch" },
-    ],
+    headline: "CEx: Customer Excellence aus Köln",
+    body: "Für die Customer-Excellence-Plattform CEx haben wir SEO, Webdesign und Inhalte umgesetzt.",
+    metrics: [{"value": "Köln", "label": "Standort"}, {"value": "SEO", "label": "Leistung"}, {"value": "2026", "label": "Projekt"}],
     url: "https://cex.koeln",
   },
   {
@@ -534,15 +522,10 @@ export const caseStudies: CaseStudy[] = [
     industry: "Villenvermietung",
     location: "Bali",
     services: ["SEO", "Webdesign"],
-    timeline: "90 Tage",
-    headline: "Von 0 auf Seite 1 in 90 Tagen",
-    body:
-      "Von 0 auf Seite 1 für „villa rental bali“ in 90 Tagen — kontinuierliche Direktbuchungen statt Plattform-Kommission.",
-    metrics: [
-      { value: "90", label: "Tage bis Seite 1" },
-      { value: "Direkt", label: "Buchungen ohne Plattform" },
-      { value: "0 %", label: "Plattform-Kommission" },
-    ],
+    timeline: "2026",
+    headline: "Azura Living Bali: Villen zur Miete",
+    body: "Für die Villenvermietung Azura Living Bali haben wir die Website gestaltet und die Suchmaschinenoptimierung übernommen.",
+    metrics: [{"value": "Bali", "label": "Standort"}, {"value": "SEO", "label": "Leistung"}, {"value": "2026", "label": "Projekt"}],
     url: "https://azuralivingbali.com",
   },
   {
@@ -552,14 +535,9 @@ export const caseStudies: CaseStudy[] = [
     location: "Bali",
     services: ["Webdesign", "Performance Marketing"],
     timeline: "2026",
-    headline: "8× Anfragen-Pipeline",
-    body:
-      "Premium-Villenmarke. Komplettes Website-Re-Design plus Performance-Marketing-Sprint, 8× Anfragen-Pipeline.",
-    metrics: [
-      { value: "8×", label: "Anfragen-Pipeline" },
-      { value: "Neu", label: "Website-Design" },
-      { value: "2026", label: "Sprint" },
-    ],
+    headline: "ADDRESS BALI: Eine Marke für Premiumvillen",
+    body: "Für ADDRESS BALI haben wir Webdesign und Performance-Marketing umgesetzt.",
+    metrics: [{"value": "Bali", "label": "Standort"}, {"value": "Webdesign", "label": "Leistung"}, {"value": "2026", "label": "Projekt"}],
     url: "https://addressbali.com",
   },
   {
@@ -568,15 +546,10 @@ export const caseStudies: CaseStudy[] = [
     industry: "Finanzberatung",
     location: "London",
     services: ["SEO", "Content", "Webdesign"],
-    timeline: "5 Monate",
-    headline: "5x mehr Beratungen über Google",
-    body:
-      "Die Marke hatte klare Expertise, aber zu wenig Sichtbarkeit. Wir bauten Themenautorität auf und lieferten neue Seiten für die richtigen Suchbegriffe.",
-    metrics: [
-      { value: "5x", label: "Beratungen" },
-      { value: "7x", label: "Organischer Traffic" },
-      { value: "#1", label: "12 wichtige Suchanfragen" },
-    ],
+    timeline: "2026",
+    headline: "Cunos: Finanzberatung in London",
+    body: "Für die Londoner Finanzberatung Cunos haben wir die Website gestaltet, Inhalte erstellt und SEO umgesetzt.",
+    metrics: [{"value": "London", "label": "Standort"}, {"value": "SEO", "label": "Leistung"}, {"value": "2026", "label": "Projekt"}],
     url: "https://cunos.co.uk",
   },
   {
@@ -585,15 +558,10 @@ export const caseStudies: CaseStudy[] = [
     industry: "Gewerbereinigung",
     location: "Manchester",
     services: ["SEO", "Webdesign", "Google Ads"],
-    timeline: "4 Monate",
-    headline: "13x mehr Anfragen pro Monat",
-    body:
-      "Starke Bewertungen, aber kaum Präsenz in der Google-Suche, weil es für keine Leistung eine eigene Seite gab. Wir bauten die Website neu, optimierten für Google und KI-Suche, ordneten die Service-Struktur — und schon nach wenigen Wochen standen gewerbliche Suchbegriffe auf Google Platz 1.",
-    metrics: [
-      { value: "13x", label: "Mehr Anfragen" },
-      { value: "60", label: "Tage bis Seite 1" },
-      { value: "8x", label: "ROAS" },
-    ],
+    timeline: "2026",
+    headline: "Fantastic Finish: Gewerbliche Reinigung in Manchester",
+    body: "Für Fantastic Finish haben wir Webdesign, Suchmaschinenoptimierung und Google Ads übernommen.",
+    metrics: [{"value": "Manchester", "label": "Standort"}, {"value": "SEO", "label": "Leistung"}, {"value": "2026", "label": "Projekt"}],
   },
 ];
 
@@ -651,43 +619,43 @@ export const testimonials: Review[] = [
    ============================================================ */
 
 export const comparison = {
-  eyebrow: "Digital Movement vs. Andere",
+  eyebrow: "Zusammenarbeit",
   headlineMain: "Was machen wir anders?",
   headlineSub: "",
   intro: "Sechs Punkte. Damit Sie wissen, worauf Sie sich einlassen. Bevor Sie sich einlassen.",
-  columns: { topic: "Thema", other: "Andere Agenturen", neo: "Digital Movement" },
+  columns: {"topic": "Kriterium", "other": "Darauf sollten Sie achten", "neo": "Bei Digital Movement"},
   rows: [
-    {
-      topic: "Vertragslaufzeit",
-      other: "12 oder 24 Monate, schwer zu beenden",
-      neo: "90-Tage-Sprint, monatlich verlängerbar",
-    },
-    {
-      topic: "Reporting",
-      other: "Eitelkeitsmetriken in 30-seitigen PDFs",
-      neo: "Anfragen, Umsatz, Quellen — eine Seite",
-    },
-    {
-      topic: "Ansprechpartner",
-      other: "Account-Manager, der Excel vorliest",
-      neo: "Johannes und Raoul, direkt erreichbar",
-    },
-    {
-      topic: "Preisgestaltung",
-      other: "Stundensätze, Setup-Fees, Mehrkosten",
-      neo: "Festpreis, alles inklusive, transparent",
-    },
-    {
-      topic: "Ziel",
-      other: "Mehr Klicks, mehr Reichweite",
-      neo: "Mehr qualifizierte Anfragen",
-    },
-    {
-      topic: "Lock-in",
-      other: "Daten und Accounts beim Wechsel verloren",
-      neo: "Sie besitzen alles vom ersten Tag",
-    },
-  ],
+  {
+    "topic": "Vertragslaufzeit",
+    "other": "Laufzeit und Kündigungsbedingungen prüfen.",
+    "neo": "Die Laufzeit vereinbaren wir im Angebot."
+  },
+  {
+    "topic": "Berichte",
+    "other": "Rhythmus und Inhalt der Berichte klären.",
+    "neo": "Monatlicher Bericht über Arbeiten und Anfragen."
+  },
+  {
+    "topic": "Ansprechpartner",
+    "other": "Zuständigkeit und Erreichbarkeit klären.",
+    "neo": "Johannes und Raoul sind persönlich erreichbar."
+  },
+  {
+    "topic": "Preis",
+    "other": "Leistungsumfang und Gesamtkosten prüfen.",
+    "neo": "Umfang und Kosten vereinbaren wir vor Arbeitsbeginn im Angebot."
+  },
+  {
+    "topic": "Ziel",
+    "other": "Festlegen, welche Anfragen Ihrem Geschäft helfen.",
+    "neo": "Unser Ziel: qualifizierte Anfragen, die zu Ihrem Angebot passen."
+  },
+  {
+    "topic": "Website und Konten",
+    "other": "Eigentum und Zugänge vorab klären.",
+    "neo": "Ihre Website, Daten und Konten bleiben bei Ihnen."
+  }
+],
 };
 
 /* ============================================================
@@ -858,16 +826,20 @@ export const sticky = {
 
 export const faqs = [
   {
+    q: "Wie arbeiten SEO und GEO zusammen?",
+    a: "SEO richtet Ihre Website auf klassische Suchergebnisse aus. GEO ergänzt diese Arbeit mit Blick auf Antworten in KI-Suchsystemen. Wir verbinden beides durch verständliche Inhalte, klare Seitenstrukturen und belegbare Aussagen über Ihr Angebot. Ziel ist, dass potenzielle Kunden Ihre Leistungen auch dann nachvollziehen können, wenn ihre Suche mit einer KI beginnt.",
+  },
+  {
     q: "Wie lange dauert es, bis ich etwas sehe?",
-    a: "Erste Bewegung im Ranking oft in den ersten Wochen. Die ersten Seite-1-Platzierungen für kommerzielle Suchanfragen planen wir auf Tag 60, spürbar mehr Anfragen auf Tag 90. Was für Ihr Unternehmen realistisch ist, sagen wir Ihnen nach dem Audit — konkret, nicht als Spanne.",
+    a: "Das hängt vom Zustand Ihrer Website, vom Wettbewerb und vom Umfang der Maßnahmen ab. Im monatlichen Bericht sehen Sie, welche Arbeiten abgeschlossen wurden und welche Kundenanfragen eingegangen sind. So können Sie die Entwicklung nachvollziehen.",
   },
   {
     q: "Gibt es eine Mindestlaufzeit?",
-    a: "Ein 90-Tage-Sprint, danach monatlich verlängerbar. Die 90 Tage stehen dort, weil die Aufbauarbeit — Analyse, neue Seiten, Technik — so lange braucht, bis sie messbar wird. Danach entscheiden Sie jeden Monat neu.",
+    a: "Die Laufzeit vereinbaren wir im Angebot.",
   },
   {
-    q: "Was kostet das?",
-    a: "Ein Festpreis pro Monat, vor dem Start vereinbart, ohne Setup-Gebühr und ohne Nachforderungen. Die Höhe hängt von Ihrer Branche, Ihrer Region und dem Ziel ab. Eine echte Zahl bekommen Sie im Erstgespräch, keine Preisspanne von einer Webseite.",
+    q: "Wie viel kostet eine SEO-Agentur?",
+    a: "Die Kosten hängen vom Zustand Ihrer Website, Ihren Zielen und dem Umfang der Betreuung ab. Einzelne Seiten zu überarbeiten erfordert einen anderen Aufwand als eine umfangreiche Website neu aufzubauen. Nach der kostenlosen Analyse besprechen wir die sinnvollen Maßnahmen und die damit verbundenen Kosten. So können Sie das Angebot anhand konkreter Leistungen beurteilen.",
   },
   {
     q: "Garantieren Sie Platz 1 bei Google?",
@@ -915,7 +887,7 @@ export const faqs = [
 export const answerBlock = {
   question: "Was macht eine SEO-Agentur — und was bringt Ihnen das?",
   answer:
-    "Eine SEO-Agentur sorgt dafür, dass Ihr Unternehmen gefunden wird, wenn jemand nach Ihrer Leistung sucht — bei Google und in KI-Antworten. Digital Movement baut dafür die Seiten, die zu diesen Suchanfragen passen, und misst das Ergebnis in Anfragen statt in Klicks. Sie sehen jeden Monat, was getan wurde und was sich verändert hat.",
+    "Eine SEO-Agentur verbessert die technischen Grundlagen, die Struktur und die Inhalte Ihrer Website. Wir prüfen, welche Fragen Ihre Seiten beantworten sollten und wie Interessenten anschließend Kontakt aufnehmen können. Im monatlichen Bericht sehen Sie, welche Arbeiten wir umgesetzt haben und welche Anfragen eingegangen sind.",
 };
 
 /**
@@ -1001,7 +973,7 @@ export const faqIntro = {
  * einzige Quelle für beide. Wer die Seite ändert, ändert diese Zeile mit.
  */
 export const lastUpdated = {
-  iso: "2026-09-11",
-  label: "Zuletzt aktualisiert am 11. September 2026",
-  note: "Diese Seite wird laufend geprüft. Die genannten Zahlen stammen aus laufenden und abgeschlossenen Kundenprojekten.",
+  iso: contentRevisions["/"],
+  label: `Zuletzt aktualisiert am ${new Intl.DateTimeFormat("de-DE", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${contentRevisions["/"]}T00:00:00Z`))}`,
+  note: "Verantwortlich für den Inhalt: Raoul Müller.",
 };

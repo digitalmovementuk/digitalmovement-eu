@@ -1,0 +1,29 @@
+{
+  "proof": {
+    "eyebrow": "Wer hinter Digital Movement steht",
+    "heading": "Persönlich erreichbar.",
+    "intro": "Sie wissen, mit wem Sie arbeiten – vom ersten Gespräch bis zum monatlichen Bericht.",
+    "cards": [
+      {
+        "title": "Mitglied der IHK Berlin",
+        "body": "Digital Movement Germany ist Mitglied der IHK Berlin. Unsere Mitgliedsnummer: 107#2451272.",
+        "linkLabel": "Zur IHK Berlin"
+      },
+      {
+        "title": "Ein Unternehmen mit Berliner Adresse",
+        "body": "Raoul Müller führt Digital Movement Germany als Einzelunternehmen in der Kolonnenstraße 8, 10827 Berlin. Die vollständigen Unternehmensangaben finden Sie im Impressum.",
+        "linkLabel": "Unternehmensangaben ansehen"
+      },
+      {
+        "title": "Ihre Ansprechpartner haben Namen",
+        "body": "Raoul Müller kümmert sich um die Kundenbetreuung. Johannes Kaluc verantwortet die operativen Abläufe und die Geschäftsentwicklung. Sie erreichen uns persönlich per E-Mail und WhatsApp.",
+        "linkLabel": "Raoul und Johannes kennenlernen"
+      }
+    ]
+  },
+  "reviews": {
+    "heading": "Google-Bewertungen zu Digital Movement Australia",
+    "body": "Die verlinkten Erfahrungsberichte gehören zum Google-Unternehmensprofil von Digital Movement Australia in Melbourne. Lesen Sie dort die einzelnen Bewertungen im Original.",
+    "linkLabel": "Google-Bewertungen aus Melbourne lesen"
+  }
+}

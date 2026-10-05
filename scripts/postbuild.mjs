@@ -45,6 +45,7 @@ async function findHtml(dir, found = []) {
 function toRoutePath(absFile) {
   const rel = relative(DIST, absFile).split("\\").join("/");
   if (rel === "index.html") return "/";
+  if (rel.endsWith("/index.html")) return `/${rel.slice(0, -"index.html".length)}`;
   return `/${rel.replace(/\.html$/, "")}`;
 }
 
@@ -55,6 +56,22 @@ function fail(message) {
 
 async function main() {
   if (!existsSync(DIST)) fail("dist/ not found — run the build first.");
+
+  // Head metadata inserted during prerendering must not push the encoding
+  // declaration beyond the first 1,024 bytes of the document.
+  for (const file of await findHtml(DIST)) {
+    // SSG also preloads every font in its asset manifest, including unused
+    // alphabets and fallback formats. Keep only the homepage's three fonts.
+    const html = (await readFile(file, "utf8")).replace(
+      /<link\b(?=[^>]*\brel=["']preload["'])(?=[^>]*\bas=["']font["'])[^>]*>/gi,
+      (tag) => file === join(DIST, "index.html") && /href=["'][^"']*\/(?:inter-tight|plus-jakarta-sans|jetbrains-mono)-[^"']+\.woff2["']/i.test(tag) ? tag : "",
+    );
+    const charset = html.match(/<meta\s+charset=["'][^"']+["'][^>]*>/i)?.[0];
+    if (charset) {
+      const normalized = html.replace(charset, "").replace(/<head([^>]*)>/i, `<head$1>${charset}`);
+      await writeFile(file, normalized, "utf8");
+    }
+  }
 
   // ---- 1. The GitHub Pages not-found page must exist and must NOT be a
   //         copy of the homepage. That copy is the original defect.
@@ -92,7 +109,12 @@ async function main() {
 
   // ---- 3. Sitemap from what was actually built --------------------------
   // Only the flat files are listed; the directory twins are the same URL.
-  const files = (await findHtml(DIST)).filter((f) => !f.endsWith(`${sep}index.html`) || f === join(DIST, "index.html"));
+  const files = (await findHtml(DIST)).filter((f) => {
+    if (!f.endsWith(`${sep}index.html`) || f === join(DIST, "index.html")) return true;
+    // Directory twins share the flat page's canonical. Standalone pages
+    // such as /privacy/ have no flat twin and belong in the inventory.
+    return !existsSync(`${dirname(f)}.html`);
+  });
 
   // A page that tells crawlers not to index it must not then be advertised in
   // the sitemap — the two directives contradict each other and Search Console
@@ -118,11 +140,12 @@ async function main() {
 
   if (routePaths.length === 0) fail("no HTML pages found in dist/.");
 
-  const lastmod = new Date().toISOString().slice(0, 10);
+  const revisions = JSON.parse(await readFile(join(ROOT, "src", "content-revisions.json"), "utf8"));
   const urls = routePaths
     .map((p) => {
       const loc = p === "/" ? `${SITE_URL}/` : `${SITE_URL}${p}`;
-      return `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
+      const lastmod = revisions[p];
+      return `  <url>\n    <loc>${loc}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ""}\n  </url>`;
     })
     .join("\n");
 
@@ -135,7 +158,7 @@ async function main() {
   // ---- 4. Every page must carry its own title, or pre-rendering has not
   //         actually solved the duplicate-metadata problem.
   const titles = new Map();
-  for (const file of files) {
+  for (const file of indexable) {
     const html = await readFile(file, "utf8");
     const title = html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1]?.trim();
     const path = toRoutePath(file);

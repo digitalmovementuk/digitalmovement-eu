@@ -154,7 +154,7 @@ export function Contact() {
                 id="contact-form"
                 onSubmit={onSubmit}
                 noValidate
-                initial={{ opacity: 0, y: 8 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.35 }}
@@ -318,7 +318,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#EC178D] hover:bg-[#d4147f] disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium text-[15px] py-3 transition-colors"
+                  className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#c91077] hover:bg-[#af0e67] disabled:opacity-60 disabled:cursor-not-allowed text-white font-medium text-[15px] py-3 transition-colors"
                 >
                   {sending ? (
                     hero.formSending
@@ -361,7 +361,7 @@ export function Contact() {
             ) : (
               <motion.div
                 key="success"
-                initial={{ opacity: 0, y: 12 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}

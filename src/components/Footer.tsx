@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { openConsentDialog } from "./CookieBanner";
 import { business, footer } from "../content";
 import { FooterMap } from "./FooterMap";
-import { ADDRESS_LINE, VAT_ID } from "../seo";
+import { ADDRESS_LINE, IHK_MEMBERSHIP_NUMBER, VAT_ID } from "../seo";
 
 /**
  * Fußzeile.
@@ -127,6 +127,7 @@ export function Footer() {
                 Platzhalter an dieser Stelle wäre eine falsche Angabe. */}
             {VAT_ID ? <p className="text-ink-faint">USt-IdNr. {VAT_ID}</p> : null}
             <p className="text-ink-faint">{ADDRESS_LINE}</p>
+            <p>IHK Berlin · Mitgliedsnummer <span className="whitespace-nowrap">{IHK_MEMBERSHIP_NUMBER}</span></p>
           </div>
           <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-6 gap-y-2">
             {footer.legal.map((l) => (

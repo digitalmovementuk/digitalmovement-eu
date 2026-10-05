@@ -21,7 +21,7 @@ export default {
           DEFAULT: "#1B0E2E",
           soft: "#3F3450",
           muted: "#6E6478",
-          faint: "#A39CB2",
+          faint: "#706478",
         },
         dm: {
           pink: "#F13C64",

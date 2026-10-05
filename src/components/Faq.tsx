@@ -42,22 +42,20 @@ export function Faq() {
           </h2>
         </Reveal>
 
-        <dl className="mt-12 sm:mt-14 grid gap-x-12 gap-y-9 md:grid-cols-2">
+        <div className="mt-12 sm:mt-14 grid gap-x-12 gap-y-9 md:grid-cols-2">
           {faqs.map((f, i) => (
             <Reveal key={f.q} delay={0.05 + i * 0.04}>
               <div>
-                <dt>
                   <h3 className="text-[17.5px] sm:text-[19px] font-bold leading-snug text-ink">
                     {f.q}
                   </h3>
-                </dt>
-                <dd className="mt-3 max-w-[58ch] text-[15px] sm:text-[16px] leading-relaxed text-ink-soft">
+                <p className="mt-3 max-w-[58ch] text-[15px] sm:text-[16px] leading-relaxed text-ink-soft">
                   {f.a}
-                </dd>
+                </p>
               </div>
             </Reveal>
           ))}
-        </dl>
+        </div>
       </div>
     </section>
   );

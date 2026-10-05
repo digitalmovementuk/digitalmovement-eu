@@ -3,7 +3,7 @@ import { useReducedMotion } from "framer-motion";
 
 /** Start the number with its card, and cancel pending frames on unmount. */
 export function useCountUp(target: number, active: boolean, duration = 1600) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(target);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
