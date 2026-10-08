@@ -825,3 +825,178 @@ h3 { font-size: 1.2rem; letter-spacing: -.01em; }
 .card--media figcaption { padding: 20px 24px 24px; }
 .card--media figcaption h3 { margin: 0 0 6px; }
 .card--media figcaption span { display: block; color: var(--muted); }
+
+/* ---------- Hero and enquiry: first screen ----------
+   The first viewport is the prototype notice, the header and the hero.
+   The hero takes two-thirds of it, so the next section peeks below the fold. */
+
+:root { --proto-h: 38px; }
+
+.hero-wrap { position: relative; }
+
+.hero--v2 {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: calc(66vh - var(--header-h) - var(--proto-h));
+  min-height: calc(66svh - var(--header-h) - var(--proto-h));
+  padding-block: 26px 28px;
+  overflow: hidden;
+  background: var(--navy);
+  color: #d9e2ee;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 50%;
+}
+.hero--v2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(100deg, rgba(14, 27, 46, .95) 0%, rgba(19, 41, 75, .84) 52%, rgba(19, 41, 75, .5) 100%);
+}
+.hero--v2 .eyebrow { color: #8fc2ea; margin-bottom: 10px; }
+.hero--v2 h1 {
+  color: var(--white);
+  font-size: clamp(1.85rem, 1.25rem + 2.6vw, 3.25rem);
+  margin-bottom: .4em;
+}
+.hero--v2 .lead {
+  color: #d9e2ee;
+  font-size: clamp(1rem, .96rem + .3vw, 1.2rem);
+  margin-bottom: 22px;
+  max-width: 46ch;
+}
+.hero-chips {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+}
+.hero-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: var(--white);
+  font-size: .9rem;
+  font-weight: 600;
+}
+.hero-chips li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6cc0f0;
+}
+.hero__actions--v2 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
+.hero__actions--v2 .btn--primary { flex: 1 1 100%; }
+.hero__actions--v2 .btn--ghost-light {
+  flex: 0 0 auto;
+  min-height: 44px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: #d9e2ee;
+  font-size: .98rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.hero__actions--v2 .btn--ghost-light:hover { background: none; color: var(--white); }
+.btn--ghost-light { background: transparent; color: var(--white); border-color: rgba(255, 255, 255, .6); }
+.btn--ghost-light:hover { background: var(--white); color: var(--navy); }
+
+/* Enquiry: directly after the hero on mobile, beside it on desktop */
+.enquiry { position: relative; padding: 36px 0 52px; background: var(--white); }
+.enquiry .form-card { max-width: 640px; margin-inline: auto; padding: 24px; }
+.form-lead { margin: -4px 0 18px; font-size: .95rem; color: var(--muted); }
+.form--compact .form-fields { gap: 12px; }
+.form--compact .field label { margin-bottom: 4px; font-size: .88rem; }
+.form--compact .field input:not([type="checkbox"]),
+.form--compact .field select { min-height: 48px; padding: 10px 14px; }
+.form--compact .check { font-size: .88rem; }
+.form--compact .btn { margin-top: 4px; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.steps-compact { list-style: none; margin: 0; padding: 0; }
+.steps-compact li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  color: var(--text);
+}
+.steps-compact li:first-child { border-top: 0; padding-top: 4px; }
+.steps-compact span {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--warm);
+  color: var(--white);
+  font-weight: 800;
+}
+.next-card h3 { margin-bottom: 14px; }
+
+@media (min-width: 640px) {
+  .hero__actions--v2 .btn--primary { flex: 0 0 auto; }
+  .hero__actions--v2 .btn--ghost-light {
+    min-height: 54px;
+    padding: 0 24px;
+    border: 2px solid rgba(255, 255, 255, .6);
+    background: transparent;
+    color: var(--white);
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  .hero__actions--v2 .btn--ghost-light:hover { background: var(--white); color: var(--navy); }
+}
+
+@media (min-width: 960px) {
+  .hero-wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+    height: calc(66vh - var(--header-h) - var(--proto-h));
+    height: calc(66svh - var(--header-h) - var(--proto-h));
+  }
+  .hero--v2 { min-height: 0; height: 100%; padding-block: 40px; }
+  .hero-chips { display: flex; }
+  .enquiry {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 24px clamp(24px, 3vw, 48px);
+    background: var(--surface);
+  }
+  .enquiry .form-card { max-width: none; margin: 0; padding: 26px 28px; box-shadow: var(--shadow); }
+}
+
+/* Short laptop screens: tighten the hero so the form still fits */
+@media (min-width: 960px) and (max-height: 820px) {
+  .hero--v2 { padding-block: 20px; }
+  .hero--v2 h1 { font-size: 2.5rem; }
+  .hero--v2 .lead { font-size: 1rem; margin-bottom: 16px; }
+  .hero-chips { display: none; }
+  .enquiry { padding: 16px clamp(24px, 3vw, 48px); }
+  .enquiry .form-card { padding: 20px 24px; }
+  .enquiry .form-title { font-size: 1.25rem; margin-bottom: 2px; }
+  .enquiry .form-lead { display: none; }
+  .form--compact .form-fields { gap: 10px; }
+  .form--compact .field input:not([type="checkbox"]),
+  .form--compact .field select { min-height: 44px; }
+}
