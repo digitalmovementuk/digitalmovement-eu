@@ -1,0 +1,27 @@
+# CLAUDE.md
+
+## Standing rules (set by the owner)
+
+### Open the result when a task is done
+
+When a chat or task is completed, don't just name the deliverable: open it so
+it is in front of the user. This is the last step, after commit and push.
+
+- **Website / landing-page changes**: build (`npm run build`), serve the build
+  (`npx vite preview`, or the dev server on port 5185), and open it.
+  - Cloud session: tell the app the port with `report_preview_port`, and send a
+    desktop (1440 px) and a mobile (390 px) Playwright screenshot of the changed
+    section with `SendUserFile` (`display: "render"`). In the cloud container,
+    launch Chromium without `executablePath` (`scripts/dev/shot.mjs` points at
+    macOS Chrome).
+  - Local session: open the URL in the browser (`open` on macOS, `xdg-open` on
+    Linux).
+  - If it was deployed, also give the link: draft
+    https://new.digitalmovement.eu/ (`npm run deploy:draft`), live
+    https://digitalmovement.eu/.
+- **PDFs, images, standalone HTML, reports**: `SendUserFile` with
+  `display: "render"` (locally: `open <file>`).
+- **claude.ai artifacts**: `Artifact` with `action: "open"`. A publish in the
+  same turn already opens it, so no second call.
+- Several deliverables: open each one. Nothing visible to open (for example a
+  pure config change): say so in one line.
