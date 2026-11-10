@@ -5,7 +5,11 @@
 ### Open the result when a task is done
 
 When a chat or task is completed, don't just name the deliverable: open it so
-it is in front of the user. This is the last step, after commit and push.
+the user sees what was created. This is the last step, after commit and push.
+
+Only for things that were made to be looked at: pages, sites, PDFs, images,
+reports, artifacts. Never open instruction or setup files such as CLAUDE.md,
+skills, memory, settings or hooks.
 
 - **Website / landing-page changes**: build (`npm run build`), serve the build
   (`npx vite preview`, or the dev server on port 5185), and open it.
@@ -23,5 +27,5 @@ it is in front of the user. This is the last step, after commit and push.
   `display: "render"` (locally: `open <file>`).
 - **claude.ai artifacts**: `Artifact` with `action: "open"`. A publish in the
   same turn already opens it, so no second call.
-- Several deliverables: open each one. Nothing visible to open (for example a
-  pure config change): say so in one line.
+- Several deliverables: open each one. Nothing visible was created: skip this
+  step.
